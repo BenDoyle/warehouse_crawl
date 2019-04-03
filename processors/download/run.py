@@ -11,51 +11,40 @@ def __get_url(url):
 
 def __get_links(html, pattern, group=0):
     pattern = re.compile(pattern)
-    return pattern.findall(html)
+    for link in pattern.findall(html):
+        yield link
 
 def get_user_names():
     print('> Listing user directories at {}'.format(BASE_URL))
     html = __get_url(BASE_URL)
     usernames = __get_links(html, '<a href="([a-zA-Z0-9][^"]*)/"', group=0)
-    print('  > Found {} username{}'.format(len(usernames), '' if len(usernames) == 1 else 's'))
-    return usernames
+    for username in usernames:
+        yield username
 
 def get_user_listing(username):
     print('> Listing morgue files for [{}]'.format(username))
     html = __get_url('{}{}/'.format(BASE_URL, username))
     files = __get_links(html, '<a href="(morgue-[^"]*.txt)"')
-    files = [
-        '{}{}/{}'.format(BASE_URL, username, file_)
-        for file_ in files
-    ]
-    print('  > Found {} file{}'.format(len(files), '' if len(files) == 1 else 's'))
+    for file_ in files:
+        yield '{}{}/{}'.format(BASE_URL, username, file_)
 
-def download(files_dict):
-    for username, files in sorted(files_dict.items()):
-        print('Downloading {} file{} from user {}'.format(len(files), '' if len(files) == 1 else 's', username))
-        for file_ in files:
-            response = requests.get(file_)
-            if not response.ok:
-                print('Failed to download file {} {} - {}'.format(response.status_code, response.reason, file_))
-                continue
+def download(file_):
+    print('  > Downloading {} ...'.format(os.path.basename(file_)))
+    response = requests.get(file_)
+    if not response.ok:
+        print('  !! Failed to download file {} {} - {}'.format(response.status_code, response.reason, file_))
+        return
 
-            import ipdb; ipdb.set_trace()
-            basedir = './{}'.format(os.path.dirname(__file__))
-            filepath = './{}/{}'.format(os.path.dirname(__file__), os.path.basename(file_))
-            os.mkdir(basedir)
-            open(filepath, 'wb').write(response.content)
-
-
+    basedir = './{}/morgue'.format(os.path.dirname(__file__))
+    filepath = './{}/morgue/{}'.format(os.path.dirname(__file__), os.path.basename(file_))
+    if not os.path.exists(basedir):
+        os.mkdir(basedir, exist_ok=True)
+    with open(filepath, 'wb') as f:
+        f.write(response.content)
 
 if __name__ == '__main__':
     usernames = get_user_names()
-    user_files_all = {
-        username: get_user_listing(username)
-        for username in usernames
-    }
-    user_files = {
-        username: files
-        for username, files in user_files_all.items()
-        if files
-    }
-    import ipdb; ipdb.set_trace()
+
+    for username in get_user_names():
+        for file in get_user_listing(username):
+            download(file)
