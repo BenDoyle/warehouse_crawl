@@ -72,8 +72,8 @@ class MorguesCrawler(object):
             f.write(response.content)
 
     def _get_url(self, url):
+        now = datetime.now()
         if self.throttle:
-            now = datetime.now()
             delta = now - self.__last_download
             if delta < self.throttle:
                 seconds = delta.microseconds / 1000000.0
@@ -100,6 +100,5 @@ if __name__ == '__main__':
     missing_options = set(required) & set(option for option, value in env.items() if not value)
     if set(required) & set(option for option, value in env.items() if not value):
         raise Exception('Missing required options: {}'.format(missing_options))
-    import ipdb; ipdb.set_trace()
     crawler = MorguesCrawler(**env)
     crawler.run()
