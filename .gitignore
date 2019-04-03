@@ -1,3 +1,6 @@
 .venv
 .python-version
 .vscode
+*.pyc
+data/*
+.DS_Store
