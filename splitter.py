@@ -59,11 +59,11 @@ if __name__ == '__main__':
 
     for section in map(lambda s: s[0], SECTION_PATTERNS):
         try:
-            os.makedirs('data/{}'.format(section))
+            os.makedirs('data/0.23.0/{}'.format(section))
         except:
             pass
 
-        outfile_name = 'data/{}/{}-{}'.format(section, section, os.path.basename(file_name))
+        outfile_name = 'data/0.23.0/{}/{}-{}'.format(section, section, os.path.basename(file_name))
         if sections[section]:
             file_handle = open(outfile_name, 'w')
             file_handle.write(sections[section])
