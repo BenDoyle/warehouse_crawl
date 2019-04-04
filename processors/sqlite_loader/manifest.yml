@@ -1,0 +1,20 @@
+name: csv-loader
+env-type: python
+options:
+ - database: >
+      A local path to a sqlite database. A database is created if 
+      it doesn't already exist. If a database does exist, only new
+      CSV files will be processed. Existing CSVs are skipped without
+      any effort to detect if the contents have changed.
+ - table_name: The name of the table to append the rows to.
+ - csv_path: >
+      A local path to a directory containing CSV files. A .schema must
+      exist in this directory describing the column names and types. 
+      Every CSV in the directory is assumed to respect this schema and
+      each row is appended to the table.
+ - force: Will always download morgues, even if they exist locally
+run-command: python sqlite_loader.py
+test-command: py.test
+
+# Example script invocation
+# DATABASE=`pwd`/output/test.sqlite TABLE_NAME='test' CSV_PATH=./test/csv_files python sqlite_loader.py
