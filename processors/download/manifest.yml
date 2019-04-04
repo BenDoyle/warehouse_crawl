@@ -9,6 +9,6 @@ options:
 test-command: py.test
 
 # BASE_URL=http://crawl.develz.org/morgues/0.23/ \
-# OUTPUT=`pwd`/data/download \
+# OUTPUT=`pwd`/data/morgues \
 # THROTTLE=2000 \
 #   python processors/download/run.py
