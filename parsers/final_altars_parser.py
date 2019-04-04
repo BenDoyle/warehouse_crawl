@@ -5,9 +5,11 @@ import os
 import glob
 
 def get_rows(contents):
+    lines = contents.strip().split('\n')
+    assert lines[0] == 'Altars:'
     return [
         [game_id, altar]
-        for altar in contents.strip().split('\n')[1:]
+        for altar in lines[1:]
     ]
 
 if __name__ == '__main__':
