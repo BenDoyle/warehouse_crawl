@@ -8,7 +8,7 @@ import time
 def _get_url(url):
     response = requests.get(url)
     response.raise_for_status()
-    return response.text
+    return response
 
 def _get_links(html, pattern, group=0):
     pattern = re.compile(pattern)
@@ -16,7 +16,7 @@ def _get_links(html, pattern, group=0):
         yield link
 
 class MorguesCrawler(object):
-    def __init__(self, base_url, output, throttle=None, force=None):
+    def __init__(self, base_url, output, throttle=None, force=False):
         self.__base_url = base_url
         self.__output = output
         self.__throttle = timedelta(milliseconds=int(throttle)) if throttle else None
@@ -41,14 +41,14 @@ class MorguesCrawler(object):
 
     def get_user_names(self):
         print('> Listing user directories at {}'.format(self.base_url))
-        html = self._get_url(self.base_url)
+        html = self._get_url(self.base_url).text
         usernames = _get_links(html, '<a href="([a-zA-Z0-9][^"]*)/"', group=0)
         for username in usernames:
             yield username
 
     def get_user_listing(self, username):
         print('> Listing morgue files for [{}]'.format(username))
-        html = self._get_url('{}{}/'.format(self.base_url, username))
+        html = self._get_url('{}{}/'.format(self.base_url, username)).text
         files = _get_links(html, '<a href="(morgue-[^"]*.txt)"')
         for file_ in files:
             yield '{}{}/{}'.format(self.base_url, username, file_)
@@ -56,12 +56,12 @@ class MorguesCrawler(object):
     def download(self, file_):
         basedir = self.output.rstrip('/')
         filepath = '{}/{}'.format(basedir, os.path.basename(file_))
-        if os.path.exists(filepath):
+        if not self.force and os.path.exists(filepath):
             print('  > !! Skipping existing file {} ...'.format(os.path.basename(file_)))
             return
 
         print('  > Downloading {} ...'.format(os.path.basename(file_)))
-        response = requests.get(file_)
+        response = self._get_url(file_)
         if not response.ok:
             print('  !! Failed to download file {} {} - {}'.format(response.status_code, response.reason, file_))
             return
@@ -76,7 +76,7 @@ class MorguesCrawler(object):
         if self.throttle:
             delta = now - self.__last_download
             if delta < self.throttle:
-                seconds = delta.microseconds / 1000000.0
+                seconds = self.throttle.seconds - (delta.microseconds / 1000000.0)
                 print('  ! Sleeping {} seconds'.format(seconds))
                 time.sleep(seconds)
 
