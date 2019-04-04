@@ -1,7 +1,35 @@
-pip install virtualenv
-pyenv local 3.6.5
-pip install virtualenv
-virtualenv
-virtualenv .venv
+# Python
+
+Requires Python 3.6.5+
+
+```
+pyenv install 3.6.5
+```
+
+Activate the virtualenv
+
+```
 . .venv/bin/activate
- pip install ipython
+```
+
+Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+# Other dependencies
+
+## SQLite
+MacOS (brew)
+
+```
+brew install sqlite
+```
+
+Other
+- https://sqlite.org/download.html
+
+## Morgue file repository
+
+http://crawl.develz.org/morgues/
