@@ -18,7 +18,7 @@ SECTION_PATTERNS = {
     'final_annotations':            'Annotations:',
     'final_abilities':              'Innate Abilities, Weirdness & Mutations',
     'final_messages':               'Message History\n\n',
-    'final_vanquished':             'Vanquished Creatures',
+    'final_vanquished':             'Vanquished Creatures\n',
     'notes':                        'Notes',
     'skill_progression':            'Skill\s+XL:',
     'action_totals':                'Action\s+\|',
