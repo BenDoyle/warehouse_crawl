@@ -3,6 +3,8 @@
 .vscode
 *.pyc
 __pycache__
+.pytest_cache
 data/*
 .DS_Store
 log.txt
+*.log

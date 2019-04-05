@@ -4,7 +4,9 @@ import subprocess
 import argparse
 import yaml
 
-def discover_processors():
+PROCESSORS_REPO_PATH = os.path.abspath(os.path.dirname(__file__)+'/../processors')
+
+def discover_processors(processors_repo_path):
     def load_processor_manifest(path):
         with open(path, 'r') as fd:
             try:
@@ -48,25 +50,20 @@ def execute_step(name, options, processors, dryrun):
         command = command.split(' ')
         subprocess.run(command, cwd=path, env=env, stdout=sys.stdout, stderr=sys.stderr)
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser('App runner')
-    parser.add_argument('manifest', help='Path to app manifest YAML file')
-    parser.add_argument('--dryrun', action='store_true', help='Print the processor commands instead of executing them')
-    args = parser.parse_args()
-    
-    manifest_path = os.path.abspath(args.manifest)
+def load_app_manifest(manifest_path):
     if not os.path.exists(manifest_path):
         print('File does not exist: {}'.format(manifest_path))
         exit(code=1)
     with open(manifest_path, 'r') as fd:
         try:
-            manifest = yaml.load(fd, Loader=yaml.FullLoader)
+            return yaml.load(fd, Loader=yaml.FullLoader)
         except yaml.YAMLError as exc:
             print(exc)
 
+def run_app(manifest):
     print('Running app: {}'.format(manifest['name']))
     print(' > Discovering processors...')
-    processors = discover_processors()
+    processors = discover_processors(PROCESSORS_REPO_PATH)
 
     total_steps = len(manifest['steps'])
     for (i, (name, options)) in enumerate(manifest['steps'].items()):
@@ -74,3 +71,14 @@ if __name__ == '__main__':
             name=name, current=i+1, total=total_steps
         ))
         execute_step(name, options, processors, args.dryrun)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser('App runner')
+    parser.add_argument('manifest', help='Path to app manifest YAML file')
+    parser.add_argument('--dryrun', action='store_true', help='Print the processor commands instead of executing them')
+    args = parser.parse_args()
+    
+    manifest_path = os.path.abspath(args.manifest)
+    manifest = load_app_manifest(manifest_path)
+    run_app(manifest)
+    
