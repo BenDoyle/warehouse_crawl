@@ -92,7 +92,7 @@ class TestAppManifest(object):
     @pytest.fixture
     def app_manifest_simple(self):
         return """
-name: Simple App Manifest
+name: Simple app manifest
 jobs:
 - processor: download
   base_url: http://example.com/data
@@ -103,7 +103,7 @@ jobs:
     @pytest.fixture
     def app_manifest_multiple_jobs(self):
         return """
-name: Simple App Manifest
+name: Multiple job manifest
 jobs:
 - processor: download
   base_url: http://example.com/data
@@ -114,44 +114,83 @@ jobs:
   output: /tmp/data/splits
         """
 
-    @mock.patch('core.runner.execute_job')
-    def test_run_app_simple_job(self, execute_job, app_manifest_simple, processors_fixtures_path):
+    @pytest.fixture
+    def app_manifest_composed_job(self):
+        return """
+name: Single composed job manifest
+jobs:
+- 
+  - processor: download
+    base_url: http://example.com/data
+    throttle: 1000
+    output: /tmp/data/morgues
+  - processor: splitter
+    morgues: /tmp/data/morgues
+    output: /tmp/data/splits
+        """
+
+    @mock.patch('core.runner.execute_processor')
+    def test_run_app_simple_job(self, execute_processor, app_manifest_simple, processors_fixtures_path):
         manifest = parse_yaml(app_manifest_simple)
         runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
 
-        assert execute_job.call_count == 1, '`execute_job` was called an unexpected number of times'
-        actual_jobs = [call[1].get('job') or call[0][0] for call in execute_job.call_args_list]
-        actual_processors = [call[1].get('processors') or call[0][1] for call in execute_job.call_args_list]
-        actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_job.call_args_list]
+        assert execute_processor.call_count == 1, '`execute_processor` was called an unexpected number of times'
+        actual_steps = [call[1].get('step') or call[0][0] for call in execute_processor.call_args_list]
+        actual_processors = [call[1].get('processors') or call[0][1] for call in execute_processor.call_args_list]
+        actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_processor.call_args_list]
         
-        assert actual_jobs == [
+        assert actual_steps == [
             {'processor': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': '/tmp/data/morgues'}
         ]
         actual_processor = actual_processors[0]
-        assert all(actual_processor == p for p in actual_processors), 'Each call to `execute_job` should have passed the same processors dict'
+        assert all(actual_processor == p for p in actual_processors), 'Each call to `execute_processor` should have passed the same processors dict'
         assert sorted(actual_processor.keys()) == [
             'morgue-splitter', 'morgues-download', 'parser'
         ]
         assert all(dryrun == False for dryrun in actual_dryruns)
 
-    @mock.patch('core.runner.execute_job')
-    def test_run_app_multiple_jobs(self, execute_job, app_manifest_multiple_jobs, processors_fixtures_path):
-        manifest = parse_yaml(app_manifest_multiple_jobs)
-        runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
+    @mock.patch('core.runner.execute_processor')
+    @pytest.mark.parametrize('manifest_type', ['composed', 'multiple'])
+    @pytest.mark.parametrize('dryrun', [True, False])
+    def test_run_app_multiple_single_step_jobs(self, execute_processor, manifest_type, dryrun, app_manifest_composed_job, app_manifest_multiple_jobs, processors_fixtures_path):
+        manifest_yaml = app_manifest_composed_job if manifest_type == 'composed' else app_manifest_multiple_jobs
+        manifest = parse_yaml(manifest_yaml)
+        runner.run_app(manifest, dryrun=dryrun, processors_repo_path=processors_fixtures_path)
 
-        assert execute_job.call_count == 2, '`execute_job` was called an unexpected number of times'
-        actual_jobs = [call[1].get('job') or call[0][0] for call in execute_job.call_args_list]
-        actual_processors = [call[1].get('processors') or call[0][1] for call in execute_job.call_args_list]
-        actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_job.call_args_list]
+        assert execute_processor.call_count == 2, '`execute_processor` was called an unexpected number of times'
+        actual_steps = [call[1].get('step') or call[0][0] for call in execute_processor.call_args_list]
+        actual_processors = [call[1].get('processors') or call[0][1] for call in execute_processor.call_args_list]
+        actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_processor.call_args_list]
         
-        assert actual_jobs == [
+        assert actual_steps == [
             {'processor': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': '/tmp/data/morgues'},
             {'processor': 'splitter', 'morgues': '/tmp/data/morgues', 'output': '/tmp/data/splits'}
         ]
         actual_processor = actual_processors[0]
-        assert all(actual_processor == p for p in actual_processors), 'Each call to `execute_job` should have passed the same processors dict'
+        assert all(actual_processor == p for p in actual_processors), 'Each call to `execute_processor` should have passed the same processors dict'
         assert sorted(actual_processor.keys()) == [
             'morgue-splitter', 'morgues-download', 'parser'
         ]
-        assert all(dryrun == False for dryrun in actual_dryruns)
+        assert all(actual_dryrun == dryrun for actual_dryrun in actual_dryruns), 'Unexpected dryruns: {}'.format(list(actual_dryruns))
   
+    @mock.patch('core.runner.execute_processors')
+    def test_run_app_one_job_multiple_steps(self, execute_processors, app_manifest_composed_job, processors_fixtures_path):
+        manifest = parse_yaml(app_manifest_composed_job)
+        runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
+
+        assert execute_processors.call_count == 1, '`execute_processors` was called an unexpected number of times'
+        actual_steps = [call[1].get('step') or call[0][0] for call in execute_processors.call_args_list]
+        actual_processors = [call[1].get('processors') or call[0][1] for call in execute_processors.call_args_list]
+        actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_processors.call_args_list]
+        assert actual_steps == [
+            [
+                {'processor': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': '/tmp/data/morgues'},
+                {'processor': 'splitter', 'morgues': '/tmp/data/morgues', 'output': '/tmp/data/splits'}
+            ]
+        ]
+        actual_processor = actual_processors[0]
+        assert all(actual_processor == p for p in actual_processors), 'Each call to `execute_processor` should have passed the same processors dict'
+        assert sorted(actual_processor.keys()) == [
+            'morgue-splitter', 'morgues-download', 'parser'
+        ]
+        assert all(actual_dryrun == False for actual_dryrun in actual_dryruns), 'Unexpected dryruns: {}'.format(list(actual_dryruns))
