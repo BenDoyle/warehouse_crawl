@@ -1,10 +1,10 @@
 name: Dungeon Crawler Warehouse
-steps:
-  morgues-download:
+jobs:
+  - processor: morgues-download
     base_url: http://crawl.develz.org/morgues/0.23/
     throttle: 1000
     output: /tmp/data/morgues
   
-  morgue-splitter:
+  - processor: morgue-splitter
     morgues: /tmp/data/morgues
     output: /tmp/data/splits

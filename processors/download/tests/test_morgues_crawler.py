@@ -29,7 +29,7 @@ def morgue_requests_mock(requests_mock, all_morgue_files):
         try:
             context.status_code = 200
             context.reason = 'OK'
-            path = request.path.lstrip('/morgues-repo/').rstrip('/') or 'root'
+            path = request.path[len('/morgues-repo/'):].rstrip('/') or 'root'
             if os.path.basename(path).lower() in all_morgue_files:
                 return '<game data here>'
             fixture = '{}{}_listing.html'.format(FIXTURES_ROOT, path)
