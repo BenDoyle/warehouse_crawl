@@ -1,10 +1,13 @@
 name: Dungeon Crawler Warehouse
+data: /tmp/data/
 jobs:
-  - processor: morgues-download-2
-    base_url: http://crawl.berotato.org/crawl/morgue/
-    throttle: 500
-    output: /tmp/data/morgues
+  download:
+    - transform: morgues-download-2
+      base_url: http://crawl.berotato.org/crawl/morgue/
+      throttle: 500
+      output: /tmp/data/morgues
 
-  - processor: index-versions
-    morgues: /tmp/data/morgues
-    output: /tmp/data/morgues-by-version/
+  preprocess:
+    - transform: index-versions
+      morgues: /tmp/data/morgues
+      output: /tmp/data/morgues-by-version/

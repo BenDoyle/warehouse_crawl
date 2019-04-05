@@ -32,10 +32,11 @@ if __name__ == '__main__':
     if not os.path.exists(morgues_path):
         raise Exception('Invalid morgues path: {}'.format(morgues_path))
 
-    print('* Classifying moregue files in {}'.format(morgues_path))
+    print('* Classifying morgue files in {}'.format(morgues_path))
     versions = defaultdict(set)
     for path in find_morgues(morgues_path):
         version = get_version(path)
+        print('  > {}'.format(path))
         if version and version.startswith('0.'):
             versions[version].add(path)
 
