@@ -1,7 +1,8 @@
-import os
-import sys
-import subprocess
 import argparse
+import os
+import subprocess
+import sys
+
 import yaml
 
 PROCESSORS_REPO_PATH = os.path.abspath(os.path.dirname(__file__)+'/../processors')
@@ -29,9 +30,14 @@ def discover_processors(processors_repo_path):
         }
     return processors
 
-def execute_job(job, processors, dryrun):
-    name = job['processor']
-    options = {name: value for (name, value) in job.items() if name != 'processor'}
+def execute_processors(steps, processors, dryrun):
+    # TODO: support chaining inputs and outputs with $previous
+    for step in steps:
+        execute_processor(step, processors, dryrun)
+
+def execute_processor(step, processors, dryrun):
+    name = step['processor']
+    options = {name: value for (name, value) in step.items() if name != 'processor'}
 
     assert name in processors, 'Unknown processor: {}'.format(name)
     path = processors[name]['path']
@@ -62,16 +68,9 @@ def run_app(manifest, dryrun=False, processors_repo_path=None):
     print(' > Discovering processors...')
     processors = discover_processors(processors_repo_path or PROCESSORS_REPO_PATH)
 
-    total_jobs = len(manifest['jobs'])
-    for (i, job) in enumerate(manifest['jobs']):
-        missing_required_fields = REQUIRED_JOB_FIELDS - set(job.keys())
-        assert not missing_required_fields, 'Cannot execute job due to missing required fields: {}'.format(
-            missing_required_fields
-        )
-        print('Executing processor {name} [{current}/{total}]'.format(
-            name=job['processor'], current=i+1, total=total_jobs
-        ))
-        execute_job(job, processors, dryrun)
+    for (job_num, job) in enumerate(manifest['jobs']):
+        steps = [job] if isinstance(job, dict) else job
+        execute_processors(steps, processors, dryrun)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('App runner')
@@ -86,4 +85,3 @@ if __name__ == '__main__':
 
     manifest = load_yaml_manifest(manifest_path)
     run_app(manifest, args.dryrun)
-    
