@@ -79,20 +79,11 @@ run-command: python run.py
 
 @mock.patch('subprocess.run', mock.Mock())
 class TestAppManifest(object):
-    # @pytest.fixture
-    # def write_yaml(self, tmpdir):
-    #     def writer(yaml, name=None):
-    #         name = name or 'my_app'
-    #         path = os.path.join(str(tmpdir.mkdir('apps')), '{}.yml'.format(name))
-    #         with open(path, 'w') as fd:
-    #             fd.write(yaml)
-    #         return path
-    #     return writer
-
     @pytest.fixture
     def app_manifest_simple(self):
         return """
 name: Simple app manifest
+data: /data
 jobs:
 - processor: download
   base_url: http://example.com/data
@@ -104,6 +95,7 @@ jobs:
     def app_manifest_multiple_jobs(self):
         return """
 name: Multiple job manifest
+data: /data
 jobs:
 - processor: download
   base_url: http://example.com/data
@@ -118,16 +110,17 @@ jobs:
     def app_manifest_composed_job(self):
         return """
 name: Single composed job manifest
+data: /data
 jobs:
-- 
-  - processor: download
-    base_url: http://example.com/data
-    throttle: 1000
-    output: /tmp/data/morgues
-  - processor: splitter
-    morgues: /tmp/data/morgues
-    output: /tmp/data/splits
-        """
+  - 
+    - processor: download
+      base_url: http://example.com/data
+      throttle: 1000
+      output: /tmp/data/morgues
+    - processor: splitter
+      morgues: /tmp/data/morgues
+      output: /tmp/data/splits
+          """
 
     @mock.patch('core.runner.execute_processor')
     def test_run_app_simple_job(self, execute_processor, app_manifest_simple, processors_fixtures_path):
@@ -194,3 +187,135 @@ jobs:
             'morgue-splitter', 'morgues-download', 'parser'
         ]
         assert all(actual_dryrun == False for actual_dryrun in actual_dryruns), 'Unexpected dryruns: {}'.format(list(actual_dryruns))
+
+    @mock.patch('core.runner.execute_processor')
+    @mock.patch('core.runner.temp_directory', return_value='/data/tmp/dir')
+    @mock.patch('core.runner.temp_file', return_value='/data/tmp/file')
+    def test_run_app_temp_placeholder(self, tmpfile_mock, tmpdir_mock, execute_processor, processors_fixtures_path):
+        manifest = parse_yaml("""
+name: Named placeholder
+data: /data
+jobs:
+ - some-file: $tmp.file
+   output: $tmp.dir
+        """)
+        runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
+
+        assert execute_processor.call_count == 1, '`execute_processor` was called an unexpected number of times'
+        actual_steps = [call[1].get('step') or call[0][0] for call in execute_processor.call_args_list]
+        assert actual_steps == [
+            {'some-file': '/data/tmp/file', 'output': '/data/tmp/dir'},
+        ]
+
+    @mock.patch('core.runner.execute_processor')
+    def test_run_app_named_placeholders(self, execute_processor, processors_fixtures_path):
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: /data
+jobs:
+- 
+  - name: downloader
+    processor: morgues-download
+    base_url: http://example.com/data
+    throttle: 1000
+    output: /tmp/data/morgues
+  - processor: morgue-splitter
+    morgues: $downloader.output  # this should be replaced with the first step's output value
+    output: /tmp/data/splits
+        """)
+        runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
+
+        assert execute_processor.call_count == 2, '`execute_processor` was called an unexpected number of times'
+        actual_steps = [call[1].get('step') or call[0][0] for call in execute_processor.call_args_list]
+        assert actual_steps[1]['morgues'] == actual_steps[0]['output']
+
+    @mock.patch('core.runner.execute_processor')
+    def test_run_app_named_placeholders_step_name_not_found(self, execute_processor, processors_fixtures_path):
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: /data
+jobs:
+- 
+  - name: downloader
+    processor: morgues-download
+    base_url: http://example.com/data
+    throttle: 1000
+    output: /tmp/data/morgues
+  - processor: morgue-splitter
+    morgues: $unknown.output  # unknown step name
+    output: /tmp/data/splits
+        """)
+
+        with pytest.raises(AssertionError) as exc:
+            runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
+
+        assert str(exc.value) == "Invalid placeholder: $unknown; valid names include: ['downloader']"
+        
+
+    @mock.patch('core.runner.execute_processor')
+    def test_run_app_named_placeholders_value_key_not_found(self, execute_processor, processors_fixtures_path):
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: /data
+jobs:
+- 
+  - name: downloader
+    processor: morgues-download
+    base_url: http://example.com/data
+    throttle: 1000
+    output: /tmp/data/morgues
+  - processor: morgue-splitter
+    morgues: $downloader.unknown  # unknown value name
+    output: /tmp/data/splits
+        """)
+
+        with pytest.raises(AssertionError) as exc:
+            runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
+
+        assert str(exc.value) == "Invalid placeholder: $downloader.unknown; valid option names include: ['base_url', 'name', 'output', 'processor', 'throttle']"
+
+    @mock.patch('core.runner.execute_processor')
+    def test_run_app_named_placeholders_reference_future_step(self, execute_processor, processors_fixtures_path):
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: /data
+jobs:
+- 
+  - name: downloader
+    processor: morgues-download
+    base_url: http://example.com/data
+    throttle: 1000
+    output: $splitter.morgues  # cannot reference values from future steps
+  - name: splitter
+    processor: /tmp/data/morgues
+    morgues: $downloader.unknown
+    output: /tmp/data/splits
+        """)
+
+        with pytest.raises(AssertionError) as exc:
+            runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
+
+        assert str(exc.value) == "Invalid placeholder: $splitter; valid names include: []"
+
+    @mock.patch('core.runner.execute_processor')
+    def test_run_app_named_placeholders_reference_other_job(self, execute_processor, processors_fixtures_path):
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: /data
+jobs:
+- 
+  - name: downloader
+    processor: morgues-download
+    base_url: http://example.com/data
+    throttle: 1000
+    output: /tmp/data/morgues
+-
+  - processor: morgue-splitter
+    morgues: $downloader.output  # not part of the same job
+    output: /tmp/data/splits
+        """)
+
+        with pytest.raises(AssertionError) as exc:
+            runner.run_app(manifest, processors_repo_path=processors_fixtures_path)
+
+        assert str(exc.value) == "Invalid placeholder: $downloader; valid names include: []"
