@@ -1,0 +1,78 @@
+name: Dungeon Crawler Warehouse
+data: /Users/seb/Development/dcss-data/data
+jobs:
+-
+  - name: filter
+    processor: filter-new-data
+    include-updates: true
+
+  - name: download
+    processor: morgues-download
+    base_url: http://crawl.develz.org/morgues/0.23/
+    throttle: 1000
+    output: $tmp
+
+  - processor: morgue-splitter
+    morgues: $download.output
+    output: data://morgue-splits
+
+  - processor: publish-sqlite
+
+
+jobs-test1:
+  download:
+    processor: morgues-download
+    base_url: http://crawl.develz.org/morgues/0.23/
+    throttle: 1000
+    output: /data/morgues
+
+  split-morgues:
+    - name: new-final-altars
+      filter: files 
+      input: $download.output
+      output: $tmp.file
+      
+    - processor: morgue-splitter
+      morgues: $new-final-altars.output
+      output: /morgue-splits
+
+    - publish: files
+      path: $morgue-splitter.output
+
+
+
+jobs-test1:
+  download:
+    - transform: morgues-download
+      base_url: http://crawl.develz.org/morgues/0.23/
+      throttle: 1000
+      # output: $tmp.dir
+    - publish-to: /data/raw/morgues
+      type: files
+  
+  split-final-altars: 
+    - transform: extract-regex
+      name: extract
+      path: /data/raw/morgues
+      filter: 'morgue-*.txt'
+      pattern: ./split-regex/final-altars.json
+      output: $tmp.dir
+
+    - transform: csv-to-sqlite
+      # data: $split-final-altars.extract.output
+      data: $previous.output
+      table-name: final-altars
+      output: $tmp.file
+
+    - publish-to: /data/raw/splits/final-altars
+      type: sqlite
+      data: $previous.output
+      schema: /schemas/final-altars
+
+      
+      
+# directory structure
+# /data/tmp/split-final-altars/0af020f/inputs.sqlite
+# /data/tmp/split-final-altars/0af020f/step-000/output.csv
+# /data/tmp/split-final-altars/0af020f/step-000/output.schema
+# /data/tmp/split-final-altars/0af020f/step-001/tmpfile (file: sqlite)
