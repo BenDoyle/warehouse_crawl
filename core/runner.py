@@ -7,9 +7,8 @@ import tempfile
 
 import yaml
 
-PROCESSORS_REPO_PATH = os.path.abspath(os.path.dirname(__file__)+'/../processors')
-REQUIRED_PROCESSOR_FIELDS = {'name', 'run-command'}
-REQUIRED_JOB_FIELDS = {'processor'}
+TRANSFORMS_REPO_PATH = os.path.abspath(os.path.dirname(__file__)+'/../transforms')
+REQUIRED_TRANSFORM_FIELDS = {'name', 'run-command'}
 
 def load_yaml(path):
     with open(path, 'r') as fd:
@@ -19,30 +18,33 @@ def load_yaml(path):
         except yaml.YAMLError:
             return None
 
-def discover_processors(processors_repo_path):
-    processors_paths = [path[0] for path in os.walk(processors_repo_path) if 'manifest.yml' in path[2]]
-    processors = {}
-    for path in processors_paths:
+def discover_transforms(transforms_repo_path):
+    transforms_paths = [path[0] for path in os.walk(transforms_repo_path) if 'manifest.yml' in path[2]]
+    transforms = {}
+    for path in transforms_paths:
         manifest = load_yaml('{}/manifest.yml'.format(path))
-        if not manifest or REQUIRED_PROCESSOR_FIELDS - set(manifest.keys()) :
+        if not manifest or REQUIRED_TRANSFORM_FIELDS - set(manifest.keys()) :
             continue
-        processors[manifest['name']] = {
+        transforms[manifest['name']] = {
             'path': path,
             'manifest': manifest
         }
-    return processors
+    return transforms
 
-def execute_processors(steps, processors, dryrun):
+def execute_job_steps(job_name, steps, transforms, dryrun):
     for step in steps:
-        execute_processor(step, processors, dryrun)
+        if 'transform' in step:
+            execute_transform(step, transforms, dryrun)
+        elif 'publish-to' in step:
+            execute_publish(step, transforms, dryrun)
 
-def execute_processor(step, processors, dryrun):
-    name = step['processor']
-    options = {name: value for (name, value) in step.items() if name != 'processor'}
+def execute_transform(step, transforms, dryrun):
+    name = step['transform']
+    options = {name: value for (name, value) in step.items() if name != 'transform'}
 
-    assert name in processors, 'Unknown processor: {}, should be one of: {}'.format(name, set(processors.keys()))
-    path = processors[name]['path']
-    manifest = processors[name]['manifest']
+    assert name in transforms, 'Unknown transform: {}, should be one of: {}'.format(name, set(transforms.keys()))
+    path = transforms[name]['path']
+    manifest = transforms[name]['manifest']
     
     command = '{options} {command}'.format(
         options = ' '.join('{}={}'.format(option.upper(), value) for (option, value) in options.items()),
@@ -64,17 +66,44 @@ def execute_processor(step, processors, dryrun):
         command = command.split(' ')
         subprocess.run(command, cwd=path, env=env, stdout=sys.stdout, stderr=sys.stderr)
 
+def execute_publish(step, transforms, dryrun):
+    pass
+
 def temp_directory(root):
     return tempfile.mkdtemp('__', dir=root)
 
 def temp_file(root):
     return tempfile.mkstemp('__', dir=root)
 
-def validate_app_manifest(manifest):
+def resolve_manifest_variables(manifest):
     assert manifest.get('data'), "App manifest does not have a 'data' path"
     datapath = manifest['data']
     tmpdir = os.path.join(datapath, 'tmp')
-    var_pattern = re.compile(r'\$(\w+)\.(\w+)')
+    var_patterns = [
+        re.compile(r'\${(\w+)\.(\w+)}'),
+        re.compile(r'\$(\w+)\.(\w+)')
+    ]
+    var_pattern = var_patterns[1]  # temp; fix this to try both patterns
+
+    def temp_resolve(match):
+        pass
+
+    def reference_resolve(match):
+        pass
+
+    def resolve_temp_variables(manifest, patterns, resolve_fn):
+        for job_name, steps in manifest['jobs'].items():
+            for step in steps:
+                for name, value in step.items():
+                    if not isinstance(value, str):
+                        continue
+                    for pattern in patterns:
+                        match = pattern.search(value)
+                        if match:
+                            step[name] = pattern.sub(resolve_fn(match), value)
+    
+    def resolve_reference_variables(manifest):
+        pass
 
     def variable_value(name_tuple, named_steps):
         if name_tuple == ('tmp', 'dir'):
@@ -84,14 +113,12 @@ def validate_app_manifest(manifest):
         
         step_name, option = name_tuple
         assert step_name in named_steps, 'Invalid placeholder: ${}; valid names include: {}'.format(
-            step_name, list(sorted(named_steps.keys())))
+            step_name, sorted(list(named_steps.keys())))
         assert option in named_steps[step_name], 'Invalid placeholder: ${}.{}; valid option names include: {}'.format(
-            step_name, option, list(sorted(named_steps[step_name].keys())))
+            step_name, option, sorted(list(named_steps[step_name].keys())))
         return named_steps[step_name][option]
     
-    for index, job in enumerate(manifest['jobs']):
-        manifest['jobs'][index] = steps = [job] if isinstance(job, dict) else job
-        # named_steps = {step['name']: step for step in steps.items() if 'name' in step}
+    for _, steps in manifest['jobs'].items():
         named_steps = {}
         for step in steps:
             for name, value in step.items():
@@ -104,21 +131,20 @@ def validate_app_manifest(manifest):
                 named_steps[step['name']] = step
                     
 
-def run_app(manifest, dryrun=False, processors_repo_path=None):
+def run_app(manifest, dryrun=False, transforms_repo_path=None):
     print('Running app: {}'.format(manifest['name']))
-    print(' > Discovering processors...')
-    processors = discover_processors(processors_repo_path or PROCESSORS_REPO_PATH)
+    print(' > Discovering transforms...')
+    transforms = discover_transforms(transforms_repo_path or TRANSFORMS_REPO_PATH)
 
-    validate_app_manifest(manifest)
+    resolve_manifest_variables(manifest)
 
-    for (job_num, job) in enumerate(manifest['jobs']):
-        steps = [job] if isinstance(job, dict) else job
-        execute_processors(steps, processors, dryrun)
+    for (job_name, steps) in manifest['jobs'].items():
+        execute_job_steps(job_name, steps, transforms, dryrun)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('App runner')
     parser.add_argument('manifest', help='Path to app manifest YAML file')
-    parser.add_argument('--dryrun', action='store_true', help='Print the processor commands instead of executing them')
+    parser.add_argument('--dryrun', action='store_true', help='Print the transform commands instead of executing them')
     args = parser.parse_args()
     
     manifest_path = os.path.abspath(args.manifest)
