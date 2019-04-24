@@ -81,15 +81,10 @@ def temp_file(root):
     os.close(fd)
     return path
 
-def resolve_manifest_variables(manifest):
+def resolve_manifest_placeholders(manifest):
     assert manifest.get('data'), "App manifest does not have a 'data' path"
     datapath = manifest['data']
     tmpdir = os.path.join(datapath, 'tmp')
-    var_patterns = [
-        re.compile(r'\${(\w+)\.(\w+)}'),
-        re.compile(r'\$(\w+)\.(\w+)')
-    ]
-    var_pattern = var_patterns[1]  # temp; fix this to try both patterns
 
     def variable_value(name_tuple, named_steps):
         if name_tuple == ('tmp', 'dir'):
@@ -103,6 +98,21 @@ def resolve_manifest_variables(manifest):
         assert option in named_steps[step_name], 'Invalid placeholder: ${}.{}; valid option names include: {}'.format(
             step_name, option, sorted(list(named_steps[step_name].keys())))
         return named_steps[step_name][option]
+
+    def resolve_placeholders(value):
+        parens_pattern = re.compile(r'\${(\w+)\.(\w+)}')
+        simple_pattern = re.compile(r'\$(\w+)\.(\w+)')
+        pos = 0
+        value = value.strip()
+        while True:
+            match = parens_pattern.search(value, pos) or simple_pattern.match(value, pos)
+            if match:
+                resolved = variable_value(match.groups(), named_steps)
+                value = value[:match.start()] + resolved + value[match.end():]
+                pos = match.start()
+            else:
+                break
+        return value
     
     for _, steps in manifest['jobs'].items():
         named_steps = {}
@@ -110,9 +120,9 @@ def resolve_manifest_variables(manifest):
             for name, value in step.items():
                 if not isinstance(value, str):
                     continue
-                match = var_pattern.match(value.strip())
-                if match:
-                    step[name] = variable_value(match.groups(), named_steps)
+                if '$' in value:
+                    value = resolve_placeholders(value)
+                    step[name] = value
             if 'name' in step:
                 named_steps[step['name']] = step
                     
@@ -122,7 +132,7 @@ def run_app(manifest, dryrun=False, transforms_repo_path=None):
     print(' > Discovering transforms...')
     transforms = discover_transforms(transforms_repo_path or TRANSFORMS_REPO_PATH)
 
-    resolve_manifest_variables(manifest)
+    resolve_manifest_placeholders(manifest)
 
     for (job_name, steps) in manifest['jobs'].items():
         execute_job_steps(job_name, steps, transforms, dryrun)
