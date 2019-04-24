@@ -70,10 +70,16 @@ def execute_publish(step, transforms, dryrun):
     pass
 
 def temp_directory(root):
+    if not os.path.exists(root):
+        os.makedirs(root)
     return tempfile.mkdtemp('__', dir=root)
 
 def temp_file(root):
-    return tempfile.mkstemp('__', dir=root)
+    if not os.path.exists(root):
+        os.makedirs(root)
+    fd, path = tempfile.mkstemp('__', dir=root)
+    os.close(fd)
+    return path
 
 def resolve_manifest_variables(manifest):
     assert manifest.get('data'), "App manifest does not have a 'data' path"
@@ -84,26 +90,6 @@ def resolve_manifest_variables(manifest):
         re.compile(r'\$(\w+)\.(\w+)')
     ]
     var_pattern = var_patterns[1]  # temp; fix this to try both patterns
-
-    def temp_resolve(match):
-        pass
-
-    def reference_resolve(match):
-        pass
-
-    def resolve_temp_variables(manifest, patterns, resolve_fn):
-        for job_name, steps in manifest['jobs'].items():
-            for step in steps:
-                for name, value in step.items():
-                    if not isinstance(value, str):
-                        continue
-                    for pattern in patterns:
-                        match = pattern.search(value)
-                        if match:
-                            step[name] = pattern.sub(resolve_fn(match), value)
-    
-    def resolve_reference_variables(manifest):
-        pass
 
     def variable_value(name_tuple, named_steps):
         if name_tuple == ('tmp', 'dir'):
@@ -127,7 +113,7 @@ def resolve_manifest_variables(manifest):
                 match = var_pattern.match(value.strip())
                 if match:
                     step[name] = variable_value(match.groups(), named_steps)
-            if step.get('name'):
+            if 'name' in step:
                 named_steps[step['name']] = step
                     
 

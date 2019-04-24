@@ -378,3 +378,55 @@ jobs:
         actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
         actual_base_urls = [step['base_url'] for step in actual_steps]
         assert actual_base_urls == ['http://example.com/data'] * 3
+
+    @mock.patch('core.runner.execute_job_steps')
+    def test_resolve_tmp_dir(self, execute_job_steps, transforms_fixtures_path, tmpdir):
+        data_path = str(tmpdir.mkdir('data'))
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: {}
+jobs:
+  job1:
+    - name: downloader
+      transform: morgues-download
+      base_url: http://example.com/data
+      output: $tmp.dir
+    - name: splitter
+      transform: morgue-splitter
+      morgues: morgues
+      output: $downloader.output
+        """.format(data_path))
+
+        runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
+
+        assert execute_job_steps.call_count == 1
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        assert all(step['output'] == actual_steps[0]['output'] for step in actual_steps), 'Every tmp value should be the same value'
+        assert actual_steps[0]['output'].startswith(data_path + '/tmp/')
+        assert os.path.isdir(actual_steps[0]['output'])
+    
+    @mock.patch('core.runner.execute_job_steps')
+    def test_resolve_tmp_file(self, execute_job_steps, transforms_fixtures_path, tmpdir):
+        data_path = str(tmpdir.mkdir('data'))
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: {}
+jobs:
+  job1:
+    - name: downloader
+      transform: morgues-download
+      base_url: http://example.com/data
+      output: $tmp.file
+    - name: splitter
+      transform: morgue-splitter
+      morgues: morgues
+      output: $downloader.output
+        """.format(data_path))
+
+        runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
+
+        assert execute_job_steps.call_count == 1
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        assert all(step['output'] == actual_steps[0]['output'] for step in actual_steps), 'Every tmp value should be the same value'
+        assert actual_steps[0]['output'].startswith(data_path + '/tmp/')
+        assert os.path.isfile(actual_steps[0]['output'])
