@@ -458,3 +458,92 @@ jobs:
         assert execute_job_steps.call_count == 1
         actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
         assert actual_steps[1]['output'] == resolved
+
+    @mock.patch('core.runner.execute_job_steps')
+    def test_resolve_variable_previous_output(self, execute_job_steps, transforms_fixtures_path):
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: /data
+jobs:
+  job1:
+    - name: downloader
+      transform: morgues-download
+      base_url: http://example.com/data
+      output: /some/path
+    - name: splitter
+      transform: morgue-splitter
+      morgues: $previous.output
+      output: /data/output
+        """)
+
+        runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
+
+        assert execute_job_steps.call_count == 1
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        assert actual_steps[1]['morgues'] == actual_steps[0]['output']
+
+    @mock.patch('core.runner.execute_job_steps')
+    def test_resolve_variable_previous_output_no_previous_output(self, execute_job_steps, transforms_fixtures_path):
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: /data
+jobs:
+  job1:
+    - name: downloader
+      transform: morgues-download
+      base_url: http://example.com/data
+    - name: splitter
+      transform: morgue-splitter
+      morgues: $previous.output
+      output: /data/output
+        """)
+
+        with pytest.raises(Exception) as exc_info:
+            runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
+        assert str(exc_info.value) == 'No previous value found for $previous.output (previous == "downloader")'
+
+    @mock.patch('core.runner.execute_job_steps')
+    def test_resolve_variable_previous_output_first_step(self, execute_job_steps, transforms_fixtures_path):
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: /data
+jobs:
+  job1:
+    - name: splitter
+      transform: morgue-splitter
+      morgues: $previous.output
+      output: /data/output
+        """)
+
+        with pytest.raises(Exception) as exc_info:
+            runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
+        assert str(exc_info.value) == 'Cannot use $previous placeholder on the first step'
+
+    @mock.patch('core.runner.execute_job_steps')
+    def test_resolve_variable_previous_output_variable(self, execute_job_steps, transforms_fixtures_path, tmpdir):
+        data_path = str(tmpdir.mkdir('data'))
+        manifest = parse_yaml("""
+name: Single composed job manifest
+data: {}
+jobs:
+  job1:
+    - name: downloader
+      transform: morgues-download
+      base_url: http://example.com/data
+      output: $tmp.dir
+    - name: splitter
+      transform: morgue-splitter
+      morgues: $previous.output
+      output: /data/output
+        """.format(data_path))
+
+        runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
+
+        assert execute_job_steps.call_count == 1
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        assert actual_steps[1]['morgues'] == actual_steps[0]['output']
+        assert actual_steps[0]['output'].startswith(data_path)
+
+
+    def test_run_app_publish(self):
+        assert False, 'implement `execute_publish`'

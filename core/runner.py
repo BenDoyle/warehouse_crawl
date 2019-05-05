@@ -4,6 +4,7 @@ import subprocess
 import sys
 import re
 import tempfile
+from collections import OrderedDict
 
 import yaml
 
@@ -86,11 +87,17 @@ def resolve_manifest_placeholders(manifest):
     datapath = manifest['data']
     tmpdir = os.path.join(datapath, 'tmp')
 
-    def variable_value(name_tuple, named_steps):
+    def variable_value(name_tuple, named_steps, previous_step):
         if name_tuple == ('tmp', 'dir'):
             return value.replace('$tmp.dir', temp_directory(tmpdir))
         if name_tuple == ('tmp', 'file'):
             return value.replace('$tmp.file', temp_file(tmpdir))
+        if name_tuple[0].lower() == 'previous':
+            if not previous_step:
+                raise Exception('Cannot use $previous placeholder on the first step')
+            if name_tuple[1] not in named_steps[previous_step]:
+                raise Exception('No previous value found for $previous.{} (previous == "{}")'.format(name_tuple[1], previous_step))
+            return named_steps[previous_step][name_tuple[1]]
         
         step_name, option = name_tuple
         assert step_name in named_steps, 'Invalid placeholder: ${}; valid names include: {}'.format(
@@ -99,7 +106,7 @@ def resolve_manifest_placeholders(manifest):
             step_name, option, sorted(list(named_steps[step_name].keys())))
         return named_steps[step_name][option]
 
-    def resolve_placeholders(value):
+    def resolve_placeholders(value, named_steps, previous_step):
         parens_pattern = re.compile(r'\${(\w+)\.(\w+)}')
         simple_pattern = re.compile(r'\$(\w+)\.(\w+)')
         pos = 0
@@ -107,7 +114,7 @@ def resolve_manifest_placeholders(manifest):
         while True:
             match = parens_pattern.search(value, pos) or simple_pattern.match(value, pos)
             if match:
-                resolved = variable_value(match.groups(), named_steps)
+                resolved = variable_value(match.groups(), named_steps, previous_step)
                 value = value[:match.start()] + resolved + value[match.end():]
                 pos = match.start()
             else:
@@ -115,13 +122,13 @@ def resolve_manifest_placeholders(manifest):
         return value
     
     for _, steps in manifest['jobs'].items():
-        named_steps = {}
+        named_steps = OrderedDict({})
         for step in steps:
             for name, value in step.items():
                 if not isinstance(value, str):
                     continue
                 if '$' in value:
-                    value = resolve_placeholders(value)
+                    value = resolve_placeholders(value, named_steps, previous_step=list(named_steps.keys() or [None])[-1])
                     step[name] = value
             if 'name' in step:
                 named_steps[step['name']] = step
