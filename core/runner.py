@@ -4,11 +4,12 @@ import subprocess
 import sys
 import re
 import tempfile
+from urllib.parse import urlparse
 from collections import OrderedDict
 
 import yaml
 
-TRANSFORMS_REPO_PATH = os.path.abspath(os.path.dirname(__file__)+'/../transforms')
+TRANSFORMS_REPO_PATH = os.path.abspath(os.path.dirname(__file__)+'/../components')
 REQUIRED_MANIFEST_FIELDS = {'type'}
 REQUIRED_TRANSFORM_FIELDS = {'name', 'run-command'}
 REQUIRED_PUBLISHER_FIELDS = {'output-type', 'run-command'}
@@ -37,20 +38,20 @@ def discover_manifests(transforms_repo_path):
 
 def load_manifest_at_path(path, transforms, publishers):
     manifest = load_yaml('{}/manifest.yml'.format(path))
-    
+
     def skip(path):
         pass # TODO warn that we're skipping a manifest
 
     if not manifest or REQUIRED_MANIFEST_FIELDS - set(manifest.keys()):
         skip(path)
         return
-    
+
     if manifest['type'].lower().strip() == 'transform':
         if REQUIRED_TRANSFORM_FIELDS - set(manifest.keys()):
             skip(path)
             return
         dest = transforms
-    
+
     elif manifest['type'].lower().strip() == 'publisher':
         if REQUIRED_PUBLISHER_FIELDS - set(manifest.keys()):
             skip(path)
@@ -64,12 +65,17 @@ def load_manifest_at_path(path, transforms, publishers):
         'manifest': manifest
     }
 
-def execute_job_steps(job_name, steps, transforms, dryrun):
-    for step in steps:
+def execute_job_steps(job_name, steps, transforms, publishers, dryrun):
+    for pos, step in enumerate(steps):
+        step_num = pos + 1
+        print('   > Executing step {}{}'.format(step_num, (': ' + step['name']) if 'name' in step else ''))
         if 'transform' in step:
             execute_transform(step, transforms, dryrun)
         elif 'publish-to' in step:
-            execute_publish(step, transforms, dryrun)
+            assert pos == len(steps)-1, 'The publish step for job "{}" cannot be followed by subsequent steps'.format(job_name)
+            execute_publish(step, publishers, dryrun)
+        else:
+            raise Exception("The job '{}' step {} is malformed, unable to execute it.".format(job_name, step_num))
 
 def execute_transform(step, transforms, dryrun):
     name = step['transform']
@@ -78,12 +84,12 @@ def execute_transform(step, transforms, dryrun):
     assert name in transforms, 'Unknown transform: {}, should be one of: {}'.format(name, set(transforms.keys()))
     path = transforms[name]['path']
     manifest = transforms[name]['manifest']
-    
+
     command = '{options} {command}'.format(
         options = ' '.join('{}={}'.format(option.upper(), value) for (option, value) in options.items()),
         command = manifest['run-command']
     )
-    
+
     options = {option.upper(): str(value) for (option, value) in options.items()}
     command = manifest['run-command']
     if dryrun:
@@ -99,7 +105,7 @@ def execute_transform(step, transforms, dryrun):
         command = command.split(' ')
         subprocess.run(command, cwd=path, env=env, stdout=sys.stdout, stderr=sys.stderr)
 
-def execute_publish(step, transforms, dryrun):
+def execute_publish(step, publishers, dryrun):
     pass
 
 def temp_directory(root):
@@ -130,29 +136,35 @@ def resolve_manifest_placeholders(manifest):
             if name_tuple[1] not in named_steps[previous_step]:
                 raise Exception('No previous value found for $previous.{} (previous == "{}")'.format(name_tuple[1], previous_step))
             return named_steps[previous_step][name_tuple[1]]
-        
+
         step_name, option = name_tuple
         assert step_name in named_steps, 'Invalid placeholder: ${}; valid names include: {}'.format(
             step_name, sorted(list(named_steps.keys())))
         assert option in named_steps[step_name], 'Invalid placeholder: ${}.{}; valid option names include: {}'.format(
-            step_name, option, sorted(list(named_steps[step_name].keys())))
+            step_name, option or '{None}', sorted(list(named_steps[step_name].keys())))
         return named_steps[step_name][option]
 
     def resolve_placeholders(value, named_steps, previous_step):
-        parens_pattern = re.compile(r'\${(\w+)\.(\w+)}')
-        simple_pattern = re.compile(r'\$(\w+)\.(\w+)')
+        parens_pattern = re.compile(r'\${([\w_-]+)\.([\w_-]+)}')
+        simple_pattern = re.compile(r'\$([\w_]+)\.([\w_]+)')
+        invalid_patterns = [re.compile(r'\$([\w_]+)'), re.compile(r'\${([\w_-]+)}')]
         pos = 0
         value = value.strip()
         while True:
-            match = parens_pattern.search(value, pos) or simple_pattern.match(value, pos)
+            match = parens_pattern.search(value, pos) or simple_pattern.search(value, pos)
             if match:
                 resolved = variable_value(match.groups(), named_steps, previous_step)
                 value = value[:match.start()] + resolved + value[match.end():]
                 pos = match.start()
             else:
+                for pattern in invalid_patterns:
+                    match = pattern.search(value, pos)
+                    if match:
+                        # this should raise
+                        variable_value((match.groups()[0], None), named_steps, previous_step)
                 break
         return value
-    
+
     for _, steps in manifest['jobs'].items():
         named_steps = OrderedDict({})
         for step in steps:
@@ -162,9 +174,12 @@ def resolve_manifest_placeholders(manifest):
                 if '$' in value:
                     value = resolve_placeholders(value, named_steps, previous_step=list(named_steps.keys() or [None])[-1])
                     step[name] = value
+                if value.startswith('data:///'):
+                    # TODO: add tests for this!
+                    step[name] = '/'.join(['', datapath.strip('/'), urlparse(value).path.strip('/')])
             if 'name' in step:
                 named_steps[step['name']] = step
-                    
+
 
 def run_app(manifest, dryrun=False, transforms_repo_path=None):
     print('Running app: {}'.format(manifest['name']))
@@ -174,14 +189,15 @@ def run_app(manifest, dryrun=False, transforms_repo_path=None):
     resolve_manifest_placeholders(manifest)
 
     for (job_name, steps) in manifest['jobs'].items():
-        execute_job_steps(job_name, steps, transforms, dryrun)
+        print(' > Executing job: {}'.format(job_name))
+        execute_job_steps(job_name, steps, transforms, publishers, dryrun)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('App runner')
     parser.add_argument('manifest', help='Path to app manifest YAML file')
     parser.add_argument('--dryrun', action='store_true', help='Print the transform commands instead of executing them')
     args = parser.parse_args()
-    
+
     manifest_path = os.path.abspath(args.manifest)
     if not os.path.exists(manifest_path):
         print('File does not exist: {}'.format(manifest_path))

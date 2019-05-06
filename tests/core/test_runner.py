@@ -32,7 +32,7 @@ class TestManifestDiscovery(object):
             (name, transform['path'])
             for name, transform in transforms.items()
         ]
-        
+
         assert sorted(names_and_paths) == sorted([
             ('morgue-splitter', '{repo_dir}/transforms/splitter'.format(repo_dir=transforms_fixtures_path)),
             ('morgues-download', '{repo_dir}/transforms/download'.format(repo_dir=transforms_fixtures_path)),
@@ -55,7 +55,7 @@ class TestManifestDiscovery(object):
     def test_discover_manifests_ignore_dirs_without_manifests(self, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
         copy_tree(transforms_fixtures_path, repo_dir)
-        
+
         os.mkdir(os.path.join(repo_dir, 'not-a-transform'))
         with open(os.path.join(repo_dir, 'not-a-transform', 'manifest'), 'w') as fd:
             fd.write('not really a manifest')
@@ -77,7 +77,7 @@ class TestManifestDiscovery(object):
         for path in [tests_dir, nested_tests_dir]:
             with open(os.path.join(str(path), 'manifest.yml'), 'w') as fd:
                 fd.write(simple_transform_manifest_yml)
-        
+
         runner.discover_manifests(repo_dir)
 
         loaded_paths = [c[0][0] for c in load_manifest_at_path.call_args_list]
@@ -87,7 +87,7 @@ class TestManifestDiscovery(object):
     def test_discover_manifests_ignore_invalid_yaml_manifest(self, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
         copy_tree(transforms_fixtures_path, repo_dir)
-        
+
         os.mkdir(os.path.join(repo_dir, 'invalid-yaml-transform'))
         with open(os.path.join(repo_dir, 'invalid-yaml-transform', 'manifest.yml'), 'w') as fd:
             fd.write('not really a manifest')
@@ -104,7 +104,7 @@ class TestManifestDiscovery(object):
     def test_discover_manifests_ignore_missing_required_transform_field(self, required_key, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
         copy_tree(transforms_fixtures_path, repo_dir)
-        
+
         yaml = re.sub(r'^([ \t]*{}\:)'.format(required_key), r'# \1', """
 name: invalid-manifest-transform
 type: transform
@@ -119,14 +119,14 @@ run-command: python run.py
         assert sorted(transforms.keys()) == [
             'morgue-splitter', 'morgues-download', 'parser'
         ]
-    
+
     @pytest.mark.parametrize('required_key', [
         'output-type'
     ])
     def test_discover_manifests_ignore_missing_required_publisher_field(self, required_key, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
         copy_tree(transforms_fixtures_path, repo_dir)
-        
+
         yaml = re.sub(r'^([ \t]*{}\:)'.format(required_key), r'# \1', """
 type: publisher
 output-type: sqlite
@@ -157,6 +157,13 @@ jobs:
       throttle: 1000
       output: /tmp/data/morgues
         """
+
+    @pytest.fixture
+    def app_manifest_simple_published(self, app_manifest_simple):
+        return """{simple_manifest}
+    - publish-to: /published/path
+      type: sqlite
+        """.format(simple_manifest=app_manifest_simple)
 
     @pytest.fixture
     def app_manifest_multiple_single_step_jobs(self):
@@ -200,7 +207,7 @@ jobs:
         actual_steps = [call[1].get('step') or call[0][0] for call in execute_transform.call_args_list]
         actual_transforms = [call[1].get('transforms') or call[0][1] for call in execute_transform.call_args_list]
         actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_transform.call_args_list]
-        
+
         assert actual_steps == [
             {'transform': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': '/tmp/data/morgues'}
         ]
@@ -222,7 +229,7 @@ jobs:
         actual_steps = [call[1].get('step') or call[0][0] for call in execute_transform.call_args_list]
         actual_transforms = [call[1].get('transforms') or call[0][1] for call in execute_transform.call_args_list]
         actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_transform.call_args_list]
-        
+
         assert actual_steps == [
             {'transform': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': '/tmp/data/morgues'},
             {'transform': 'splitter', 'morgues': '/tmp/data/morgues', 'output': '/tmp/data/splits'}
@@ -233,7 +240,44 @@ jobs:
             'morgue-splitter', 'morgues-download', 'parser'
         ]
         assert all(actual_dryrun == dryrun for actual_dryrun in actual_dryruns), 'Unexpected dryruns: {}'.format(list(actual_dryruns))
-  
+
+    @mock.patch('core.runner.execute_publish')
+    @mock.patch('core.runner.execute_transform')
+    def test_run_app_publish(self, execute_transform, execute_publish, app_manifest_simple_published, transforms_fixtures_path):
+        manifest = parse_yaml(app_manifest_simple_published)
+        runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
+
+        assert execute_publish.call_count == 1, '`execute_publish` was called an unexpected number of times'
+
+        actual_steps = [call[1].get('step') or call[0][0] for call in execute_publish.call_args_list]
+        actual_publishers = [call[1].get('transforms') or call[0][1] for call in execute_publish.call_args_list]
+        actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_publish.call_args_list]
+
+        assert actual_steps == [
+            {'publish-to': '/published/path', 'type': 'sqlite'}
+        ]
+        actual_publisher = actual_publishers[0]
+        assert all(actual_publisher == p for p in actual_publishers), 'Each call to `execute_publisher` should have passed the same publishers dict'
+        assert sorted(actual_publisher.keys()) == [
+            'named-publisher', 'publisher-sqlite'
+        ]
+        assert all(dryrun == False for dryrun in actual_dryruns)
+
+    @mock.patch('core.runner.execute_publish')
+    @mock.patch('core.runner.execute_transform')
+    def test_run_app_publish_must_be_last_step(self, execute_transform, execute_publish, app_manifest_simple_published, transforms_fixtures_path):
+        yaml = app_manifest_simple_published + """
+    - transform: splitter
+      morgues: /tmp/data/morgues
+      output: /tmp/data/splits
+        """
+        manifest = parse_yaml(yaml)
+
+        with pytest.raises(AssertionError) as exc_info:
+            runner.run_app(manifest)
+
+        assert str(exc_info.value) == 'The publish step for job "my-job" cannot be followed by subsequent steps'
+
     @mock.patch('core.runner.execute_job_steps')
     def test_run_app_one_job_multiple_steps(self, execute_job_steps, app_manifest_single_multiple_step_job, transforms_fixtures_path):
         manifest = parse_yaml(app_manifest_single_multiple_step_job)
@@ -243,7 +287,8 @@ jobs:
         actual_job_name = [call[1].get('step') or call[0][0] for call in execute_job_steps.call_args_list]
         actual_steps = [call[1].get('step') or call[0][1] for call in execute_job_steps.call_args_list]
         actual_transforms = [call[1].get('transforms') or call[0][2] for call in execute_job_steps.call_args_list]
-        actual_dryruns = [call[1].get('dryrun') or call[0][3] for call in execute_job_steps.call_args_list]
+        actual_publishers = [call[1].get('publishers') or call[0][3] for call in execute_job_steps.call_args_list]
+        actual_dryruns = [call[1].get('dryrun') or call[0][4] for call in execute_job_steps.call_args_list]
         assert actual_job_name == ['download']
         assert actual_steps == [
             [
@@ -252,7 +297,9 @@ jobs:
             ]
         ]
         actual_transform = actual_transforms[0]
+        actual_publisher = actual_publishers[0]
         assert all(actual_transform == p for p in actual_transforms), 'Each call to `execute_transform` should have passed the same transforms dict'
+        assert all(actual_publisher == p for p in actual_publishers), 'Each call to `execute_transform` should have passed the same publishers dict'
         assert sorted(actual_transform.keys()) == [
             'morgue-splitter', 'morgues-download', 'parser'
         ]
@@ -301,8 +348,14 @@ jobs:
         actual_steps = [call[1].get('step') or call[0][0] for call in execute_transform.call_args_list]
         assert actual_steps[1]['morgues'] == actual_steps[0]['output']
 
+    @pytest.mark.parametrize('invalid_name, matched_name', [
+      ('download_suffix', 'download_suffix'),
+      ('prefix_download', 'prefix_download'),
+      ('unknown', 'unknown'),
+      ('morgues-download', 'morgues'),
+    ])
     @mock.patch('core.runner.execute_transform')
-    def test_run_app_named_placeholders_step_name_not_found(self, execute_transform, transforms_fixtures_path):
+    def test_run_app_named_placeholders_step_name_not_found(self, execute_transform, invalid_name, matched_name, transforms_fixtures_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
 data: /data
@@ -314,18 +367,21 @@ jobs:
       throttle: 1000
       output: /tmp/data/morgues
     - transform: morgue-splitter
-      morgues: $unknown.output  # unknown step name
-      output: /tmp/data/splits
-        """)
+      morgues: ${placeholder}.output  # unknown step name
+        """.format(placeholder=invalid_name))
 
         with pytest.raises(AssertionError) as exc:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
-        assert str(exc.value) == "Invalid placeholder: $unknown; valid names include: ['downloader']"
-        
+        assert str(exc.value) == "Invalid placeholder: ${}; valid names include: ['downloader']".format(matched_name)
 
+
+    @pytest.mark.parametrize('invalid_name, error', [
+      ('$downloader.unknown', "Invalid placeholder: $downloader.unknown; valid option names include: ['base_url', 'name', 'output', 'throttle', 'transform']"),
+      ('$downloader', "Invalid placeholder: $downloader.{None}; valid option names include: ['base_url', 'name', 'output', 'throttle', 'transform']")
+    ])
     @mock.patch('core.runner.execute_transform')
-    def test_run_app_named_placeholders_value_key_not_found(self, execute_transform, transforms_fixtures_path):
+    def test_run_app_named_placeholders_value_key_not_found(self, execute_transform, invalid_name, error, transforms_fixtures_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
 data: /data
@@ -337,14 +393,14 @@ jobs:
       throttle: 1000
       output: /tmp/data/morgues
     - transform: morgue-splitter
-      morgues: $downloader.unknown  # unknown value name
+      morgues: {placeholder}
       output: /tmp/data/splits
-        """)
+        """.format(placeholder=invalid_name))
 
         with pytest.raises(AssertionError) as exc:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
-        assert str(exc.value) == "Invalid placeholder: $downloader.unknown; valid option names include: ['base_url', 'name', 'output', 'throttle', 'transform']"
+        assert str(exc.value) == error
 
     @mock.patch('core.runner.execute_transform')
     def test_run_app_named_placeholders_reference_future_step(self, execute_transform, transforms_fixtures_path):
@@ -439,7 +495,7 @@ jobs:
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
         assert execute_job_steps.call_count == 1
-        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]
         actual_base_urls = [step['base_url'] for step in actual_steps]
         assert actual_base_urls == ['http://example.com/data'] * 3
 
@@ -464,11 +520,11 @@ jobs:
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
         assert execute_job_steps.call_count == 1
-        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]
         assert all(step['output'] == actual_steps[0]['output'] for step in actual_steps), 'Every tmp value should be the same value'
         assert actual_steps[0]['output'].startswith(data_path + '/tmp/')
         assert os.path.isdir(actual_steps[0]['output'])
-    
+
     @mock.patch('core.runner.execute_job_steps')
     def test_resolve_tmp_file(self, execute_job_steps, transforms_fixtures_path, tmpdir):
         data_path = str(tmpdir.mkdir('data'))
@@ -490,16 +546,16 @@ jobs:
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
         assert execute_job_steps.call_count == 1
-        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]
         assert all(step['output'] == actual_steps[0]['output'] for step in actual_steps), 'Every tmp value should be the same value'
         assert actual_steps[0]['output'].startswith(data_path + '/tmp/')
         assert os.path.isfile(actual_steps[0]['output'])
 
     @mock.patch('core.runner.execute_job_steps')
     @pytest.mark.parametrize('placeholder, resolved', [
-        ('${downloader.output}/mid/${downloader.name}', '/some/path/mid/downloader'),
-        ('[${downloader.output}${downloader.name}]', '[/some/pathdownloader]'),
-        ('${downloader.output}$downloader.name', '/some/path$downloader.name'),
+        ('${file-downloader.output}/mid/${file-downloader.name}', '/some/path/mid/file-downloader'),
+        ('[${file-downloader.output}${file-downloader.name}]', '[/some/pathfile-downloader]'),
+        ('${file-downloader.output}$downloader.base-url', '/some/pathhttp://example.com/data/base-url'),
     ])
     def test_resolve_variable_curley_braces(self, execute_job_steps, placeholder, resolved, transforms_fixtures_path):
         manifest = parse_yaml("""
@@ -507,10 +563,15 @@ name: Single composed job manifest
 data: /data
 jobs:
   job1:
+    - name: file-downloader
+      transform: morgues-download
+      base-url: http://example.com/data/1
+      output: /some/path
     - name: downloader
       transform: morgues-download
-      base_url: http://example.com/data
-      output: /some/path
+      base-url: http://example.com/data/base-url
+      base: http://example.com/data/base
+      output: /some/other-path
     - name: splitter
       transform: morgue-splitter
       morgues: morgues
@@ -520,8 +581,8 @@ jobs:
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
         assert execute_job_steps.call_count == 1
-        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
-        assert actual_steps[1]['output'] == resolved
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]
+        assert actual_steps[2]['output'] == resolved
 
     @mock.patch('core.runner.execute_job_steps')
     def test_resolve_variable_previous_output(self, execute_job_steps, transforms_fixtures_path):
@@ -543,7 +604,7 @@ jobs:
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
         assert execute_job_steps.call_count == 1
-        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]
         assert actual_steps[1]['morgues'] == actual_steps[0]['output']
 
     @mock.patch('core.runner.execute_job_steps')
@@ -604,10 +665,6 @@ jobs:
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
         assert execute_job_steps.call_count == 1
-        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
+        actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]
         assert actual_steps[1]['morgues'] == actual_steps[0]['output']
         assert actual_steps[0]['output'].startswith(data_path)
-
-
-    def test_run_app_publish(self):
-        assert False, 'implement `execute_publish`'

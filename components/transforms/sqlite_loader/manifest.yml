@@ -1,4 +1,5 @@
 name: csv-loader
+type: transform
 env-type: python
 options:
  - database: >
