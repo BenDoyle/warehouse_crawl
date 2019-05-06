@@ -9,7 +9,9 @@ from collections import OrderedDict
 import yaml
 
 TRANSFORMS_REPO_PATH = os.path.abspath(os.path.dirname(__file__)+'/../transforms')
+REQUIRED_MANIFEST_FIELDS = {'type'}
 REQUIRED_TRANSFORM_FIELDS = {'name', 'run-command'}
+REQUIRED_PUBLISHER_FIELDS = {'output-type', 'run-command'}
 
 def load_yaml(path):
     with open(path, 'r') as fd:
@@ -19,18 +21,40 @@ def load_yaml(path):
         except yaml.YAMLError:
             return None
 
-def discover_transforms(transforms_repo_path):
+def discover_manifests(transforms_repo_path):
     transforms_paths = [path[0] for path in os.walk(transforms_repo_path) if 'manifest.yml' in path[2]]
     transforms = {}
+    publishers = {}
+
+    def skip(path):
+        pass # TODO warn that we're skipping a manifest
+
     for path in transforms_paths:
         manifest = load_yaml('{}/manifest.yml'.format(path))
-        if not manifest or REQUIRED_TRANSFORM_FIELDS - set(manifest.keys()) :
+        
+        if not manifest or REQUIRED_MANIFEST_FIELDS - set(manifest.keys()):
+            skip(path)
             continue
-        transforms[manifest['name']] = {
+        
+        if manifest['type'].lower().strip() == 'transform':
+            if REQUIRED_TRANSFORM_FIELDS - set(manifest.keys()):
+                skip(path)
+                continue
+            dest = transforms
+        
+        elif manifest['type'].lower().strip() == 'publisher':
+            if REQUIRED_TRANSFORM_FIELDS - set(manifest.keys()):
+                skip(path)
+                continue
+            if 'name' not in manifest:
+                manifest['name'] = 'publisher-{}'.format(manifest['output-type'])
+            dest = publishers
+
+        dest[manifest['name']] = {
             'path': path,
             'manifest': manifest
         }
-    return transforms
+    return transforms, publishers
 
 def execute_job_steps(job_name, steps, transforms, dryrun):
     for step in steps:
@@ -137,7 +161,7 @@ def resolve_manifest_placeholders(manifest):
 def run_app(manifest, dryrun=False, transforms_repo_path=None):
     print('Running app: {}'.format(manifest['name']))
     print(' > Discovering transforms...')
-    transforms = discover_transforms(transforms_repo_path or TRANSFORMS_REPO_PATH)
+    transforms, publishers = discover_manifests(transforms_repo_path or TRANSFORMS_REPO_PATH)
 
     resolve_manifest_placeholders(manifest)
 

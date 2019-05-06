@@ -1,4 +1,5 @@
 name: morgue-splitter
+type: transform
 env-type: python
 options:
  - morgues: A local path to a directory containing raw morgue files

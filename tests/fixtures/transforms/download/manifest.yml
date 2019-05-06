@@ -1,4 +1,5 @@
 name: morgues-download
+type: transform
 env-type: python
 run-command: python run.py
 options:
