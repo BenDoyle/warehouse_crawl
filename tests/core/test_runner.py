@@ -12,20 +12,44 @@ def parse_yaml(yaml_str):
 
 @pytest.fixture
 def transforms_fixtures_path():
-    return os.path.abspath(os.path.dirname(__file__)+'/../../tests/fixtures/transforms')
+    return os.path.abspath(os.path.dirname(__file__)+'/../../tests/fixtures/')
+
+@pytest.fixture
+def simple_transform_manifest_yml():
+    return """
+name: simple-transform
+type: transform
+env-type: python
+run-command: python run.py
+test-command: py.test
+    """
 
 class TestManifestDiscovery(object):
-    def test_discover_manifests(self, transforms_fixtures_path):
+    def test_discover_manifests_transforms(self, transforms_fixtures_path):
         transforms, _ = runner.discover_manifests(transforms_fixtures_path)
 
         names_and_paths = [
             (name, transform['path'])
             for name, transform in transforms.items()
         ]
+        
         assert sorted(names_and_paths) == sorted([
-            ('morgue-splitter', '{repo_dir}/splitter'.format(repo_dir=transforms_fixtures_path)),
-            ('morgues-download', '{repo_dir}/download'.format(repo_dir=transforms_fixtures_path)),
-            ('parser', '{repo_dir}/parser'.format(repo_dir=transforms_fixtures_path))
+            ('morgue-splitter', '{repo_dir}/transforms/splitter'.format(repo_dir=transforms_fixtures_path)),
+            ('morgues-download', '{repo_dir}/transforms/download'.format(repo_dir=transforms_fixtures_path)),
+            ('parser', '{repo_dir}/transforms/parser'.format(repo_dir=transforms_fixtures_path))
+        ])
+
+    def test_discover_manifests_publishers(self, transforms_fixtures_path):
+        _, publishers = runner.discover_manifests(transforms_fixtures_path)
+
+        names_and_paths = [
+            (name, publisher['path'])
+            for name, publisher in publishers.items()
+        ]
+
+        assert sorted(names_and_paths) == sorted([
+            ('named-publisher', '{repo_dir}/publishers/named'.format(repo_dir=transforms_fixtures_path)),
+            ('publisher-sqlite', '{repo_dir}/publishers/sqlite'.format(repo_dir=transforms_fixtures_path)),
         ])
 
     def test_discover_manifests_ignore_dirs_without_manifests(self, transforms_fixtures_path, tmpdir):
@@ -41,6 +65,24 @@ class TestManifestDiscovery(object):
         assert sorted(transforms.keys()) == sorted([
             'morgue-splitter', 'morgues-download', 'parser'
         ])
+
+    @mock.patch('core.runner.load_manifest_at_path')
+    def test_discover_manifests_ignore_test_dirs(self, load_manifest_at_path, transforms_fixtures_path, simple_transform_manifest_yml, tmpdir):
+        repo_dir = tmpdir.mkdir('manifests')
+        tests_dir = repo_dir.mkdir('transforms').mkdir('parser').mkdir('tests')
+        nested_tests_dir = tests_dir.mkdir('nested').mkdir('deeply')
+
+        copy_tree(transforms_fixtures_path, str(repo_dir))
+
+        for path in [tests_dir, nested_tests_dir]:
+            with open(os.path.join(str(path), 'manifest.yml'), 'w') as fd:
+                fd.write(simple_transform_manifest_yml)
+        
+        runner.discover_manifests(repo_dir)
+
+        loaded_paths = [c[0][0] for c in load_manifest_at_path.call_args_list]
+        assert tests_dir not in loaded_paths, 'the "tests" directory was not skipped'
+        assert nested_tests_dir not in loaded_paths, 'the nested "tests" directory was not skipped'
 
     def test_discover_manifests_ignore_invalid_yaml_manifest(self, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
@@ -59,12 +101,13 @@ class TestManifestDiscovery(object):
     @pytest.mark.parametrize('required_key', [
         'name', 'run-command'
     ])
-    def test_discover_manifests_ignore_missing_required_manifest_field(self, required_key, transforms_fixtures_path, tmpdir):
+    def test_discover_manifests_ignore_missing_required_transform_field(self, required_key, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
         copy_tree(transforms_fixtures_path, repo_dir)
         
-        yaml = re.sub(r'^([ \t]*{}\:)'.format('name'), r'# \1', """
+        yaml = re.sub(r'^([ \t]*{}\:)'.format(required_key), r'# \1', """
 name: invalid-manifest-transform
+type: transform
 run-command: python run.py
         """, flags=re.MULTILINE)
         os.mkdir(os.path.join(repo_dir, 'invalid-transform'))
@@ -73,10 +116,31 @@ run-command: python run.py
 
         transforms, _ = runner.discover_manifests(repo_dir)
 
-        assert sorted(transforms.keys()) == sorted([
+        assert sorted(transforms.keys()) == [
             'morgue-splitter', 'morgues-download', 'parser'
-        ])
+        ]
+    
+    @pytest.mark.parametrize('required_key', [
+        'output-type'
+    ])
+    def test_discover_manifests_ignore_missing_required_publisher_field(self, required_key, transforms_fixtures_path, tmpdir):
+        repo_dir = str(tmpdir.mkdir('transforms'))
+        copy_tree(transforms_fixtures_path, repo_dir)
+        
+        yaml = re.sub(r'^([ \t]*{}\:)'.format(required_key), r'# \1', """
+type: publisher
+output-type: sqlite
+run-command: python run.py
+        """, flags=re.MULTILINE)
+        os.mkdir(os.path.join(repo_dir, 'invalid-transform'))
+        with open(os.path.join(repo_dir, 'invalid-transform', 'manifest.yml'), 'w') as fd:
+            fd.write(yaml)
 
+        _, publishers = runner.discover_manifests(repo_dir)
+
+        assert sorted(publishers.keys()) == [
+            'named-publisher', 'publisher-sqlite'
+        ]
 
 @mock.patch('subprocess.run', mock.Mock())
 class TestAppManifest(object):
