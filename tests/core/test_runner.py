@@ -159,6 +159,13 @@ jobs:
         """
 
     @pytest.fixture
+    def app_manifest_simple_published(self, app_manifest_simple):
+        return """{simple_manifest}
+    - publish-to: /published/path
+      type: sqlite
+        """.format(simple_manifest=app_manifest_simple)
+
+    @pytest.fixture
     def app_manifest_multiple_single_step_jobs(self):
         return """
 name: Multiple job manifest
@@ -233,7 +240,44 @@ jobs:
             'morgue-splitter', 'morgues-download', 'parser'
         ]
         assert all(actual_dryrun == dryrun for actual_dryrun in actual_dryruns), 'Unexpected dryruns: {}'.format(list(actual_dryruns))
-  
+
+    @mock.patch('core.runner.execute_publish')
+    @mock.patch('core.runner.execute_transform')
+    def test_run_app_publish(self, execute_transform, execute_publish, app_manifest_simple_published, transforms_fixtures_path):
+        manifest = parse_yaml(app_manifest_simple_published)
+        runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
+
+        assert execute_publish.call_count == 1, '`execute_publish` was called an unexpected number of times'
+        
+        actual_steps = [call[1].get('step') or call[0][0] for call in execute_publish.call_args_list]
+        actual_publishers = [call[1].get('transforms') or call[0][1] for call in execute_publish.call_args_list]
+        actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_publish.call_args_list]
+        
+        assert actual_steps == [
+            {'publish-to': '/published/path', 'type': 'sqlite'}
+        ]
+        actual_publisher = actual_publishers[0]
+        assert all(actual_publisher == p for p in actual_publishers), 'Each call to `execute_publisher` should have passed the same publishers dict'
+        assert sorted(actual_publisher.keys()) == [
+            'named-publisher', 'publisher-sqlite'
+        ]
+        assert all(dryrun == False for dryrun in actual_dryruns)
+
+    @mock.patch('core.runner.execute_publish')
+    @mock.patch('core.runner.execute_transform')
+    def test_run_app_publish_must_be_last_step(self, execute_transform, execute_publish, app_manifest_simple_published, transforms_fixtures_path):
+        yaml = app_manifest_simple_published + """
+    - transform: splitter
+      morgues: /tmp/data/morgues
+      output: /tmp/data/splits
+        """
+        manifest = parse_yaml(yaml)
+
+        with pytest.raises(AssertionError) as exc_info:
+            runner.run_app(manifest)
+    
+        assert str(exc_info.value) == 'The publish step for job "my-job" cannot be followed by subsequent steps'
+
     @mock.patch('core.runner.execute_job_steps')
     def test_run_app_one_job_multiple_steps(self, execute_job_steps, app_manifest_single_multiple_step_job, transforms_fixtures_path):
         manifest = parse_yaml(app_manifest_single_multiple_step_job)
@@ -243,7 +287,8 @@ jobs:
         actual_job_name = [call[1].get('step') or call[0][0] for call in execute_job_steps.call_args_list]
         actual_steps = [call[1].get('step') or call[0][1] for call in execute_job_steps.call_args_list]
         actual_transforms = [call[1].get('transforms') or call[0][2] for call in execute_job_steps.call_args_list]
-        actual_dryruns = [call[1].get('dryrun') or call[0][3] for call in execute_job_steps.call_args_list]
+        actual_publishers = [call[1].get('publishers') or call[0][3] for call in execute_job_steps.call_args_list]
+        actual_dryruns = [call[1].get('dryrun') or call[0][4] for call in execute_job_steps.call_args_list]
         assert actual_job_name == ['download']
         assert actual_steps == [
             [
@@ -252,7 +297,9 @@ jobs:
             ]
         ]
         actual_transform = actual_transforms[0]
+        actual_publisher = actual_publishers[0]
         assert all(actual_transform == p for p in actual_transforms), 'Each call to `execute_transform` should have passed the same transforms dict'
+        assert all(actual_publisher == p for p in actual_publishers), 'Each call to `execute_transform` should have passed the same publishers dict'
         assert sorted(actual_transform.keys()) == [
             'morgue-splitter', 'morgues-download', 'parser'
         ]
@@ -607,7 +654,3 @@ jobs:
         actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
         assert actual_steps[1]['morgues'] == actual_steps[0]['output']
         assert actual_steps[0]['output'].startswith(data_path)
-
-
-    def test_run_app_publish(self):
-        assert False, 'implement `execute_publish`'

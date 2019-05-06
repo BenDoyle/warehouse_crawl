@@ -64,12 +64,13 @@ def load_manifest_at_path(path, transforms, publishers):
         'manifest': manifest
     }
 
-def execute_job_steps(job_name, steps, transforms, dryrun):
-    for step in steps:
+def execute_job_steps(job_name, steps, transforms, publishers, dryrun):
+    for pos, step in enumerate(steps):
         if 'transform' in step:
             execute_transform(step, transforms, dryrun)
         elif 'publish-to' in step:
-            execute_publish(step, transforms, dryrun)
+            assert pos == len(steps)-1, 'The publish step for job "{}" cannot be followed by subsequent steps'.format(job_name)
+            execute_publish(step, publishers, dryrun)
 
 def execute_transform(step, transforms, dryrun):
     name = step['transform']
@@ -99,7 +100,7 @@ def execute_transform(step, transforms, dryrun):
         command = command.split(' ')
         subprocess.run(command, cwd=path, env=env, stdout=sys.stdout, stderr=sys.stderr)
 
-def execute_publish(step, transforms, dryrun):
+def execute_publish(step, publishers, dryrun):
     pass
 
 def temp_directory(root):
@@ -174,7 +175,7 @@ def run_app(manifest, dryrun=False, transforms_repo_path=None):
     resolve_manifest_placeholders(manifest)
 
     for (job_name, steps) in manifest['jobs'].items():
-        execute_job_steps(job_name, steps, transforms, dryrun)
+        execute_job_steps(job_name, steps, transforms, publishers, dryrun)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('App runner')
