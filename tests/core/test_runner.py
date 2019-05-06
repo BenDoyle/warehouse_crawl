@@ -14,9 +14,9 @@ def parse_yaml(yaml_str):
 def transforms_fixtures_path():
     return os.path.abspath(os.path.dirname(__file__)+'/../../tests/fixtures/transforms')
 
-class TestTransformDiscovery(object):
-    def test_discover_transforms(self, transforms_fixtures_path):
-        transforms = runner.discover_transforms(transforms_fixtures_path)
+class TestManifestDiscovery(object):
+    def test_discover_manifests(self, transforms_fixtures_path):
+        transforms, _ = runner.discover_manifests(transforms_fixtures_path)
 
         names_and_paths = [
             (name, transform['path'])
@@ -28,7 +28,7 @@ class TestTransformDiscovery(object):
             ('parser', '{repo_dir}/parser'.format(repo_dir=transforms_fixtures_path))
         ])
 
-    def test_discover_transforms_ignore_dirs_without_manifests(self, transforms_fixtures_path, tmpdir):
+    def test_discover_manifests_ignore_dirs_without_manifests(self, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
         copy_tree(transforms_fixtures_path, repo_dir)
         
@@ -36,13 +36,13 @@ class TestTransformDiscovery(object):
         with open(os.path.join(repo_dir, 'not-a-transform', 'manifest'), 'w') as fd:
             fd.write('not really a manifest')
 
-        transforms = runner.discover_transforms(repo_dir)
+        transforms, _ = runner.discover_manifests(repo_dir)
 
         assert sorted(transforms.keys()) == sorted([
             'morgue-splitter', 'morgues-download', 'parser'
         ])
 
-    def test_discover_transforms_ignore_invalid_yaml_manifest(self, transforms_fixtures_path, tmpdir):
+    def test_discover_manifests_ignore_invalid_yaml_manifest(self, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
         copy_tree(transforms_fixtures_path, repo_dir)
         
@@ -50,7 +50,7 @@ class TestTransformDiscovery(object):
         with open(os.path.join(repo_dir, 'invalid-yaml-transform', 'manifest.yml'), 'w') as fd:
             fd.write('not really a manifest')
 
-        transforms = runner.discover_transforms(repo_dir)
+        transforms, _ = runner.discover_manifests(repo_dir)
 
         assert sorted(transforms.keys()) == sorted([
             'morgue-splitter', 'morgues-download', 'parser'
@@ -59,7 +59,7 @@ class TestTransformDiscovery(object):
     @pytest.mark.parametrize('required_key', [
         'name', 'run-command'
     ])
-    def test_discover_transforms_ignore_missing_required_manifest_field(self, required_key, transforms_fixtures_path, tmpdir):
+    def test_discover_manifests_ignore_missing_required_manifest_field(self, required_key, transforms_fixtures_path, tmpdir):
         repo_dir = str(tmpdir.mkdir('transforms'))
         copy_tree(transforms_fixtures_path, repo_dir)
         
@@ -71,7 +71,7 @@ run-command: python run.py
         with open(os.path.join(repo_dir, 'invalid-transform', 'manifest.yml'), 'w') as fd:
             fd.write(yaml)
 
-        transforms = runner.discover_transforms(repo_dir)
+        transforms, _ = runner.discover_manifests(repo_dir)
 
         assert sorted(transforms.keys()) == sorted([
             'morgue-splitter', 'morgues-download', 'parser'

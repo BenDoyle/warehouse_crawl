@@ -1,0 +1,4 @@
+name: named-publisher
+type: publisher
+output-type: named
+run-command: python run.py
