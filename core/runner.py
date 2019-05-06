@@ -22,39 +22,47 @@ def load_yaml(path):
             return None
 
 def discover_manifests(transforms_repo_path):
-    transforms_paths = [path[0] for path in os.walk(transforms_repo_path) if 'manifest.yml' in path[2]]
+    manifest_paths = sorted([path[0] for path in os.walk(transforms_repo_path) if 'manifest.yml' in path[2]])
     transforms = {}
     publishers = {}
 
+    for path in manifest_paths:
+        if path.endswith('/tests'):
+            continue  # ignore manifests in tests directories
+        if '/tests/' in path and path.split('/tests/')[0] in manifest_paths:
+            continue  # ignore manifests in tests directories
+        load_manifest_at_path(path, transforms, publishers)
+
+    return transforms, publishers
+
+def load_manifest_at_path(path, transforms, publishers):
+    manifest = load_yaml('{}/manifest.yml'.format(path))
+    
     def skip(path):
         pass # TODO warn that we're skipping a manifest
 
-    for path in transforms_paths:
-        manifest = load_yaml('{}/manifest.yml'.format(path))
-        
-        if not manifest or REQUIRED_MANIFEST_FIELDS - set(manifest.keys()):
+    if not manifest or REQUIRED_MANIFEST_FIELDS - set(manifest.keys()):
+        skip(path)
+        return
+    
+    if manifest['type'].lower().strip() == 'transform':
+        if REQUIRED_TRANSFORM_FIELDS - set(manifest.keys()):
             skip(path)
-            continue
-        
-        if manifest['type'].lower().strip() == 'transform':
-            if REQUIRED_TRANSFORM_FIELDS - set(manifest.keys()):
-                skip(path)
-                continue
-            dest = transforms
-        
-        elif manifest['type'].lower().strip() == 'publisher':
-            if REQUIRED_TRANSFORM_FIELDS - set(manifest.keys()):
-                skip(path)
-                continue
-            if 'name' not in manifest:
-                manifest['name'] = 'publisher-{}'.format(manifest['output-type'])
-            dest = publishers
+            return
+        dest = transforms
+    
+    elif manifest['type'].lower().strip() == 'publisher':
+        if REQUIRED_PUBLISHER_FIELDS - set(manifest.keys()):
+            skip(path)
+            return
+        if 'name' not in manifest:
+            manifest['name'] = 'publisher-{}'.format(manifest['output-type'])
+        dest = publishers
 
-        dest[manifest['name']] = {
-            'path': path,
-            'manifest': manifest
-        }
-    return transforms, publishers
+    dest[manifest['name']] = {
+        'path': path,
+        'manifest': manifest
+    }
 
 def execute_job_steps(job_name, steps, transforms, dryrun):
     for step in steps:
