@@ -1,7 +1,8 @@
 import os
+import subprocess
 import pytest
 import mock
-from distutils.dir_util import copy_tree
+from distutils.dir_util import copy_tree  # pylint: disable=no-name-in-module, import-error
 import re
 import yaml
 
@@ -23,6 +24,10 @@ env-type: python
 run-command: python run.py
 test-command: py.test
     """
+
+@pytest.fixture
+def data_path(tmpdir):
+    return os.path.join(str(tmpdir), 'data')
 
 class TestManifestDiscovery(object):
     def test_discover_manifests_transforms(self, transforms_fixtures_path):
@@ -146,17 +151,16 @@ run-command: python run.py
 class TestAppManifest(object):
 
     @pytest.fixture
-    def app_manifest_simple(self):
+    def app_manifest_simple(self, data_path):
         return """
 name: Simple app manifest
-data: /data
+data: {data_path}
 jobs:
   my-job:
     - transform: download
       base_url: http://example.com/data
       throttle: 1000
-      output: /tmp/data/morgues
-        """
+        """.format(data_path=data_path)
 
     @pytest.fixture
     def app_manifest_simple_published(self, app_manifest_simple):
@@ -166,37 +170,33 @@ jobs:
         """.format(simple_manifest=app_manifest_simple)
 
     @pytest.fixture
-    def app_manifest_multiple_single_step_jobs(self):
+    def app_manifest_multiple_single_step_jobs(self, data_path):
         return """
 name: Multiple job manifest
-data: /data
+data: {data_path}
 jobs:
   download:
     - transform: download
       base_url: http://example.com/data
       throttle: 1000
-      output: /tmp/data/morgues
   split:
     - transform: splitter
       morgues: /tmp/data/morgues
-      output: /tmp/data/splits
-        """
+        """.format(data_path=data_path)
 
     @pytest.fixture
-    def app_manifest_single_multiple_step_job(self):
+    def app_manifest_single_multiple_step_job(self, data_path):
         return """
 name: Multiple job manifest
-data: /data
+data: {data_path}
 jobs:
   download:
     - transform: download
       base_url: http://example.com/data
       throttle: 1000
-      output: /tmp/data/morgues
     - transform: splitter
       morgues: /tmp/data/morgues
-      output: /tmp/data/splits
-        """
+        """.format(data_path=data_path)
 
     @mock.patch('core.runner.execute_transform')
     def test_run_app_simple_job(self, execute_transform, app_manifest_simple, transforms_fixtures_path):
@@ -209,7 +209,7 @@ jobs:
         actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_transform.call_args_list]
         
         assert actual_steps == [
-            {'transform': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': '/tmp/data/morgues'}
+            {'transform': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': mock.ANY}
         ]
         actual_transform = actual_transforms[0]
         assert all(actual_transform == p for p in actual_transforms), 'Each call to `execute_transform` should have passed the same transforms dict'
@@ -231,8 +231,8 @@ jobs:
         actual_dryruns = [call[1].get('dryrun') or call[0][2] for call in execute_transform.call_args_list]
         
         assert actual_steps == [
-            {'transform': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': '/tmp/data/morgues'},
-            {'transform': 'splitter', 'morgues': '/tmp/data/morgues', 'output': '/tmp/data/splits'}
+            {'transform': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': mock.ANY},
+            {'transform': 'splitter', 'morgues': mock.ANY, 'output': mock.ANY}
         ]
         actual_transform = actual_transforms[0]
         assert all(actual_transform == p for p in actual_transforms), 'Each call to `execute_transform` should have passed the same transforms dict'
@@ -269,7 +269,6 @@ jobs:
         yaml = app_manifest_simple_published + """
     - transform: splitter
       morgues: /tmp/data/morgues
-      output: /tmp/data/splits
         """
         manifest = parse_yaml(yaml)
 
@@ -292,8 +291,8 @@ jobs:
         assert actual_job_name == ['download']
         assert actual_steps == [
             [
-                {'transform': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': '/tmp/data/morgues'},
-                {'transform': 'splitter', 'morgues': '/tmp/data/morgues', 'output': '/tmp/data/splits'}
+                {'transform': 'download', 'base_url': 'http://example.com/data', 'throttle': 1000, 'output': mock.ANY},
+                {'transform': 'splitter', 'morgues': mock.ANY, 'output': mock.ANY}
             ]
         ]
         actual_transform = actual_transforms[0]
@@ -308,40 +307,38 @@ jobs:
     @mock.patch('core.runner.execute_transform')
     @mock.patch('core.runner.temp_directory', return_value='/data/tmp/dir')
     @mock.patch('core.runner.temp_file', return_value='/data/tmp/file')
-    def test_run_app_temp_placeholder(self, tmpfile_mock, tmpdir_mock, execute_transform, transforms_fixtures_path):
+    def test_run_app_temp_placeholder(self, tmpfile_mock, tmpdir_mock, execute_transform, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Named placeholder
-data: /data
+data: {data_path}
 jobs:
   my-job:
     - transform: morgues-download
       some-file: $tmp.file
       output: $tmp.dir
-        """)
+        """.format(data_path=data_path))
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
         assert execute_transform.call_count == 1, '`execute_transform` was called an unexpected number of times'
         actual_steps = [call[1].get('step') or call[0][0] for call in execute_transform.call_args_list]
         assert actual_steps == [
-            {'transform': 'morgues-download', 'some-file': '/data/tmp/file', 'output': '/data/tmp/dir'},
+            {'transform': 'morgues-download', 'some-file': '/data/tmp/file', 'output': mock.ANY},
         ]
 
     @mock.patch('core.runner.execute_transform')
-    def test_run_app_named_placeholders(self, execute_transform, transforms_fixtures_path):
+    def test_run_app_named_placeholders(self, execute_transform, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   my-job:
     - name: downloader
       transform: morgues-download
       base_url: http://example.com/data
       throttle: 1000
-      output: /tmp/data/morgues
     - transform: morgue-splitter
       morgues: $downloader.output  # this should be replaced with the first step's output value
-      output: /tmp/data/splits
-        """)
+        """.format(data_path=data_path))
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
         assert execute_transform.call_count == 2, '`execute_transform` was called an unexpected number of times'
@@ -349,21 +346,19 @@ jobs:
         assert actual_steps[1]['morgues'] == actual_steps[0]['output']
 
     @mock.patch('core.runner.execute_transform')
-    def test_run_app_named_placeholders_step_name_not_found(self, execute_transform, transforms_fixtures_path):
+    def test_run_app_named_placeholders_step_name_not_found(self, execute_transform, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   my-job:
     - name: downloader
       transform: morgues-download
       base_url: http://example.com/data
       throttle: 1000
-      output: /tmp/data/morgues
     - transform: morgue-splitter
       morgues: $unknown.output  # unknown step name
-      output: /tmp/data/splits
-        """)
+        """.format(data_path=data_path))
 
         with pytest.raises(AssertionError) as exc:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
@@ -372,21 +367,19 @@ jobs:
         
 
     @mock.patch('core.runner.execute_transform')
-    def test_run_app_named_placeholders_value_key_not_found(self, execute_transform, transforms_fixtures_path):
+    def test_run_app_named_placeholders_value_key_not_found(self, execute_transform, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   my-job:
     - name: downloader
       transform: morgues-download
       base_url: http://example.com/data
       throttle: 1000
-      output: /tmp/data/morgues
     - transform: morgue-splitter
       morgues: $downloader.unknown  # unknown value name
-      output: /tmp/data/splits
-        """)
+        """.format(data_path=data_path))
 
         with pytest.raises(AssertionError) as exc:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
@@ -394,10 +387,10 @@ jobs:
         assert str(exc.value) == "Invalid placeholder: $downloader.unknown; valid option names include: ['base_url', 'name', 'output', 'throttle', 'transform']"
 
     @mock.patch('core.runner.execute_transform')
-    def test_run_app_named_placeholders_reference_future_step(self, execute_transform, transforms_fixtures_path):
+    def test_run_app_named_placeholders_reference_future_step(self, execute_transform, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   my-job:
     - name: downloader
@@ -409,7 +402,7 @@ jobs:
       transform: /tmp/data/morgues
       morgues: $downloader.unknown
       output: /tmp/data/splits
-        """)
+        """.format(data_path=data_path))
 
         with pytest.raises(AssertionError) as exc:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
@@ -417,22 +410,20 @@ jobs:
         assert str(exc.value) == "Invalid placeholder: $splitter; valid names include: []"
 
     @mock.patch('core.runner.execute_transform')
-    def test_run_app_named_placeholders_reference_other_job(self, execute_transform, transforms_fixtures_path):
+    def test_run_app_named_placeholders_reference_other_job(self, execute_transform, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   job1:
     - name: downloader
       transform: morgues-download
       base_url: http://example.com/data
       throttle: 1000
-      output: /tmp/data/morgues
   job2:
     - transform: morgue-splitter
       morgues: $downloader.output  # not part of the same job
-      output: /tmp/data/splits
-        """)
+        """.format(data_path=data_path))
 
         with pytest.raises(AssertionError) as exc:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
@@ -440,10 +431,10 @@ jobs:
         assert str(exc.value) == "Invalid placeholder: $downloader; valid names include: []"
 
     @mock.patch('core.runner.execute_job_steps')
-    def test_run_app_named_placeholders_circular_reference(self, execute_job_steps, transforms_fixtures_path):
+    def test_run_app_named_placeholders_circular_reference(self, execute_job_steps, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   job1:
     - name: downloader
@@ -455,7 +446,7 @@ jobs:
       transform: morgue-splitter
       morgues: morgues
       output: $downloader.output
-        """)
+        """.format(data_path=data_path))
 
         with pytest.raises(AssertionError) as exc:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
@@ -463,25 +454,22 @@ jobs:
         assert str(exc.value) == "Invalid placeholder: $splitter; valid names include: []"
 
     @mock.patch('core.runner.execute_job_steps')
-    def test_run_app_chained_placeholders(self, execute_job_steps, transforms_fixtures_path):
+    def test_run_app_chained_placeholders(self, execute_job_steps, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   job1:
     - name: downloader1
       transform: morgues-download
       base_url: http://example.com/data
-      output: /tmp/data/morgues
     - name: downloader2
       transform: morgues-download
       base_url: $downloader1.base_url
-      output: /tmp/data/morgues
     - name: downloader3
       transform: morgues-download
       base_url: $downloader2.base_url
-      output: /tmp/data/morgues
-        """)
+        """.format(data_path=data_path))
 
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
@@ -491,11 +479,10 @@ jobs:
         assert actual_base_urls == ['http://example.com/data'] * 3
 
     @mock.patch('core.runner.execute_job_steps')
-    def test_resolve_tmp_dir(self, execute_job_steps, transforms_fixtures_path, tmpdir):
-        data_path = str(tmpdir.mkdir('data'))
+    def test_resolve_tmp_dir(self, execute_job_steps, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: {}
+data: {data_path}
 jobs:
   job1:
     - name: downloader
@@ -506,7 +493,7 @@ jobs:
       transform: morgue-splitter
       morgues: morgues
       output: $downloader.output
-        """.format(data_path))
+        """.format(data_path=data_path))
 
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
@@ -517,11 +504,10 @@ jobs:
         assert os.path.isdir(actual_steps[0]['output'])
     
     @mock.patch('core.runner.execute_job_steps')
-    def test_resolve_tmp_file(self, execute_job_steps, transforms_fixtures_path, tmpdir):
-        data_path = str(tmpdir.mkdir('data'))
+    def test_resolve_tmp_file(self, execute_job_steps, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: {}
+data: {data_path}
 jobs:
   job1:
     - name: downloader
@@ -532,7 +518,7 @@ jobs:
       transform: morgue-splitter
       morgues: morgues
       output: $downloader.output
-        """.format(data_path))
+        """.format(data_path=data_path))
 
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
@@ -548,10 +534,10 @@ jobs:
         ('[${downloader.output}${downloader.name}]', '[/some/pathdownloader]'),
         ('${downloader.output}$downloader.name', '/some/path$downloader.name'),
     ])
-    def test_resolve_variable_curley_braces(self, execute_job_steps, placeholder, resolved, transforms_fixtures_path):
+    def test_resolve_variable_curley_braces(self, execute_job_steps, placeholder, resolved, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   job1:
     - name: downloader
@@ -561,8 +547,8 @@ jobs:
     - name: splitter
       transform: morgue-splitter
       morgues: morgues
-      output: '{}'
-        """.format(placeholder))
+      output: '{placeholder}'
+        """.format(data_path=data_path, placeholder=placeholder))
 
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
@@ -571,21 +557,22 @@ jobs:
         assert actual_steps[1]['output'] == resolved
 
     @mock.patch('core.runner.execute_job_steps')
-    def test_resolve_variable_previous_output(self, execute_job_steps, transforms_fixtures_path):
+    def test_resolve_variable_previous_output(self, execute_job_steps, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   job1:
     - name: downloader
       transform: morgues-download
       base_url: http://example.com/data
-      output: /some/path
     - name: splitter
       transform: morgue-splitter
       morgues: $previous.output
-      output: /data/output
-        """)
+    - publish-to: /final/output
+      type: sqlite
+    #   data: $previous.output  -- not necessary, should always be the previous output
+        """.format(data_path=data_path))
 
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
@@ -594,10 +581,10 @@ jobs:
         assert actual_steps[1]['morgues'] == actual_steps[0]['output']
 
     @mock.patch('core.runner.execute_job_steps')
-    def test_resolve_variable_previous_output_no_previous_output(self, execute_job_steps, transforms_fixtures_path):
+    def test_resolve_variable_previous_output_no_previous_output(self, execute_job_steps, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   job1:
     - name: downloader
@@ -605,48 +592,43 @@ jobs:
       base_url: http://example.com/data
     - name: splitter
       transform: morgue-splitter
-      morgues: $previous.output
-      output: /data/output
-        """)
+      morgues: $previous.not_defined
+        """.format(data_path=data_path))
 
         with pytest.raises(Exception) as exc_info:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
-        assert str(exc_info.value) == 'No previous value found for $previous.output (previous == "downloader")'
+        assert str(exc_info.value) == 'No previous value found for $previous.not_defined (previous == "downloader")'
 
     @mock.patch('core.runner.execute_job_steps')
-    def test_resolve_variable_previous_output_first_step(self, execute_job_steps, transforms_fixtures_path):
+    def test_resolve_variable_previous_output_first_step(self, execute_job_steps, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: /data
+data: {data_path}
 jobs:
   job1:
     - name: splitter
       transform: morgue-splitter
       morgues: $previous.output
-      output: /data/output
-        """)
+        """.format(data_path=data_path))
 
         with pytest.raises(Exception) as exc_info:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
         assert str(exc_info.value) == 'Cannot use $previous placeholder on the first step'
 
     @mock.patch('core.runner.execute_job_steps')
-    def test_resolve_variable_previous_output_variable(self, execute_job_steps, transforms_fixtures_path, tmpdir):
-        data_path = str(tmpdir.mkdir('data'))
+    def test_resolve_variable_previous_output_variable(self, execute_job_steps, transforms_fixtures_path, data_path):
         manifest = parse_yaml("""
 name: Single composed job manifest
-data: {}
+data: {data_path}
 jobs:
   job1:
     - name: downloader
       transform: morgues-download
       base_url: http://example.com/data
-      output: $tmp.dir
     - name: splitter
       transform: morgue-splitter
       morgues: $previous.output
-      output: /data/output
-        """.format(data_path))
+        """.format(data_path=data_path))
 
         runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
@@ -654,3 +636,13 @@ jobs:
         actual_steps = execute_job_steps.call_args_list[0][1].get('steps') or execute_job_steps.call_args_list[0][0][1]        
         assert actual_steps[1]['morgues'] == actual_steps[0]['output']
         assert actual_steps[0]['output'].startswith(data_path)
+
+    @pytest.mark.skip('TODO')
+    def test_execute_transform(self):
+        assert subprocess.run.call_count == 100
+        assert False, 'need to test the implementation of execute_transform'
+
+    @pytest.mark.skip('TODO')
+    def test_execute_publish(self):
+        assert subprocess.run.call_count == 100
+        assert False, 'need to test the implementation of execute_publish'

@@ -103,10 +103,10 @@ def execute_transform(step, transforms, dryrun):
 def execute_publish(step, publishers, dryrun):
     pass
 
-def temp_directory(root):
+def temp_directory(root, prefix='__'):
     if not os.path.exists(root):
         os.makedirs(root)
-    return tempfile.mkdtemp('__', dir=root)
+    return tempfile.mkdtemp(prefix=prefix, dir=root)
 
 def temp_file(root):
     if not os.path.exists(root):
@@ -115,10 +115,13 @@ def temp_file(root):
     os.close(fd)
     return path
 
+def manifest_tmp_dir(manifest):
+    datapath = manifest['data']
+    return os.path.join(datapath, 'tmp')
+
 def resolve_manifest_placeholders(manifest):
     assert manifest.get('data'), "App manifest does not have a 'data' path"
-    datapath = manifest['data']
-    tmpdir = os.path.join(datapath, 'tmp')
+    tmpdir = manifest_tmp_dir(manifest)
 
     def variable_value(name_tuple, named_steps, previous_step):
         if name_tuple == ('tmp', 'dir'):
@@ -166,12 +169,22 @@ def resolve_manifest_placeholders(manifest):
             if 'name' in step:
                 named_steps[step['name']] = step
                     
+def resolve_manifest_outputs(manifest):
+    tmpdir = manifest_tmp_dir(manifest)
+    for job_name, steps in manifest['jobs'].items():
+        job_tmp_path = temp_directory(root=tmpdir, prefix='job_{}_'.format(job_name))
+        for step_num, step in enumerate(steps):
+            if 'transform' in step:
+                step_dirname = 'step-{}'.format((('0' * 4) + str(step_num))[-4:])
+                if not 'output' in step:
+                    step['output'] = os.path.join(job_tmp_path, step_dirname)
 
 def run_app(manifest, dryrun=False, transforms_repo_path=None):
     print('Running app: {}'.format(manifest['name']))
     print(' > Discovering transforms...')
     transforms, publishers = discover_manifests(transforms_repo_path or TRANSFORMS_REPO_PATH)
 
+    resolve_manifest_outputs(manifest)
     resolve_manifest_placeholders(manifest)
 
     for (job_name, steps) in manifest['jobs'].items():
