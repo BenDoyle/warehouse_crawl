@@ -33,7 +33,7 @@ Other
 ## Morgue file repository
 
 http://crawl.develz.org/morgues/
-
+http://crawl.berotato.org/crawl/morgue/
 
 ## Log generation code
 
