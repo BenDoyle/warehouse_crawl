@@ -23,8 +23,19 @@ def read_text_file(file_name):
     return contents
 
 
-def write_rows_to_csv(rows, file_name):
+def write_rows_to_csv(rows, file_name, subfolder=None):
     if rows:
-        outfile_name = file_name[0:-3] + 'csv'
+        if subfolder:
+            tokens = file_name.split('/')
+            tokens.insert(-1, subfolder)
+            adjusted_file_name = '/'.join(tokens)
+            try:
+                os.makedirs('/'.join(tokens[0:-1]))
+            except:
+                pass
+        else:
+            adjusted_file_name = file_name
+
+        outfile_name = adjusted_file_name[0:-4] + '.csv'
         write_csv(outfile_name, rows)
 
