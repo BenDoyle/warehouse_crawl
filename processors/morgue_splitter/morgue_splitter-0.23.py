@@ -22,16 +22,18 @@ SECTION_PATTERNS = {
     'notes':                        'Notes',
     'skill_progression':            'Skill\s+XL:',
     'action_totals':                'Action\s+\|',
+    'levels_and_vaults_discovered': 'Levels and vault maps discovered:',
 }
 
 OPTIONAL_SECTIONS = [
-    'final_altars',      # some logs do not print an altars list, even if found. e.g. morgue-stickyfingers-20190213-154231.txt
-    'final_abilities',   # games without mutations
-    'final_shops',       # shops are not discovered in this game
-    'final_annotations', # annotatable things are not present in this game
-    'final_vanquished',  # games with no vanquished creatures
-    'skill_progression', # games that end before level 2 is reached
-    'action_totals',     # games without a single action
+    'final_altars',                 # some logs do not print an altars list, even if found. e.g. morgue-stickyfingers-20190213-154231.txt
+    'final_abilities',              # games without mutations
+    'final_shops',                  # shops are not discovered in this game
+    'final_annotations',            # annotatable things are not present in this game
+    'final_vanquished',             # games with no vanquished creatures
+    'skill_progression',            # games that end before level 2 is reached
+    'action_totals',                # games without a single action
+    'levels_and_vaults_discovered', # not all games have this
 ]
 
 def section_log_string(contents):
