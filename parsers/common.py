@@ -11,7 +11,7 @@ def get_game_id(file_name):
 
 def write_csv(outfile_name, rows):
     with open(outfile_name, 'w') as f:
-        writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
+        writer = csv.writer(f, delimiter=',', quotechar='"', escapechar='\\', quoting=csv.QUOTE_NONE)
         writer.writerows(rows)
 
 
