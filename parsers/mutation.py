@@ -8,24 +8,25 @@ import glob
 
 def get_rows(contents):
     notes = get_notes(game_id, contents)
-    skill_re = '^Reached skill level\s+(\d+)\s+in(.*)$'
+    mutation_re = '^(Gained|Lost) mutation:\s*\[?(.*)\]?\[(.*)\]\s*$'
 
     output = []
     for line in notes:
-        if re.match(skill_re, line[4]) is not None:
-            info = re.search(skill_re, line[4])
+        if re.match(mutation_re, line[4]) is not None:
+            info = re.search(mutation_re, line[4])
 
             output.append(line + [
-                int(info.group(1)),     # skill_level
-                info.group(2).strip(),  # skill
+                info.group(1).strip(),                  # status
+                info.group(2).strip().replace(']',''),  # mutation
+                info.group(3).strip(),                  # source
             ])
     return output
 
 if __name__ == '__main__':
     files = glob.glob('{}/*.txt'.format(os.environ.get('path')))
     for file_name in files:
+        print(file_name)
         contents = read_text_file(file_name)
         game_id = get_game_id(file_name)
         rows = get_rows(contents)
-        write_rows_to_csv(rows, file_name, 'skill_progression')
-        print(file_name)
+        write_rows_to_csv(rows, file_name, 'mutation')
