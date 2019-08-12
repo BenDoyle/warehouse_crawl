@@ -4,6 +4,17 @@ from common import read_text_file
 import os
 import glob
 
+CREATE_TABLE = '''
+    DROP TABLE IF EXISTS action_totals;
+    CREATE TABLE action_totals (
+        game_id         VARCHAR(255),
+        action_category VARCHAR(255),
+        action          VARCHAR(255),
+        level_group     VARCHAR(255),
+        count           INTEGER
+    );
+'''
+
 def get_rows(contents):
     lines = contents.strip().split('\n')
     assert lines[0][0:6] == 'Action'
