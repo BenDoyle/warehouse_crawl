@@ -12,8 +12,8 @@ def get_rows(contents):
 
     output = []
     for line in notes:
-        if re.match(shaft_re, line[4]) is not None:
-            info = re.search(shaft_re, line[4])
+        if re.match(shaft_re, line[6]) is not None:
+            info = re.search(shaft_re, line[6])
 
             if info.group(1):
                 floors = int(info.group(2))

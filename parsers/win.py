@@ -12,7 +12,7 @@ def get_rows(contents):
 
     output = []
     for line in notes:
-        if re.match(win_re, line[4]) is not None:
+        if re.match(win_re, line[6]) is not None:
             output.append(line)
     return output
 

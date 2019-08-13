@@ -8,8 +8,7 @@ import re
 def get_rows(game_id, contents):
     seed_info = re.search('Game seed: (\d+)', contents)
     game_seed = seed_info.group(1)
-    return [[
-        game_id,
+    return [game_id + [
         game_seed,
     ]]
 

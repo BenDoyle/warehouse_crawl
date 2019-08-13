@@ -14,8 +14,7 @@ def get_rows(game_id, contents):
             vanquished_by = 'others'
         match = re.search(pattern, line)
         if match is not None:
-            rows.append([
-                game_id,
+            rows.append(game_id + [
                 vanquished_by,
                 match.group(1),
                 match.group(2),

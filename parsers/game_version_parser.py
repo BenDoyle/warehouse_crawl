@@ -14,8 +14,7 @@ def get_rows(game_id, contents):
     build = version_info.group(6)
     view = version_info.group(7)
 
-    return [[
-        game_id,
+    return [game_id + [
         version_string,
         major_version,
         minor_version,

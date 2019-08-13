@@ -6,7 +6,7 @@ def get_game_id(file_name):
     basename = os.path.basename(file_name)
     match = re.match('(.*)-morgue-(.*)-(\d{8})-(\d{6})\.txt', basename)
 
-    return '{}-{}-{}'.format(match.group(2), match.group(3), match.group(4))
+    return [match.group(2), match.group(3), match.group(4)]
 
 
 def write_csv(outfile_name, rows):

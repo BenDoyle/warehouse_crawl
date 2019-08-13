@@ -8,7 +8,7 @@ def get_rows(contents):
     lines = contents.strip().split('\n')
     assert lines[0] == 'Innate Abilities, Weirdness & Mutations'
     return [
-        [game_id, ability]
+        game_id + [ability]
         for ability in lines[2:]
     ]
 

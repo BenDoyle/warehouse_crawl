@@ -43,8 +43,7 @@ def get_rows(contents):
         counts = counts + [None for i in range(len(counts), 9)]
 
         for index, count in enumerate(counts):
-            output.append([
-                game_id,
+            output.append(game_id + [
                 action_category,
                 action,
                 'Level {} - Level {}'.format(3 * index + 1, 3 * (index + 1)),

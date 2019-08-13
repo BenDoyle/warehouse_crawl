@@ -17,8 +17,7 @@ def get_notes(game_id, contents):
                 output.append(current_line)
 
             info = re.search(note_re, line)
-            current_line = [
-                game_id,
+            current_line = game_id + [
                 int(info.group(1)),     # turn
                 info.group(2).strip(),  # branch_symbol
                 info.group(3).strip(),  # branch_level (could be $)

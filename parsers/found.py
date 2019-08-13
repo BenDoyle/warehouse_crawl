@@ -13,8 +13,8 @@ def get_rows(contents):
 
     output = []
     for line in notes:
-        if re.match(god_re, line[4]) is None and re.match(found_re, line[4]) is not None:
-            info = re.search(found_re, line[4])
+        if re.match(god_re, line[6]) is None and re.match(found_re, line[6]) is not None:
+            info = re.search(found_re, line[6])
 
             output.append(line + [
                 info.group(1).strip(),  # found

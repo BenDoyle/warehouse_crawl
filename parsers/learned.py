@@ -12,8 +12,8 @@ def get_rows(contents):
 
     output = []
     for line in notes:
-        if re.match(learned_re, line[4]) is not None:
-            info = re.search(learned_re, line[4])
+        if re.match(learned_re, line[6]) is not None:
+            info = re.search(learned_re, line[6])
 
             output.append(line + [
                 int(info.group(1)),     # spell_level

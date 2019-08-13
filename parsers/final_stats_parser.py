@@ -28,63 +28,60 @@ def get_rows(game_id, contents):
     mp, max_mp = get_double('Magic:\s+(\d+)/(\d+)', contents)
     spell_levels, max_spell_levels = get_double('Spells:\s+(\d+)/(\d+) levels left', contents)
 
-    out = [
-        ('game_id',            game_id),
-        ('name',               description.group(1)),
-        ('title',              description.group(2)),
-        ('species_background', description.group(3)),
-        ('turns',              get_value('Turns:\s+(\d+)', contents)),
-        ('time',               get_value('Time:\s+([\d\w\:]+)', contents)),
-        ('hp',                 hp),
-        ('max_hp',             max_hp),
-        ('ac',                 get_value('AC:\s+(\d+)', contents)),
-        ('str',                get_value('Str:\s+(\d+)', contents)),
-        ('xl',                 get_value('XL:\s+(\d+)', contents)),
-        ('next_xl',            get_value('Next:\s+(\d+)\%', contents)),
-        ('mp',                 mp),
-        ('max_mp',             max_mp),
-        ('ev',                 get_value('EV:\s+(\d+)', contents)),
-        ('int',                get_value('Int:\s+(\d+)', contents)),
-        ('god',                get_value('God:\s*([\w]+)\n', contents)),
-        ('gold',               get_value('Gold:\s+(\d+)', contents)),
-        ('sh',                 get_value('SH:\s+(\d+)', contents)),
-        ('dex',                get_value('Dex:\s+(\d+)', contents)),
-        ('spell_levels',       spell_levels),
-        ('max_spell_levels',   max_spell_levels),
-        ('rFire',              get_value('rFire\s+([.x+] [.x+] [.x+])', contents)),
-        ('rCold',              get_value('rCold\s+([.x+] [.x+] [.x+])', contents)),
-        ('rNeg',               get_value('rNeg\s+([.x+] [.x+] [.x+])', contents)),
-        ('rPois',              get_value('rPois\s+([.x+])', contents)),
-        ('rElec',              get_value('rElec\s+([.x+])', contents)),
-        ('rCorr',              get_value('rCorr\s+([.x+])', contents)),
-        ('SeeInvis',           get_value('SeeInvis\s+([.x+])', contents)),
-        ('Gourm',              get_value('Gourm\s+([.x+])', contents)),
-        ('Faith',              get_value('Faith\s+([.x+])', contents)),
-        ('Spirit',             get_value('Spirit\s+([.x+])', contents)),
-        ('Reflect',            get_value('Reflect\s+([.x+])', contents)),
-        ('Harm',               get_value('Harm\s+([.x+])', contents)),
-        ('MR',                 get_value('MR\s+([.+]{5})', contents)),
-        ('Stlth',              get_value('Stlth\s+([.+]{10})', contents)),
-        ('HPRegen',            get_value('HPRegen\s+(\d+\.\d+)/turn', contents)),
-        ('MPRegen',            get_value('MPRegen\s+(\d+\.\d+)/turn', contents)),
-        ('weapon',             get_positional('rFire', contents)),
-        ('shield',             get_positional('rCold', contents)),
-        ('armour',             get_positional('rNeg', contents)),
-        ('helmet',             get_positional('rPois', contents)),
-        ('cloak',              get_positional('rElec', contents)),
-        ('gloves',             get_positional('rCorr', contents)),
-        ('boots',              get_positional('MR', contents)),
-        ('amulet',             get_positional('Stlth', contents)),
-        ('ring_right',         get_positional('HPRegen', contents)),
-        ('ring_left',          get_positional('MPRegen', contents)),
-        ('status_effects',     get_value('\n@:\s+(.*)\n', contents)),
-        ('modifiers',          get_value('\nA:\s+(.*)\n', contents)),
-        ('abilities',          get_value('\na:\s+(.*)\n', contents)),
+    out = game_id + [
+        description.group(1),                               # name
+        description.group(2),                               # title
+        description.group(3),                               # species_background
+        get_value('Turns:\s+(\d+)', contents),              # turns
+        get_value('Time:\s+([\d\w\:]+)', contents),         # time
+        hp,                                                 # hp
+        max_hp,                                             # max_hp
+        get_value('AC:\s+(\d+)', contents),                 # ac
+        get_value('Str:\s+(\d+)', contents),                # str
+        get_value('XL:\s+(\d+)', contents),                 # xl
+        get_value('Next:\s+(\d+)\%', contents),             # next_xl
+        mp,                                                 # mp
+        max_mp,                                             # max_mp
+        get_value('EV:\s+(\d+)', contents),                 # ev
+        get_value('Int:\s+(\d+)', contents),                # int
+        get_value('God:\s*([\w]+)\n', contents),            # god
+        get_value('Gold:\s+(\d+)', contents),               # gold
+        get_value('SH:\s+(\d+)', contents),                 # sh
+        get_value('Dex:\s+(\d+)', contents),                # dex
+        spell_levels,                                       # spell_levels
+        max_spell_levels,                                   # max_spell_levels
+        get_value('rFire\s+([.x+] [.x+] [.x+])', contents), # rFire
+        get_value('rCold\s+([.x+] [.x+] [.x+])', contents), # rCold
+        get_value('rNeg\s+([.x+] [.x+] [.x+])', contents),  # rNeg
+        get_value('rPois\s+([.x+])', contents),             # rPois
+        get_value('rElec\s+([.x+])', contents),             # rElec
+        get_value('rCorr\s+([.x+])', contents),             # rCorr
+        get_value('SeeInvis\s+([.x+])', contents),          # SeeInvis
+        get_value('Gourm\s+([.x+])', contents),             # Gourm
+        get_value('Faith\s+([.x+])', contents),             # Faith
+        get_value('Spirit\s+([.x+])', contents),            # Spirit
+        get_value('Reflect\s+([.x+])', contents),           # Reflect
+        get_value('Harm\s+([.x+])', contents),              # Harm
+        get_value('MR\s+([.+]{5})', contents),              # MR
+        get_value('Stlth\s+([.+]{10})', contents),          # Stlth
+        get_value('HPRegen\s+(\d+\.\d+)/turn', contents),   # HPRegen
+        get_value('MPRegen\s+(\d+\.\d+)/turn', contents),   # MPRegen
+        get_positional('rFire', contents),                  # weapon
+        get_positional('rCold', contents),                  # shield
+        get_positional('rNeg', contents),                   # armour
+        get_positional('rPois', contents),                  # helmet
+        get_positional('rElec', contents),                  # cloak
+        get_positional('rCorr', contents),                  # gloves
+        get_positional('MR', contents),                     # boots
+        get_positional('Stlth', contents),                  # amulet
+        get_positional('HPRegen', contents),                # ring_right
+        get_positional('MPRegen', contents),                # ring_left
+        get_value('\n@:\s+(.*)\n', contents),               # status_effects
+        get_value('\nA:\s+(.*)\n', contents),               # modifiers
+        get_value('\na:\s+(.*)\n', contents),               # abilities
     ]
 
-    return [
-        map(lambda x: x[1], out)
-    ]
+    return [out]
 
 if __name__ == '__main__':
     files = glob.glob('{}/*.txt'.format(os.environ.get('path')))

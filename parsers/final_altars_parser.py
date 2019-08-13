@@ -8,7 +8,7 @@ def get_rows(contents):
     lines = contents.strip().split('\n')
     assert lines[0] == 'Altars:'
     return [
-        [game_id, altar]
+        game_id + [altar]
         for altar in lines[1:]
     ]
 
