@@ -19,6 +19,7 @@ SECTION_PATTERNS = {
     'final_abilities':              'Innate Abilities, Weirdness & Mutations',
     'final_messages':               'Message History\n\n',
     'final_vanquished':             'Vanquished Creatures\n',
+    'final_map':                    '\n\n(.+\n)+\n\n(You could see|There were no monsters in sight!)',
     'notes':                        'Notes',
     'skill_progression':            'Skill\s+XL:',
     'action_totals':                'Action\s+\|',
