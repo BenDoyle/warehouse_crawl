@@ -3,7 +3,7 @@ import re
 def get_notes(game_id, contents):
     assert contents[0:5] == 'Notes'
 
-    note_re = '^\s*(\d+)\s+\|\s+(\w+):([\$\d]+)\s+\|\s+(.*)\s*$'
+    note_re = '^\s*(\d+)\s+\|\s+(\w+)(:([\$\d]+))?\s+\|\s+(.*)\s*$'
     multiline_re = '^\s+\|(.*)$'
 
     lines = contents.strip().split('\n')
@@ -20,9 +20,9 @@ def get_notes(game_id, contents):
             current_line = game_id + [
                 int(info.group(1)),     # turn
                 info.group(2).strip(),  # branch_symbol
-                info.group(3).strip(),  # branch_level (could be $)
+                info.group(4).strip() if info.group(4) else None,  # branch_level (could be $)
             ]
-            current_note = info.group(4).strip()  # note
+            current_note = info.group(5).strip() # note
         elif re.match(multiline_re, line) is not None:
             info = re.search(multiline_re, line)
             current_note = current_note + info.group(1).strip()
