@@ -12,9 +12,9 @@ def get_rows(game_id, contents):
         match = re.search(pattern, line)
         if match is not None:
             rows.append(game_id + [
-                match.group(1),
-                match.group(2),
-                match.group(3),
+                match.group(1).strip(),
+                match.group(2).strip(),
+                match.group(3).strip(),
             ])
 
     return rows

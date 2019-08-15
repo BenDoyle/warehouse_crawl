@@ -16,9 +16,9 @@ def get_rows(game_id, contents):
         if match is not None:
             rows.append(game_id + [
                 vanquished_by,
-                match.group(1),
-                match.group(2),
-                match.group(3),
+                match.group(1).strip() if match.group(1) else None,
+                match.group(2).strip() if match.group(2) else None,
+                match.group(3).strip() if match.group(3) else None,
             ])
 
     return rows

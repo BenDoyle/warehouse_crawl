@@ -25,7 +25,7 @@ def get_notes(game_id, contents):
             current_note = info.group(4).strip()  # note
         elif re.match(multiline_re, line) is not None:
             info = re.search(multiline_re, line)
-            current_note = current_note + info.group(1)
+            current_note = current_note + info.group(1).strip()
 
     current_line.append(current_note)
     output.append(current_line)

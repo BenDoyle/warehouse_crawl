@@ -15,7 +15,7 @@ def get_value(pattern, contents):
 def get_double(pattern, contents):
     match = re.search(pattern, contents)
     if match:
-        return (match.group(1), match.group(2))
+        return (match.group(1).strip(), match.group(2).strip())
     else:
         return (None, None)
 
@@ -29,9 +29,9 @@ def get_rows(game_id, contents):
     spell_levels, max_spell_levels = get_double('Spells:\s+(\d+)/(\d+) levels left', contents)
 
     out = game_id + [
-        description.group(1),                               # name
-        description.group(2),                               # title
-        description.group(3),                               # species_background
+        description.group(1).strip(),                       # name
+        description.group(2).strip(),                       # title
+        description.group(3).strip(),                       # species_background
         get_value('Turns:\s+(\d+)', contents),              # turns
         get_value('Time:\s+([\d\w\:]+)', contents),         # time
         hp,                                                 # hp

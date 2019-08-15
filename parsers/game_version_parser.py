@@ -7,9 +7,9 @@ import re
 
 def get_rows(game_id, contents):
     version_info = re.search('(\d+)\.(\d+)(\.([\d]+))?(\-([\w\d\-]+))*\s\((\w+)\)', contents)
-    version_string = version_info.group(0)
-    major_version = version_info.group(1)
-    minor_version = version_info.group(2)
+    version_string = version_info.group(0).strip()
+    major_version = version_info.group(1).strip()
+    minor_version = version_info.group(2).strip()
     patch_level = version_info.group(4)
     build = version_info.group(6)
     view = version_info.group(7)
