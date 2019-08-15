@@ -177,6 +177,24 @@ CREATE TABLE bought
 COPY bought FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/bought.csv' WITH (FORMAT csv, DELIMITER '~');
 SELECT * FROM bought;
 
+DROP TABLE IF EXISTS conclusion;
+CREATE TABLE conclusion
+(
+    player         VARCHAR(255),
+    game_date      VARCHAR(255),
+    game_time      VARCHAR(255),
+    turn           INTEGER,
+    branch         VARCHAR(255),
+    branch_level   VARCHAR(255),
+    note           VARCHAR(255),
+
+    final_status   VARCHAR(255),
+    how            VARCHAR(255),
+    who            VARCHAR(255)
+);
+COPY conclusion FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/conclusion.csv' WITH (FORMAT csv, DELIMITER '~');
+SELECT * FROM conclusion;
+
 DROP TABLE IF EXISTS fell;
 CREATE TABLE fell
 (
