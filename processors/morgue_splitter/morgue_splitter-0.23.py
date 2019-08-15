@@ -20,6 +20,7 @@ SECTION_PATTERNS = {
     'final_messages':               'Message History\n\n',
     'final_vanquished':             'Vanquished Creatures\n',
     'final_map':                    '\n\n(.+\n)+\n\n(You could see|There were no monsters in sight!)',
+    'final_portals':                'Portals',
     'notes':                        'Notes',
     'skill_progression':            'Skill\s+XL:',
     'action_totals':                'Action\s+\|',
@@ -34,6 +35,7 @@ OPTIONAL_SECTIONS = [
     'final_vanquished',             # games with no vanquished creatures
     'skill_progression',            # games that end before level 2 is reached
     'action_totals',                # games without a single action
+    'final_portals',                # not all games have portals
     'levels_and_vaults_discovered', # not all games have this
 ]
 
