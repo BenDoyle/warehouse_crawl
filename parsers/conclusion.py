@@ -9,6 +9,7 @@ import glob
 def get_rows(contents):
     final_row = get_notes(game_id, contents)[-1]
     acid = re.search('Splashed by(.+)\'s acid', final_row[6])
+    impaled = re.search('Impaled on(.+)\'s spines', final_row[6])
     killed = re.search('(.+)by(.+)', final_row[6])
     succumbed = re.search('Succumbed to (.+) poison', final_row[6])
 
@@ -22,6 +23,8 @@ def get_rows(contents):
         conclusion = ['won', 'won', 'player']
     elif final_row[6] == 'Got out of the dungeon alive.':
         conclusion = ['quit', 'left', 'player']
+    elif impaled:
+        conclusion = ['died', 'impaled', impaled.group(1).strip()]
     elif acid:
         conclusion = ['died', 'acid', acid.group(1).strip()]
     elif killed:
