@@ -42,7 +42,7 @@ OPTIONAL_SECTIONS = [
 def section_log_string(contents):
 
     def min_or_none(breakpoints, start):
-        larger = set(filter(lambda x: x > start, breakpoints))
+        larger = set(filter(lambda x: x >= start, breakpoints))
         if larger:
             return min(larger)
         else:
