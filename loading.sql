@@ -327,6 +327,21 @@ CREATE TABLE orb
 COPY orb FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/orb.csv' WITH (FORMAT csv, DELIMITER '~');
 SELECT * FROM orb;
 
+DROP TABLE IF EXISTS rune;
+CREATE TABLE rune
+(
+    player         VARCHAR(255),
+    game_date      VARCHAR(255),
+    game_time      VARCHAR(255),
+    turn           INTEGER,
+    branch         VARCHAR(255),
+    branch_level   INTEGER,
+    note           VARCHAR(255),
+    rune           VARCHAR(255)
+);
+COPY rune FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/rune.csv' WITH (FORMAT csv, DELIMITER '~');
+SELECT * FROM rune;
+
 DROP TABLE IF EXISTS shaft;
 CREATE TABLE shaft
 (
