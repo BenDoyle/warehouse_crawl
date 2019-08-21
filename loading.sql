@@ -30,8 +30,10 @@ CREATE TABLE game_version (
     major         INTEGER,
     minor         INTEGER,
     patch         INTEGER,
-    build         VARCHAR(255),
-    style         VARCHAR(255)
+    build         INTEGER,
+    build_detail  VARCHAR(255),
+    style         VARCHAR(255),
+    malformed     BOOLEAN
 );
 COPY game_version FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/game_version.csv' WITH (FORMAT csv, DELIMITER '~');
 SELECT * FROM game_version;

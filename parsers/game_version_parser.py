@@ -6,29 +6,37 @@ import glob
 import re
 
 def get_rows(game_id, contents):
-    version_info = re.search('(\d+)\.(\d+)(\.([\d]+))?(\-([\w\d\-]+))*\s\((\w+)\)', contents)
-    version_string = version_info.group(0).strip()
-    major_version = version_info.group(1).strip()
-    minor_version = version_info.group(2).strip()
-    patch_level = version_info.group(4)
-    build = version_info.group(6)
-    view = version_info.group(7)
-
-    return [game_id + [
-        version_string,
-        major_version,
-        minor_version,
-        patch_level,
-        build,
-        view,
-    ]]
+    info = re.search('(\d+)\.(\d+)\.(\d+)?(-(\d+))??(-(\w+))?\s\((console|tiles)\)', contents)
+    if info:
+        return [game_id + [
+            info.group(0).strip(),  # string
+            int(info.group(1)),     # major
+            int(info.group(2)),     # minor
+            int(info.group(3)),     # patch
+            int(info.group(5))    if info.group(4) else None,     # build
+            info.group(7).strip() if info.group(5) else None,  # build
+            info.group(8).strip(),  # view
+            False,                  # malformed
+        ]]
+    else:
+        info = re.search('(\d+)\.(\d+).*\((console|tiles)\)', contents)
+        return [game_id + [
+            info.group(0).strip(),  # string
+            int(info.group(1)),     # major
+            int(info.group(2)),     # minor
+            None,                   # patch
+            None,                   # build
+            None,                   # build
+            info.group(3).strip(),  # view
+            True,                  # malformed
+        ]]
 
 if __name__ == '__main__':
     files = glob.glob('{}/*.txt'.format(os.environ.get('path')))
     for file_name in files:
+        print(file_name)
         contents = read_text_file(file_name)
         game_id = get_game_id(file_name)
         rows = get_rows(game_id, contents)
         write_rows_to_csv(rows, file_name)
-        print(file_name)
 
