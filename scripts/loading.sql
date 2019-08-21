@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS action_totals;
 CREATE TABLE action_totals (
     player          VARCHAR(255),
-    game_date       VARCHAR(255),
-    game_time       VARCHAR(255),
+    game_date_key   INTEGER,
+    game_at         TIMESTAMP,
     action_category VARCHAR(255),
     action          VARCHAR(255),
     level_group     VARCHAR(255),
@@ -13,10 +13,10 @@ SELECT * FROM action_totals;
 
 DROP TABLE IF EXISTS game_seed;
 CREATE TABLE game_seed (
-    player     VARCHAR(255),
-    game_date  VARCHAR(255),
-    game_time  VARCHAR(255),
-    seed       VARCHAR(255)
+    player         VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
+    seed           VARCHAR(255)
 );
 COPY game_seed FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/game_seed.csv' WITH (FORMAT csv, DELIMITER '~');
 SELECT * FROM game_seed;
@@ -24,8 +24,8 @@ SELECT * FROM game_seed;
 DROP TABLE IF EXISTS game_version;
 CREATE TABLE game_version (
     player        VARCHAR(255),
-    game_date     VARCHAR(255),
-    game_time     VARCHAR(255),
+    game_date_key INTEGER,
+    game_at       TIMESTAMP,
     full_version  VARCHAR(255),
     major         INTEGER,
     minor         INTEGER,
@@ -41,8 +41,8 @@ SELECT * FROM game_version;
 DROP TABLE IF EXISTS final_abilities;
 CREATE TABLE final_abilities (
     player        VARCHAR(255),
-    game_date     VARCHAR(255),
-    game_time     VARCHAR(255),
+    game_date_key INTEGER,
+    game_at       TIMESTAMP,
     ability       VARCHAR(255)
 );
 COPY final_abilities FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/final_abilities.csv' WITH (FORMAT csv, DELIMITER '~');
@@ -51,8 +51,8 @@ SELECT * FROM final_abilities;
 DROP TABLE IF EXISTS final_altars;
 CREATE TABLE final_altars (
     player        VARCHAR(255),
-    game_date     VARCHAR(255),
-    game_time     VARCHAR(255),
+    game_date_key INTEGER,
+    game_at       TIMESTAMP,
     god           VARCHAR(255)
 );
 COPY final_altars FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/final_altars.csv' WITH (FORMAT csv, DELIMITER '~');
@@ -61,8 +61,8 @@ SELECT a.god, count(1) from final_altars as a group by a.god ORDER BY 2 DESC;
 DROP TABLE IF EXISTS final_skills;
 CREATE TABLE final_skills (
     player        VARCHAR(255),
-    game_date     VARCHAR(255),
-    game_time     VARCHAR(255),
+    game_date_key INTEGER,
+    game_at       TIMESTAMP,
     status        VARCHAR(255),
     rank          DECIMAL(3,1),
     skill         VARCHAR(255)
@@ -75,8 +75,8 @@ DROP TABLE IF EXISTS final_stats;
 CREATE TABLE final_stats
 (
     player             VARCHAR(255),
-    game_date          VARCHAR(255),
-    game_time          VARCHAR(255),
+    game_date_key      INTEGER,
+    game_at            TIMESTAMP,
     name               VARCHAR(255),
     title              VARCHAR(255),
     species_background VARCHAR(255),
@@ -135,8 +135,8 @@ DROP TABLE IF EXISTS final_vanquished;
 CREATE TABLE final_vanquished
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     vanquished_by  VARCHAR(255),
     number         INTEGER,
     creature       VARCHAR(255),
@@ -150,8 +150,8 @@ DROP TABLE IF EXISTS altars;
 CREATE TABLE altars
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -166,8 +166,8 @@ DROP TABLE IF EXISTS bought;
 CREATE TABLE bought
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -183,8 +183,8 @@ DROP TABLE IF EXISTS conclusion;
 CREATE TABLE conclusion
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   VARCHAR(255),
@@ -201,8 +201,8 @@ DROP TABLE IF EXISTS fell;
 CREATE TABLE fell
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -217,8 +217,8 @@ DROP TABLE IF EXISTS found;
 CREATE TABLE found
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -233,8 +233,8 @@ DROP TABLE IF EXISTS identified;
 CREATE TABLE identified
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -249,8 +249,8 @@ DROP TABLE IF EXISTS killed;
 CREATE TABLE killed
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -266,8 +266,8 @@ DROP TABLE IF EXISTS learned;
 CREATE TABLE learned
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -284,8 +284,8 @@ DROP TABLE IF EXISTS mutation;
 CREATE TABLE mutation
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -302,8 +302,8 @@ DROP TABLE IF EXISTS noticed;
 CREATE TABLE noticed
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -319,8 +319,8 @@ DROP TABLE IF EXISTS orb;
 CREATE TABLE orb
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -333,8 +333,8 @@ DROP TABLE IF EXISTS rune;
 CREATE TABLE rune
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -348,8 +348,8 @@ DROP TABLE IF EXISTS shaft;
 CREATE TABLE shaft
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -364,8 +364,8 @@ DROP TABLE IF EXISTS skill_progression;
 CREATE TABLE skill_progression
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -381,8 +381,8 @@ DROP TABLE IF EXISTS unlearned;
 CREATE TABLE unlearned
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -397,8 +397,8 @@ DROP TABLE IF EXISTS upgrades;
 CREATE TABLE upgrades
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -417,8 +417,8 @@ DROP TABLE IF EXISTS win;
 CREATE TABLE win
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   VARCHAR(255),
@@ -432,8 +432,8 @@ DROP TABLE IF EXISTS worship;
 CREATE TABLE worship
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -449,8 +449,8 @@ DROP TABLE IF EXISTS xp_progression;
 CREATE TABLE xp_progression
 (
     player         VARCHAR(255),
-    game_date      VARCHAR(255),
-    game_time      VARCHAR(255),
+    game_date_key  INTEGER,
+    game_at        TIMESTAMP,
     turn           INTEGER,
     branch         VARCHAR(255),
     branch_level   INTEGER,
@@ -462,3 +462,22 @@ CREATE TABLE xp_progression
 );
 COPY xp_progression FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/0.23/summaries/xp_progression.csv' WITH (FORMAT csv, DELIMITER '~');
 SELECT * FROM xp_progression;
+
+
+
+DROP TABLE IF EXISTS dimension_species_background;
+CREATE TABLE dimension_species_background
+(
+    "Species Background Key"            INTEGER,
+    "From Game Version"                 INTEGER,
+    "To Game Version"                   INTEGER,
+    "Species"                           VARCHAR(255),
+    "Species Abreviated"                VARCHAR(255),
+    "Background Group"                  VARCHAR(255),
+    "Background"                        VARCHAR(255),
+    "Background Abreviated"             VARCHAR(255),
+    "Species And Background"            VARCHAR(255),
+    "Species And Background Abreviated" VARCHAR(255)
+);
+COPY dimension_species_background FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/static/species_background.csv' WITH (FORMAT csv, DELIMITER '~');
+SELECT * FROM dimension_species_background;
