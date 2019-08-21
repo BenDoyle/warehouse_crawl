@@ -1,0 +1,7 @@
+name: index-versions
+env-type: python
+run-command: python run.py
+options:
+ - morgues: Path to directory containing morgue files
+ - output: Path to directory where the files will be downloaded
+test-command: py.test

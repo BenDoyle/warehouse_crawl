@@ -36,12 +36,12 @@ def execute_job(job, processors, dryrun):
     assert name in processors, 'Unknown processor: {}'.format(name)
     path = processors[name]['path']
     manifest = processors[name]['manifest']
-    
+
     command = '{options} {command}'.format(
         options = ' '.join('{}={}'.format(option.upper(), value) for (option, value) in options.items()),
         command = manifest['run-command']
     )
-    
+
     options = {option.upper(): str(value) for (option, value) in options.items()}
     command = manifest['run-command']
     if dryrun:
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     parser.add_argument('manifest', help='Path to app manifest YAML file')
     parser.add_argument('--dryrun', action='store_true', help='Print the processor commands instead of executing them')
     args = parser.parse_args()
-    
+
     manifest_path = os.path.abspath(args.manifest)
     if not os.path.exists(manifest_path):
         print('File does not exist: {}'.format(manifest_path))
@@ -86,4 +86,3 @@ if __name__ == '__main__':
 
     manifest = load_yaml_manifest(manifest_path)
     run_app(manifest, args.dryrun)
-    
