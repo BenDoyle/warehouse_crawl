@@ -1,5 +1,5 @@
 rm -rf data/0.23
-MORGUES=data/morgues/ OUTPUT=data/ python processors/morgue_splitter/morgue_splitter-0.23.py;
+MORGUES=data/morgues/ OUTPUT=data/ python processors/morgue-splitter/morgue_splitter-0.23.py;
 path=data/0.23/notes/ python parsers/altars.py;
 path=data/0.23/notes/ python parsers/bought.py;
 path=data/0.23/notes/ python parsers/conclusion.py;

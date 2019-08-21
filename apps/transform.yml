@@ -1,0 +1,6 @@
+name: Dungeon Crawler Warehouse - Transform to PostgreSQL
+jobs:
+ - processor: morgue-splitter
+   versioned-morgues: /tmp/data/morgues-by-version
+   version: 0.23
+   output: /tmp/data/morgues-split
