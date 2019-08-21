@@ -1,12 +1,22 @@
 import os
 import re
 import csv
+from datetime import datetime
 
 def get_game_id(file_name):
     basename = os.path.basename(file_name)
     match = re.match('(.*)-morgue-(.*)-(\d{8})-(\d{6})\.txt', basename)
 
-    return [match.group(2), match.group(3), match.group(4)]
+    ts = datetime(
+        int(match.group(3)[0:4]),
+        int(match.group(3)[4:6]),
+        int(match.group(3)[6:8]),
+        int(match.group(4)[0:2]),
+        int(match.group(4)[2:4]),
+        int(match.group(4)[4:6])
+    )
+
+    return [match.group(2), int(match.group(3)), ts]
 
 
 def write_csv(outfile_name, rows):
