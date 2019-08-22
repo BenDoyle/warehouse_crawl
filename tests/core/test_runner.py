@@ -287,7 +287,7 @@ jobs:
         with pytest.raises(AssertionError) as exc:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
 
-        assert str(exc.value) == "Invalid placeholder: $unknown; valid names include: ['downloader']"
+        assert str(exc.value) == "Invalid placeholder: $unknown; valid names include: ['downloader', 'previous']"
 
 
     @mock.patch('core.runner.execute_transform')
@@ -530,7 +530,7 @@ jobs:
 
         with pytest.raises(Exception) as exc_info:
             runner.run_app(manifest, transforms_repo_path=transforms_fixtures_path)
-        assert str(exc_info.value) == 'No previous value found for $previous.output (previous == "downloader")'
+        assert str(exc_info.value) == "No property named \"output\" defined in previous step. Possible values are: ['name', 'transform', 'base_url']"
 
     @mock.patch('core.runner.execute_job_steps')
     def test_resolve_variable_previous_output_first_step(self, execute_job_steps, transforms_fixtures_path):
