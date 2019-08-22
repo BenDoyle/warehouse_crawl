@@ -5,13 +5,14 @@ jobs:
     - transform: morgues-download-2
       base_url: http://crawl.berotato.org/crawl/morgue/
       throttle: 500
-      output: /tmp/data/morgues
+      output: ~/warehouse_crawl-data/morgues
       skip: true
     - transform: index-versions
       morgues: $previous.output
-      output: /tmp/data/morgues-by-version/
-      skip: true
+      output: ~/warehouse_crawl-data/morgues-by-version/
+      # skip: true
     - transform: morgue-splitter
       versioned-morgues: $previous.output
       version: 0.23
-      output: /tmp/data/morgues-split
+      output: ~/warehouse_crawl-data/morgues-split
+      skip: true
