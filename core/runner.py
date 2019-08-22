@@ -5,6 +5,7 @@ import sys
 import re
 import tempfile
 from collections import OrderedDict
+import pathlib
 
 import yaml
 
@@ -143,6 +144,10 @@ def resolve_manifest_placeholders(manifest):
                 if '$' in value:
                     value = resolve_placeholders(value, named_steps)
                     step[name] = value
+                if value.startswith('~/'):
+                    # assume it's a path and expand it
+                    # TODO: add a test for this
+                    step[name] = str(pathlib.PosixPath(value).expanduser())
             if 'name' in step:
                 named_steps[step['name']] = step
             named_steps['previous'] = step
