@@ -3,7 +3,7 @@ import re
 import os
 
 SECTION_PATTERNS = {
-    'game_version':                 'Dungeon Crawl Stone Soup version 0\.23(\.\d+)?[\-\w\d]* \(\w+\) character file\.',
+    'game_version':                 'Dungeon Crawl Stone Soup version .+ character file\.',
     'game_seed':                    'Game seed: \d+',
     'prose_summary':                '\d+ [\-\w\s]+ \(level \d+, [\-0-9]+/\d+',
     'final_stats':                  '[\-\w]+\s+the\s+[\s\-\w]+\s\([\w\s]+\)\s+Turns:\s+\d+,\s+Time:\s+[0-9:]+',
