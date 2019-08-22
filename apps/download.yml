@@ -10,3 +10,8 @@ jobs:
     - transform: index-versions
       morgues: $previous.output
       output: /tmp/data/morgues-by-version/
+      skip: true
+    - transform: morgue-splitter
+      versioned-morgues: $previous.output
+      version: 0.23
+      output: /tmp/data/morgues-split
