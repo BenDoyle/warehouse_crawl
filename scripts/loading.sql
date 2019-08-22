@@ -481,3 +481,20 @@ CREATE TABLE dimension_species_background
 );
 COPY dimension_species_background FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/data/static/species_background.csv' WITH (FORMAT csv, DELIMITER '~');
 SELECT * FROM dimension_species_background;
+
+
+DROP TABLE IF EXISTS dimension_locations;
+CREATE TABLE dimension_locations
+(
+    "Location Key"                      INTEGER,
+    "From Game Version"                 INTEGER,
+    "To Game Version"                   INTEGER,
+    "Abreviated Floor"                  VARCHAR(255),
+    "Abreviated Branch"                 VARCHAR(255),
+    "Branch Group"                      VARCHAR(255),
+    "Branch"                            VARCHAR(255),
+    "Branch Required"                   VARCHAR(255),
+    "Floor Has Rune"                    VARCHAR(255)
+);
+COPY dimension_locations FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/static/locations.csv' WITH (FORMAT csv, DELIMITER '~');
+SELECT * FROM dimension_locations
