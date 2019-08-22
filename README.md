@@ -30,3 +30,7 @@ pip install -r requirements.txt
 ## DCSS Log generation code
 
 https://github.com/crawl/crawl/blob/6199648b78d653beca72b6d47ebc822e34984531/crawl-ref/source/chardump.cc
+
+## Make it go!
+
+`bin/runner apps/download.yml`
