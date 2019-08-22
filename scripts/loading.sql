@@ -511,3 +511,13 @@ CREATE TABLE dimension_gods
 );
 COPY dimension_gods FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/static/gods.csv' WITH (FORMAT csv, DELIMITER '~');
 SELECT * FROM dimension_gods
+
+DROP TABLE IF EXISTS dimension_xp_level;
+CREATE TABLE dimension_xp_level
+(
+    "Experience Level Key"   INTEGER,
+    "Experience Level"       VARCHAR(255),
+    "Experience Level Group" VARCHAR(255)
+);
+COPY dimension_xp_level FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/static/xp_level.csv' WITH (FORMAT csv, DELIMITER '~');
+SELECT * FROM dimension_xp_level
