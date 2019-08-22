@@ -1,0 +1,139 @@
+1~Coc:1~Coc~Hell~Cocytus~Optional~No Rune
+2~Coc:2~Coc~Hell~Cocytus~Optional~No Rune
+3~Coc:3~Coc~Hell~Cocytus~Optional~No Rune
+4~Coc:4~Coc~Hell~Cocytus~Optional~No Rune
+5~Coc:5~Coc~Hell~Cocytus~Optional~No Rune
+6~Coc:6~Coc~Hell~Cocytus~Optional~No Rune
+7~Coc:7~Coc~Hell~Cocytus~Optional~Icy Rune Of Zot
+8~Dis:1~Dis~Hell~The Iron City of Dis~Optional~No Rune
+9~Dis:2~Dis~Hell~The Iron City of Dis~Optional~No Rune
+10~Dis:3~Dis~Hell~The Iron City of Dis~Optional~No Rune
+11~Dis:4~Dis~Hell~The Iron City of Dis~Optional~No Rune
+12~Dis:5~Dis~Hell~The Iron City of Dis~Optional~No Rune
+13~Dis:6~Dis~Hell~The Iron City of Dis~Optional~No Rune
+14~Dis:7~Dis~Hell~The Iron City of Dis~Optional~Iron Rune Of Zot
+15~Geh:1~Geh~Hell~Gehenna~Optional~No Rune
+16~Geh:2~Geh~Hell~Gehenna~Optional~No Rune
+17~Geh:3~Geh~Hell~Gehenna~Optional~No Rune
+18~Geh:4~Geh~Hell~Gehenna~Optional~No Rune
+19~Geh:5~Geh~Hell~Gehenna~Optional~No Rune
+20~Geh:6~Geh~Hell~Gehenna~Optional~No Rune
+21~Geh:7~Geh~Hell~Gehenna~Optional~Obsidian Rune Of Zot
+22~Tar:1~Tar~Hell~Tartarus~Optional~No Rune
+23~Tar:2~Tar~Hell~Tartarus~Optional~No Rune
+24~Tar:3~Tar~Hell~Tartarus~Optional~No Rune
+25~Tar:4~Tar~Hell~Tartarus~Optional~No Rune
+26~Tar:5~Tar~Hell~Tartarus~Optional~No Rune
+27~Tar:6~Tar~Hell~Tartarus~Optional~No Rune
+28~Tar:7~Tar~Hell~Tartarus~Optional~Bone Rune Of Zot
+29~Temple~Temple~Temple~The Temple~Optional~No Rune
+30~Bailey~Bailey~Portal~The Bailey~Optional~No Rune
+31~Gauntlet~Gauntlet~Portal~The Gauntlet~Optional~No Rune
+32~IceCv~IceCv~Portal~The Ice Cave~Optional~No Rune
+33~Ossuary~Ossuary~Portal~The Ossuary~Optional~No Rune
+34~Sewer~Sewer~Portal~The Sewer~Optional~No Rune
+35~Volcano~Volcano~Portal~The Volcano~Optional~No Rune
+36~WizLab~WizLab~Portal~Wizard Lab~Optional~No Rune
+37~Abyss:1~Abyss~The Abyss~The Abyss~Rune~No Rune
+38~Abyss:2~Abyss~The Abyss~The Abyss~Rune~No Rune
+39~Abyss:3~Abyss~The Abyss~The Abyss~Rune~Abyssal Rune Of Zot
+40~Abyss:4~Abyss~The Abyss~The Abyss~Rune~Abyssal Rune Of Zot
+41~Abyss:5~Abyss~The Abyss~The Abyss~Rune~Abyssal Rune Of Zot
+42~Crypt:1~Crypt~The Crypt~The Crypt~Rune~No Rune
+43~Crypt:2~Crypt~The Crypt~The Crypt~Rune~No Rune
+44~Crypt:3~Crypt~The Crypt~The Crypt~Rune~No Rune
+45~D:1~D~The Dungeon~The Dungeon~Required~No Rune
+46~D:2~D~The Dungeon~The Dungeon~Required~No Rune
+47~D:3~D~The Dungeon~The Dungeon~Required~No Rune
+48~D:4~D~The Dungeon~The Dungeon~Required~No Rune
+49~D:5~D~The Dungeon~The Dungeon~Required~No Rune
+50~D:6~D~The Dungeon~The Dungeon~Required~No Rune
+51~D:7~D~The Dungeon~The Dungeon~Required~No Rune
+52~D:8~D~The Dungeon~The Dungeon~Required~No Rune
+53~D:9~D~The Dungeon~The Dungeon~Required~No Rune
+54~D:10~D~The Dungeon~The Dungeon~Required~No Rune
+55~D:11~D~The Dungeon~The Dungeon~Required~No Rune
+56~D:12~D~The Dungeon~The Dungeon~Required~No Rune
+57~D:13~D~The Dungeon~The Dungeon~Required~No Rune
+58~D:14~D~The Dungeon~The Dungeon~Required~No Rune
+59~D:15~D~The Dungeon~The Dungeon~Required~No Rune
+60~D:$~D~The Dungeon~Outside~Required~No Rune
+61~Depths:1~Depths~The Depths~The Depths~Required~No Rune
+62~Depths:2~Depths~The Depths~The Depths~Required~No Rune
+63~Depths:3~Depths~The Depths~The Depths~Required~No Rune
+64~Depths:4~Depths~The Depths~The Depths~Required~No Rune
+65~Depths:5~Depths~The Depths~The Depths~Required~No Rune
+66~Elf:1~Elf~The Elven Halls~The Elven Halls~Optional~No Rune
+67~Elf:2~Elf~The Elven Halls~The Elven Halls~Optional~No Rune
+68~Elf:3~Elf~The Elven Halls~The Elven Halls~Optional~No Rune
+69~Hell~Hell~Hell~The Vestibule of Hell~Optional~No Rune
+70~Lair:1~Lair~The Lair Of Beasts~The Lair Of Beasts~Rune~No Rune
+71~Lair:2~Lair~The Lair Of Beasts~The Lair Of Beasts~Rune~No Rune
+72~Lair:3~Lair~The Lair Of Beasts~The Lair Of Beasts~Rune~No Rune
+73~Lair:4~Lair~The Lair Of Beasts~The Lair Of Beasts~Rune~No Rune
+74~Lair:5~Lair~The Lair Of Beasts~The Lair Of Beasts~Rune~No Rune
+75~Lair:6~Lair~The Lair Of Beasts~The Lair Of Beasts~Rune~No Rune
+76~Orc:1~Orc~The Orcish Mines~The Orcish Mines~Optional~No Rune
+77~Orc:2~Orc~The Orcish Mines~The Orcish Mines~Optional~No Rune
+78~Pan~Pan~Pandemonium~Pandemonium~Optional~Demonic, Glowing, Magical, Fiery and Dark Runes Of Zot
+79~Shoals:1~Shoals~The Shoals~The Shoals~Rune~No Rune
+80~Shoals:2~Shoals~The Shoals~The Shoals~Rune~No Rune
+81~Shoals:3~Shoals~The Shoals~The Shoals~Rune~No Rune
+82~Shoals:4~Shoals~The Shoals~The Shoals~Rune~Barnacled Rune Of Zot
+83~Slime:1~Slime~The Slime Pits~The Slime Pits~Rune~No Rune
+84~Slime:2~Slime~The Slime Pits~The Slime Pits~Rune~No Rune
+85~Slime:3~Slime~The Slime Pits~The Slime Pits~Rune~No Rune
+86~Slime:4~Slime~The Slime Pits~The Slime Pits~Rune~No Rune
+87~Slime:5~Slime~The Slime Pits~The Slime Pits~Rune~Slimy Rune Of Zot
+88~Snake:1~Snake~The Snake Pit~The Snake Pit~Rune~No Rune
+89~Snake:2~Snake~The Snake Pit~The Snake Pit~Rune~No Rune
+90~Snake:3~Snake~The Snake Pit~The Snake Pit~Rune~No Rune
+91~Snake:4~Snake~The Snake Pit~The Snake Pit~Rune~Serpentine Rune Of Zot
+92~Spider:1~Spider~The Spider’s Nest~The Spider’s Nest~Rune~No Rune
+93~Spider:2~Spider~The Spider’s Nest~The Spider’s Nest~Rune~No Rune
+94~Spider:3~Spider~The Spider’s Nest~The Spider’s Nest~Rune~No Rune
+95~Spider:4~Spider~The Spider’s Nest~The Spider’s Nest~Rune~Gossamer Rune Of Zot
+96~Swamp:1~Swamp~The Swamp~The Swamp~Rune~No Rune
+97~Swamp:2~Swamp~The Swamp~The Swamp~Rune~No Rune
+98~Swamp:3~Swamp~The Swamp~The Swamp~Rune~No Rune
+99~Swamp:4~Swamp~The Swamp~The Swamp~Rune~Decaying Rune Of Zot
+100~Tomb:1~Tomb~The Tomb of Ancients~The Tomb of Ancients~Rune~No Rune
+101~Tomb:2~Tomb~The Tomb of Ancients~The Tomb of Ancients~Rune~No Rune
+102~Tomb:3~Tomb~The Tomb of Ancients~The Tomb of Ancients~Rune~Golden Rune Of Zot
+103~Vaults:1~Vaults~The Vaults~The Vaults~Rune~No Rune
+104~Vaults:2~Vaults~The Vaults~The Vaults~Rune~No Rune
+105~Vaults:3~Vaults~The Vaults~The Vaults~Rune~No Rune
+106~Vaults:4~Vaults~The Vaults~The Vaults~Rune~No Rune
+107~Vaults:5~Vaults~The Vaults~The Vaults~Rune~Silver Rune Of Zot
+108~Zig:1~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+109~Zig:2~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+110~Zig:3~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+111~Zig:4~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+112~Zig:5~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+113~Zig:6~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+114~Zig:7~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+115~Zig:8~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+116~Zig:9~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+117~Zig:10~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+118~Zig:11~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+119~Zig:12~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+120~Zig:13~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+121~Zig:14~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+122~Zig:15~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+123~Zig:16~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+124~Zig:17~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+125~Zig:18~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+126~Zig:19~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+127~Zig:20~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+128~Zig:21~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+129~Zig:22~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+130~Zig:23~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+131~Zig:24~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+132~Zig:25~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+133~Zig:26~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+134~Zig:27~Zig~A Ziggurat~A Ziggurat~Optional~No Rune
+135~Zot:1~Zot~Realm Of Zot~Realm Of Zot~Required~No Rune
+136~Zot:2~Zot~Realm Of Zot~Realm Of Zot~Required~No Rune
+137~Zot:3~Zot~Realm Of Zot~Realm Of Zot~Required~No Rune
+138~Zot:4~Zot~Realm Of Zot~Realm Of Zot~Required~No Rune
+139~Zot:5~Zot~Realm Of Zot~Realm Of Zot~Required~Orb Of Zot
