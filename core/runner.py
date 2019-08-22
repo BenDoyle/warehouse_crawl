@@ -47,7 +47,11 @@ def load_manifest_at_path(path, transforms):
     }
 
 def execute_job_steps(job_name, steps, transforms, dryrun):
-    for step in steps:
+    for i, step in enumerate(steps):
+        if step.get('skip'):
+            # TODO add tests for this
+            print("!! Skipping step '{}' from job '{}'".format(step.get('name', '#{}'.format(i + 1)), job_name))
+            continue
         if 'transform' in step:
             execute_transform(step, transforms, dryrun)
 

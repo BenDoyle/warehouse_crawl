@@ -6,6 +6,7 @@ jobs:
       base_url: http://crawl.berotato.org/crawl/morgue/
       throttle: 500
       output: /tmp/data/morgues
+      skip: true
     - transform: index-versions
       morgues: $previous.output
       output: /tmp/data/morgues-by-version/
