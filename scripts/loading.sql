@@ -498,3 +498,16 @@ CREATE TABLE dimension_locations
 );
 COPY dimension_locations FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/static/locations.csv' WITH (FORMAT csv, DELIMITER '~');
 SELECT * FROM dimension_locations
+
+DROP TABLE IF EXISTS dimension_gods;
+CREATE TABLE dimension_gods
+(
+    "God Key"                           INTEGER,
+    "From Game Version"                 INTEGER,
+    "To Game Version"                   INTEGER,
+    "God Name"                          VARCHAR(255),
+    "Altar Description"                 VARCHAR(255),
+    "God Title"                         VARCHAR(255)
+);
+COPY dimension_gods FROM '/Users/ben/src/github.com/bendoyle/warehouse_crawl/static/gods.csv' WITH (FORMAT csv, DELIMITER '~');
+SELECT * FROM dimension_gods
