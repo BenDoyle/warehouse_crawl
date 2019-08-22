@@ -1,5 +1,3 @@
-rm -rf data/0.23
-MORGUES=data/morgues/ OUTPUT=data/ python processors/morgue-splitter/morgue_splitter-0.23.py;
 path=data/0.23/notes/ python parsers/altars.py;
 path=data/0.23/notes/ python parsers/bought.py;
 path=data/0.23/notes/ python parsers/conclusion.py;
@@ -19,6 +17,7 @@ path=data/0.23/notes/ python parsers/upgrades.py;
 path=data/0.23/notes/ python parsers/win.py;
 path=data/0.23/notes/ python parsers/worship.py;
 path=data/0.23/notes/ python parsers/xp_progression.py;
+
 path=data/0.23/action_totals/ python parsers/action_totals.py;
 path=data/0.23/final_abilities/ python parsers/final_abilities_parser.py;
 path=data/0.23/final_altars/ python parsers/final_altars_parser.py;
@@ -29,6 +28,7 @@ path=data/0.23/game_seed/ python parsers/game_seed_parser.py;
 path=data/0.23/game_version/ python parsers/game_version_parser.py;
 
 mkdir data/0.23/summaries;
+
 cat data/0.23/notes/altars/*.csv > data/0.23/summaries/altars.csv;
 cat data/0.23/notes/bought/*.csv > data/0.23/summaries/bought.csv;
 cat data/0.23/notes/conclusion/*.csv > data/0.23/summaries/conclusion.csv;
