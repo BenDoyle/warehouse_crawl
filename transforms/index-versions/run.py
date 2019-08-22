@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 import codecs
 
-version_pattern = re.compile(' ([0-9]+[.][0-9]+)[.-]')
+version_pattern = re.compile('Dungeon Crawl Stone Soup version ([0-9]+[.][0-9]+)[.-]')
 
 def get_version(path):
     with open(path, encoding='iso-8859-1') as f:
