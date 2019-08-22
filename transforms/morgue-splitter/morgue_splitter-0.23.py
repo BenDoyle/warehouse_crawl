@@ -25,6 +25,8 @@ SECTION_PATTERNS = {
     'skill_progression':            'Skill\s+XL:',
     'action_totals':                'Action\s+\|',
     'levels_and_vaults_discovered': 'Levels and vault maps discovered:',
+    'monsters_and_xp_by_level':     'Table legend:',
+    'vaults_used',                  'Vault maps used:'
 }
 
 OPTIONAL_SECTIONS = [
@@ -38,6 +40,8 @@ OPTIONAL_SECTIONS = [
     'action_totals',                # games without a single action
     'final_portals',                # not all games have portals
     'levels_and_vaults_discovered', # not all games have this
+    'monsters_and_xp_by_level',     # not all games have this
+    'vaults_used',                  # not all games have this
 ]
 
 def section_log_string(contents):
