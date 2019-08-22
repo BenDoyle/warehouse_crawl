@@ -8,7 +8,7 @@ SECTION_PATTERNS = {
     'prose_summary':                '\d+ [\-\w\s]+ \(level \d+, [\-0-9]+/\d+',
     'final_stats':                  '[\-\w]+\s+the\s+[\s\-\w]+\s\([\w\s]+\)\s+Turns:\s+\d+,\s+Time:\s+[0-9:]+',
     'final_exploration_summary':    'You were [oi]n|You escaped',
-    'final_inventory':              'Inventory:',
+    'final_inventory':              'You aren\'t carrying anything.|Inventory:',
     'final_skills':                 'Skills:',
     'final_spells':                 'You had [\d\w]+ spell level(s)? left.|You couldn\'t memorise any spells.',
     'final_library':                'Your spell library contained the following spells:|Your spell library was empty.',
