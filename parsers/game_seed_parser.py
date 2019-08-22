@@ -13,11 +13,12 @@ def get_rows(game_id, contents):
     ]]
 
 if __name__ == '__main__':
-    files = glob.glob('{}/*.txt'.format(os.environ.get('path')))
+    files = glob.glob('{}/*.txt'.format(os.environ.get('input_path')))
+    output_path = os.environ.get('output_path')
     for file_name in files:
         contents = read_text_file(file_name)
         game_id = get_game_id(file_name)
         rows = get_rows(game_id, contents)
-        write_rows_to_csv(rows, file_name)
+        write_rows_to_csv(rows, file_name, output_path)
         print(file_name)
 
