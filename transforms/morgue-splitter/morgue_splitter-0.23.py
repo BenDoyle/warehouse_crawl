@@ -26,7 +26,7 @@ SECTION_PATTERNS = {
     'action_totals':                'Action\s+\|',
     'levels_and_vaults_discovered': 'Levels and vault maps discovered:',
     'monsters_and_xp_by_level':     'Table legend:',
-    'vaults_used',                  'Vault maps used:'
+    'vaults_used':                  'Vault maps used:'
 }
 
 OPTIONAL_SECTIONS = [
