@@ -1,0 +1,770 @@
+1~23~23~Barachi~Ba~Warrior~Fighter~Fi~Barachi Fighter~BaFi
+2~23~23~Barachi~Ba~Warrior~Gladiator~Gl~Barachi Gladiator~BaGl
+3~23~23~Barachi~Ba~Warrior~Monk~Mo~Barachi Monk~BaMo
+4~23~23~Barachi~Ba~Warrior~Hunter~Hu~Barachi Hunter~BaHu
+5~23~23~Barachi~Ba~Warrior~Assassin~As~Barachi Assassin~BaAs
+6~23~23~Barachi~Ba~Zealot~Berserker~Be~Barachi Berserker~BaBe
+7~23~23~Barachi~Ba~Zealot~Abyssal Knight~AK~Barachi Abyssal Knight~BaAK
+8~23~23~Barachi~Ba~Zealot~Chaos Knight~CK~Barachi Chaos Knight~BaCK
+9~23~23~Barachi~Ba~Warrior-mage~Skald~Sk~Barachi Skald~BaSk
+10~23~23~Barachi~Ba~Warrior-mage~Enchanter~En~Barachi Enchanter~BaEn
+11~23~23~Barachi~Ba~Warrior-mage~Transmuter~Tm~Barachi Transmuter~BaTm
+12~23~23~Barachi~Ba~Warrior-mage~Arcane Marksman~AM~Barachi Arcane Marksman~BaAM
+13~23~23~Barachi~Ba~Warrior-mage~Warper~Wr~Barachi Warper~BaWr
+14~23~23~Barachi~Ba~Mage~Wizard~Wz~Barachi Wizard~BaWz
+15~23~23~Barachi~Ba~Mage~Conjurer~Cj~Barachi Conjurer~BaCj
+16~23~23~Barachi~Ba~Mage~Summoner~Su~Barachi Summoner~BaSu
+17~23~23~Barachi~Ba~Mage~Necromancer~Ne~Barachi Necromancer~BaNe
+18~23~23~Barachi~Ba~Mage~Fire Elementalist~FE~Barachi Fire Elementalist~BaFE
+19~23~23~Barachi~Ba~Mage~Ice Elementalist~IE~Barachi Ice Elementalist~BaIE
+20~23~23~Barachi~Ba~Mage~Air Elementalist~AE~Barachi Air Elementalist~BaAE
+21~23~23~Barachi~Ba~Mage~Earth Elementalist~EE~Barachi Earth Elementalist~BaEE
+22~23~23~Barachi~Ba~Mage~Venom Mage~VM~Barachi Venom Mage~BaVM
+23~23~23~Centaur~Ce~Warrior~Fighter~Fi~Centaur Fighter~CeFi
+24~23~23~Centaur~Ce~Warrior~Gladiator~Gl~Centaur Gladiator~CeGl
+25~23~23~Centaur~Ce~Warrior~Monk~Mo~Centaur Monk~CeMo
+26~23~23~Centaur~Ce~Warrior~Hunter~Hu~Centaur Hunter~CeHu
+27~23~23~Centaur~Ce~Warrior~Assassin~As~Centaur Assassin~CeAs
+28~23~23~Centaur~Ce~Zealot~Berserker~Be~Centaur Berserker~CeBe
+29~23~23~Centaur~Ce~Zealot~Abyssal Knight~AK~Centaur Abyssal Knight~CeAK
+30~23~23~Centaur~Ce~Zealot~Chaos Knight~CK~Centaur Chaos Knight~CeCK
+31~23~23~Centaur~Ce~Warrior-mage~Skald~Sk~Centaur Skald~CeSk
+32~23~23~Centaur~Ce~Warrior-mage~Enchanter~En~Centaur Enchanter~CeEn
+33~23~23~Centaur~Ce~Warrior-mage~Transmuter~Tm~Centaur Transmuter~CeTm
+34~23~23~Centaur~Ce~Warrior-mage~Arcane Marksman~AM~Centaur Arcane Marksman~CeAM
+35~23~23~Centaur~Ce~Warrior-mage~Warper~Wr~Centaur Warper~CeWr
+36~23~23~Centaur~Ce~Mage~Wizard~Wz~Centaur Wizard~CeWz
+37~23~23~Centaur~Ce~Mage~Conjurer~Cj~Centaur Conjurer~CeCj
+38~23~23~Centaur~Ce~Mage~Summoner~Su~Centaur Summoner~CeSu
+39~23~23~Centaur~Ce~Mage~Necromancer~Ne~Centaur Necromancer~CeNe
+40~23~23~Centaur~Ce~Mage~Fire Elementalist~FE~Centaur Fire Elementalist~CeFE
+41~23~23~Centaur~Ce~Mage~Ice Elementalist~IE~Centaur Ice Elementalist~CeIE
+42~23~23~Centaur~Ce~Mage~Air Elementalist~AE~Centaur Air Elementalist~CeAE
+43~23~23~Centaur~Ce~Mage~Earth Elementalist~EE~Centaur Earth Elementalist~CeEE
+44~23~23~Centaur~Ce~Mage~Venom Mage~VM~Centaur Venom Mage~CeVM
+45~23~23~Deep Dwarf~DD~Warrior~Fighter~Fi~Deep Dwarf Fighter~DDFi
+46~23~23~Deep Dwarf~DD~Warrior~Gladiator~Gl~Deep Dwarf Gladiator~DDGl
+47~23~23~Deep Dwarf~DD~Warrior~Monk~Mo~Deep Dwarf Monk~DDMo
+48~23~23~Deep Dwarf~DD~Warrior~Hunter~Hu~Deep Dwarf Hunter~DDHu
+49~23~23~Deep Dwarf~DD~Warrior~Assassin~As~Deep Dwarf Assassin~DDAs
+50~23~23~Deep Dwarf~DD~Zealot~Berserker~Be~Deep Dwarf Berserker~DDBe
+51~23~23~Deep Dwarf~DD~Zealot~Abyssal Knight~AK~Deep Dwarf Abyssal Knight~DDAK
+52~23~23~Deep Dwarf~DD~Zealot~Chaos Knight~CK~Deep Dwarf Chaos Knight~DDCK
+53~23~23~Deep Dwarf~DD~Warrior-mage~Skald~Sk~Deep Dwarf Skald~DDSk
+54~23~23~Deep Dwarf~DD~Warrior-mage~Enchanter~En~Deep Dwarf Enchanter~DDEn
+55~23~23~Deep Dwarf~DD~Warrior-mage~Transmuter~Tm~Deep Dwarf Transmuter~DDTm
+56~23~23~Deep Dwarf~DD~Warrior-mage~Arcane Marksman~AM~Deep Dwarf Arcane Marksman~DDAM
+57~23~23~Deep Dwarf~DD~Warrior-mage~Warper~Wr~Deep Dwarf Warper~DDWr
+58~23~23~Deep Dwarf~DD~Mage~Wizard~Wz~Deep Dwarf Wizard~DDWz
+59~23~23~Deep Dwarf~DD~Mage~Conjurer~Cj~Deep Dwarf Conjurer~DDCj
+60~23~23~Deep Dwarf~DD~Mage~Summoner~Su~Deep Dwarf Summoner~DDSu
+61~23~23~Deep Dwarf~DD~Mage~Necromancer~Ne~Deep Dwarf Necromancer~DDNe
+62~23~23~Deep Dwarf~DD~Mage~Fire Elementalist~FE~Deep Dwarf Fire Elementalist~DDFE
+63~23~23~Deep Dwarf~DD~Mage~Ice Elementalist~IE~Deep Dwarf Ice Elementalist~DDIE
+64~23~23~Deep Dwarf~DD~Mage~Air Elementalist~AE~Deep Dwarf Air Elementalist~DDAE
+65~23~23~Deep Dwarf~DD~Mage~Earth Elementalist~EE~Deep Dwarf Earth Elementalist~DDEE
+66~23~23~Deep Dwarf~DD~Mage~Venom Mage~VM~Deep Dwarf Venom Mage~DDVM
+67~23~23~Deep Elf~DE~Warrior~Fighter~Fi~Deep Elf Fighter~DEFi
+68~23~23~Deep Elf~DE~Warrior~Gladiator~Gl~Deep Elf Gladiator~DEGl
+69~23~23~Deep Elf~DE~Warrior~Monk~Mo~Deep Elf Monk~DEMo
+70~23~23~Deep Elf~DE~Warrior~Hunter~Hu~Deep Elf Hunter~DEHu
+71~23~23~Deep Elf~DE~Warrior~Assassin~As~Deep Elf Assassin~DEAs
+72~23~23~Deep Elf~DE~Zealot~Berserker~Be~Deep Elf Berserker~DEBe
+73~23~23~Deep Elf~DE~Zealot~Abyssal Knight~AK~Deep Elf Abyssal Knight~DEAK
+74~23~23~Deep Elf~DE~Zealot~Chaos Knight~CK~Deep Elf Chaos Knight~DECK
+75~23~23~Deep Elf~DE~Warrior-mage~Skald~Sk~Deep Elf Skald~DESk
+76~23~23~Deep Elf~DE~Warrior-mage~Enchanter~En~Deep Elf Enchanter~DEEn
+77~23~23~Deep Elf~DE~Warrior-mage~Transmuter~Tm~Deep Elf Transmuter~DETm
+78~23~23~Deep Elf~DE~Warrior-mage~Arcane Marksman~AM~Deep Elf Arcane Marksman~DEAM
+79~23~23~Deep Elf~DE~Warrior-mage~Warper~Wr~Deep Elf Warper~DEWr
+80~23~23~Deep Elf~DE~Mage~Wizard~Wz~Deep Elf Wizard~DEWz
+81~23~23~Deep Elf~DE~Mage~Conjurer~Cj~Deep Elf Conjurer~DECj
+82~23~23~Deep Elf~DE~Mage~Summoner~Su~Deep Elf Summoner~DESu
+83~23~23~Deep Elf~DE~Mage~Necromancer~Ne~Deep Elf Necromancer~DENe
+84~23~23~Deep Elf~DE~Mage~Fire Elementalist~FE~Deep Elf Fire Elementalist~DEFE
+85~23~23~Deep Elf~DE~Mage~Ice Elementalist~IE~Deep Elf Ice Elementalist~DEIE
+86~23~23~Deep Elf~DE~Mage~Air Elementalist~AE~Deep Elf Air Elementalist~DEAE
+87~23~23~Deep Elf~DE~Mage~Earth Elementalist~EE~Deep Elf Earth Elementalist~DEEE
+88~23~23~Deep Elf~DE~Mage~Venom Mage~VM~Deep Elf Venom Mage~DEVM
+89~23~23~Demigod~Dg~Warrior~Fighter~Fi~Demigod Fighter~DgFi
+90~23~23~Demigod~Dg~Warrior~Gladiator~Gl~Demigod Gladiator~DgGl
+91~23~23~Demigod~Dg~Warrior~Monk~Mo~Demigod Monk~DgMo
+92~23~23~Demigod~Dg~Warrior~Hunter~Hu~Demigod Hunter~DgHu
+93~23~23~Demigod~Dg~Warrior~Assassin~As~Demigod Assassin~DgAs
+94~23~23~Demigod~Dg~Zealot~Berserker~Be~Demigod Berserker~DgBe
+95~23~23~Demigod~Dg~Zealot~Abyssal Knight~AK~Demigod Abyssal Knight~DgAK
+96~23~23~Demigod~Dg~Zealot~Chaos Knight~CK~Demigod Chaos Knight~DgCK
+97~23~23~Demigod~Dg~Warrior-mage~Skald~Sk~Demigod Skald~DgSk
+98~23~23~Demigod~Dg~Warrior-mage~Enchanter~En~Demigod Enchanter~DgEn
+99~23~23~Demigod~Dg~Warrior-mage~Transmuter~Tm~Demigod Transmuter~DgTm
+100~23~23~Demigod~Dg~Warrior-mage~Arcane Marksman~AM~Demigod Arcane Marksman~DgAM
+101~23~23~Demigod~Dg~Warrior-mage~Warper~Wr~Demigod Warper~DgWr
+102~23~23~Demigod~Dg~Mage~Wizard~Wz~Demigod Wizard~DgWz
+103~23~23~Demigod~Dg~Mage~Conjurer~Cj~Demigod Conjurer~DgCj
+104~23~23~Demigod~Dg~Mage~Summoner~Su~Demigod Summoner~DgSu
+105~23~23~Demigod~Dg~Mage~Necromancer~Ne~Demigod Necromancer~DgNe
+106~23~23~Demigod~Dg~Mage~Fire Elementalist~FE~Demigod Fire Elementalist~DgFE
+107~23~23~Demigod~Dg~Mage~Ice Elementalist~IE~Demigod Ice Elementalist~DgIE
+108~23~23~Demigod~Dg~Mage~Air Elementalist~AE~Demigod Air Elementalist~DgAE
+109~23~23~Demigod~Dg~Mage~Earth Elementalist~EE~Demigod Earth Elementalist~DgEE
+110~23~23~Demigod~Dg~Mage~Venom Mage~VM~Demigod Venom Mage~DgVM
+111~23~23~Demonspawn~Ds~Warrior~Fighter~Fi~Demonspawn Fighter~DsFi
+112~23~23~Demonspawn~Ds~Warrior~Gladiator~Gl~Demonspawn Gladiator~DsGl
+113~23~23~Demonspawn~Ds~Warrior~Monk~Mo~Demonspawn Monk~DsMo
+114~23~23~Demonspawn~Ds~Warrior~Hunter~Hu~Demonspawn Hunter~DsHu
+115~23~23~Demonspawn~Ds~Warrior~Assassin~As~Demonspawn Assassin~DsAs
+116~23~23~Demonspawn~Ds~Zealot~Berserker~Be~Demonspawn Berserker~DsBe
+117~23~23~Demonspawn~Ds~Zealot~Abyssal Knight~AK~Demonspawn Abyssal Knight~DsAK
+118~23~23~Demonspawn~Ds~Zealot~Chaos Knight~CK~Demonspawn Chaos Knight~DsCK
+119~23~23~Demonspawn~Ds~Warrior-mage~Skald~Sk~Demonspawn Skald~DsSk
+120~23~23~Demonspawn~Ds~Warrior-mage~Enchanter~En~Demonspawn Enchanter~DsEn
+121~23~23~Demonspawn~Ds~Warrior-mage~Transmuter~Tm~Demonspawn Transmuter~DsTm
+122~23~23~Demonspawn~Ds~Warrior-mage~Arcane Marksman~AM~Demonspawn Arcane Marksman~DsAM
+123~23~23~Demonspawn~Ds~Warrior-mage~Warper~Wr~Demonspawn Warper~DsWr
+124~23~23~Demonspawn~Ds~Mage~Wizard~Wz~Demonspawn Wizard~DsWz
+125~23~23~Demonspawn~Ds~Mage~Conjurer~Cj~Demonspawn Conjurer~DsCj
+126~23~23~Demonspawn~Ds~Mage~Summoner~Su~Demonspawn Summoner~DsSu
+127~23~23~Demonspawn~Ds~Mage~Necromancer~Ne~Demonspawn Necromancer~DsNe
+128~23~23~Demonspawn~Ds~Mage~Fire Elementalist~FE~Demonspawn Fire Elementalist~DsFE
+129~23~23~Demonspawn~Ds~Mage~Ice Elementalist~IE~Demonspawn Ice Elementalist~DsIE
+130~23~23~Demonspawn~Ds~Mage~Air Elementalist~AE~Demonspawn Air Elementalist~DsAE
+131~23~23~Demonspawn~Ds~Mage~Earth Elementalist~EE~Demonspawn Earth Elementalist~DsEE
+132~23~23~Demonspawn~Ds~Mage~Venom Mage~VM~Demonspawn Venom Mage~DsVM
+133~23~23~Draconian~Dr~Warrior~Fighter~Fi~Draconian Fighter~DrFi
+134~23~23~Draconian~Dr~Warrior~Gladiator~Gl~Draconian Gladiator~DrGl
+135~23~23~Draconian~Dr~Warrior~Monk~Mo~Draconian Monk~DrMo
+136~23~23~Draconian~Dr~Warrior~Hunter~Hu~Draconian Hunter~DrHu
+137~23~23~Draconian~Dr~Warrior~Assassin~As~Draconian Assassin~DrAs
+138~23~23~Draconian~Dr~Zealot~Berserker~Be~Draconian Berserker~DrBe
+139~23~23~Draconian~Dr~Zealot~Abyssal Knight~AK~Draconian Abyssal Knight~DrAK
+140~23~23~Draconian~Dr~Zealot~Chaos Knight~CK~Draconian Chaos Knight~DrCK
+141~23~23~Draconian~Dr~Warrior-mage~Skald~Sk~Draconian Skald~DrSk
+142~23~23~Draconian~Dr~Warrior-mage~Enchanter~En~Draconian Enchanter~DrEn
+143~23~23~Draconian~Dr~Warrior-mage~Transmuter~Tm~Draconian Transmuter~DrTm
+144~23~23~Draconian~Dr~Warrior-mage~Arcane Marksman~AM~Draconian Arcane Marksman~DrAM
+145~23~23~Draconian~Dr~Warrior-mage~Warper~Wr~Draconian Warper~DrWr
+146~23~23~Draconian~Dr~Mage~Wizard~Wz~Draconian Wizard~DrWz
+147~23~23~Draconian~Dr~Mage~Conjurer~Cj~Draconian Conjurer~DrCj
+148~23~23~Draconian~Dr~Mage~Summoner~Su~Draconian Summoner~DrSu
+149~23~23~Draconian~Dr~Mage~Necromancer~Ne~Draconian Necromancer~DrNe
+150~23~23~Draconian~Dr~Mage~Fire Elementalist~FE~Draconian Fire Elementalist~DrFE
+151~23~23~Draconian~Dr~Mage~Ice Elementalist~IE~Draconian Ice Elementalist~DrIE
+152~23~23~Draconian~Dr~Mage~Air Elementalist~AE~Draconian Air Elementalist~DrAE
+153~23~23~Draconian~Dr~Mage~Earth Elementalist~EE~Draconian Earth Elementalist~DrEE
+154~23~23~Draconian~Dr~Mage~Venom Mage~VM~Draconian Venom Mage~DrVM
+155~23~23~Red Draconian~Dr~Warrior~Fighter~Fi~Red Draconian Fighter~DrFi
+156~23~23~Red Draconian~Dr~Warrior~Gladiator~Gl~Red Draconian Gladiator~DrGl
+157~23~23~Red Draconian~Dr~Warrior~Monk~Mo~Red Draconian Monk~DrMo
+158~23~23~Red Draconian~Dr~Warrior~Hunter~Hu~Red Draconian Hunter~DrHu
+159~23~23~Red Draconian~Dr~Warrior~Assassin~As~Red Draconian Assassin~DrAs
+160~23~23~Red Draconian~Dr~Zealot~Berserker~Be~Red Draconian Berserker~DrBe
+161~23~23~Red Draconian~Dr~Zealot~Abyssal Knight~AK~Red Draconian Abyssal Knight~DrAK
+162~23~23~Red Draconian~Dr~Zealot~Chaos Knight~CK~Red Draconian Chaos Knight~DrCK
+163~23~23~Red Draconian~Dr~Warrior-mage~Skald~Sk~Red Draconian Skald~DrSk
+164~23~23~Red Draconian~Dr~Warrior-mage~Enchanter~En~Red Draconian Enchanter~DrEn
+165~23~23~Red Draconian~Dr~Warrior-mage~Transmuter~Tm~Red Draconian Transmuter~DrTm
+166~23~23~Red Draconian~Dr~Warrior-mage~Arcane Marksman~AM~Red Draconian Arcane Marksman~DrAM
+167~23~23~Red Draconian~Dr~Warrior-mage~Warper~Wr~Red Draconian Warper~DrWr
+168~23~23~Red Draconian~Dr~Mage~Wizard~Wz~Red Draconian Wizard~DrWz
+169~23~23~Red Draconian~Dr~Mage~Conjurer~Cj~Red Draconian Conjurer~DrCj
+170~23~23~Red Draconian~Dr~Mage~Summoner~Su~Red Draconian Summoner~DrSu
+171~23~23~Red Draconian~Dr~Mage~Necromancer~Ne~Red Draconian Necromancer~DrNe
+172~23~23~Red Draconian~Dr~Mage~Fire Elementalist~FE~Red Draconian Fire Elementalist~DrFE
+173~23~23~Red Draconian~Dr~Mage~Ice Elementalist~IE~Red Draconian Ice Elementalist~DrIE
+174~23~23~Red Draconian~Dr~Mage~Air Elementalist~AE~Red Draconian Air Elementalist~DrAE
+175~23~23~Red Draconian~Dr~Mage~Earth Elementalist~EE~Red Draconian Earth Elementalist~DrEE
+176~23~23~Red Draconian~Dr~Mage~Venom Mage~VM~Red Draconian Venom Mage~DrVM
+177~23~23~White Draconian~Dr~Warrior~Fighter~Fi~White Draconian Fighter~DrFi
+178~23~23~White Draconian~Dr~Warrior~Gladiator~Gl~White Draconian Gladiator~DrGl
+179~23~23~White Draconian~Dr~Warrior~Monk~Mo~White Draconian Monk~DrMo
+180~23~23~White Draconian~Dr~Warrior~Hunter~Hu~White Draconian Hunter~DrHu
+181~23~23~White Draconian~Dr~Warrior~Assassin~As~White Draconian Assassin~DrAs
+182~23~23~White Draconian~Dr~Zealot~Berserker~Be~White Draconian Berserker~DrBe
+183~23~23~White Draconian~Dr~Zealot~Abyssal Knight~AK~White Draconian Abyssal Knight~DrAK
+184~23~23~White Draconian~Dr~Zealot~Chaos Knight~CK~White Draconian Chaos Knight~DrCK
+185~23~23~White Draconian~Dr~Warrior-mage~Skald~Sk~White Draconian Skald~DrSk
+186~23~23~White Draconian~Dr~Warrior-mage~Enchanter~En~White Draconian Enchanter~DrEn
+187~23~23~White Draconian~Dr~Warrior-mage~Transmuter~Tm~White Draconian Transmuter~DrTm
+188~23~23~White Draconian~Dr~Warrior-mage~Arcane Marksman~AM~White Draconian Arcane Marksman~DrAM
+189~23~23~White Draconian~Dr~Warrior-mage~Warper~Wr~White Draconian Warper~DrWr
+190~23~23~White Draconian~Dr~Mage~Wizard~Wz~White Draconian Wizard~DrWz
+191~23~23~White Draconian~Dr~Mage~Conjurer~Cj~White Draconian Conjurer~DrCj
+192~23~23~White Draconian~Dr~Mage~Summoner~Su~White Draconian Summoner~DrSu
+193~23~23~White Draconian~Dr~Mage~Necromancer~Ne~White Draconian Necromancer~DrNe
+194~23~23~White Draconian~Dr~Mage~Fire Elementalist~FE~White Draconian Fire Elementalist~DrFE
+195~23~23~White Draconian~Dr~Mage~Ice Elementalist~IE~White Draconian Ice Elementalist~DrIE
+196~23~23~White Draconian~Dr~Mage~Air Elementalist~AE~White Draconian Air Elementalist~DrAE
+197~23~23~White Draconian~Dr~Mage~Earth Elementalist~EE~White Draconian Earth Elementalist~DrEE
+198~23~23~White Draconian~Dr~Mage~Venom Mage~VM~White Draconian Venom Mage~DrVM
+199~23~23~Green Draconian~Dr~Warrior~Fighter~Fi~Green Draconian Fighter~DrFi
+200~23~23~Green Draconian~Dr~Warrior~Gladiator~Gl~Green Draconian Gladiator~DrGl
+201~23~23~Green Draconian~Dr~Warrior~Monk~Mo~Green Draconian Monk~DrMo
+202~23~23~Green Draconian~Dr~Warrior~Hunter~Hu~Green Draconian Hunter~DrHu
+203~23~23~Green Draconian~Dr~Warrior~Assassin~As~Green Draconian Assassin~DrAs
+204~23~23~Green Draconian~Dr~Zealot~Berserker~Be~Green Draconian Berserker~DrBe
+205~23~23~Green Draconian~Dr~Zealot~Abyssal Knight~AK~Green Draconian Abyssal Knight~DrAK
+206~23~23~Green Draconian~Dr~Zealot~Chaos Knight~CK~Green Draconian Chaos Knight~DrCK
+207~23~23~Green Draconian~Dr~Warrior-mage~Skald~Sk~Green Draconian Skald~DrSk
+208~23~23~Green Draconian~Dr~Warrior-mage~Enchanter~En~Green Draconian Enchanter~DrEn
+209~23~23~Green Draconian~Dr~Warrior-mage~Transmuter~Tm~Green Draconian Transmuter~DrTm
+210~23~23~Green Draconian~Dr~Warrior-mage~Arcane Marksman~AM~Green Draconian Arcane Marksman~DrAM
+211~23~23~Green Draconian~Dr~Warrior-mage~Warper~Wr~Green Draconian Warper~DrWr
+212~23~23~Green Draconian~Dr~Mage~Wizard~Wz~Green Draconian Wizard~DrWz
+213~23~23~Green Draconian~Dr~Mage~Conjurer~Cj~Green Draconian Conjurer~DrCj
+214~23~23~Green Draconian~Dr~Mage~Summoner~Su~Green Draconian Summoner~DrSu
+215~23~23~Green Draconian~Dr~Mage~Necromancer~Ne~Green Draconian Necromancer~DrNe
+216~23~23~Green Draconian~Dr~Mage~Fire Elementalist~FE~Green Draconian Fire Elementalist~DrFE
+217~23~23~Green Draconian~Dr~Mage~Ice Elementalist~IE~Green Draconian Ice Elementalist~DrIE
+218~23~23~Green Draconian~Dr~Mage~Air Elementalist~AE~Green Draconian Air Elementalist~DrAE
+219~23~23~Green Draconian~Dr~Mage~Earth Elementalist~EE~Green Draconian Earth Elementalist~DrEE
+220~23~23~Green Draconian~Dr~Mage~Venom Mage~VM~Green Draconian Venom Mage~DrVM
+221~23~23~Yellow Draconian~Dr~Warrior~Fighter~Fi~Yellow Draconian Fighter~DrFi
+222~23~23~Yellow Draconian~Dr~Warrior~Gladiator~Gl~Yellow Draconian Gladiator~DrGl
+223~23~23~Yellow Draconian~Dr~Warrior~Monk~Mo~Yellow Draconian Monk~DrMo
+224~23~23~Yellow Draconian~Dr~Warrior~Hunter~Hu~Yellow Draconian Hunter~DrHu
+225~23~23~Yellow Draconian~Dr~Warrior~Assassin~As~Yellow Draconian Assassin~DrAs
+226~23~23~Yellow Draconian~Dr~Zealot~Berserker~Be~Yellow Draconian Berserker~DrBe
+227~23~23~Yellow Draconian~Dr~Zealot~Abyssal Knight~AK~Yellow Draconian Abyssal Knight~DrAK
+228~23~23~Yellow Draconian~Dr~Zealot~Chaos Knight~CK~Yellow Draconian Chaos Knight~DrCK
+229~23~23~Yellow Draconian~Dr~Warrior-mage~Skald~Sk~Yellow Draconian Skald~DrSk
+230~23~23~Yellow Draconian~Dr~Warrior-mage~Enchanter~En~Yellow Draconian Enchanter~DrEn
+231~23~23~Yellow Draconian~Dr~Warrior-mage~Transmuter~Tm~Yellow Draconian Transmuter~DrTm
+232~23~23~Yellow Draconian~Dr~Warrior-mage~Arcane Marksman~AM~Yellow Draconian Arcane Marksman~DrAM
+233~23~23~Yellow Draconian~Dr~Warrior-mage~Warper~Wr~Yellow Draconian Warper~DrWr
+234~23~23~Yellow Draconian~Dr~Mage~Wizard~Wz~Yellow Draconian Wizard~DrWz
+235~23~23~Yellow Draconian~Dr~Mage~Conjurer~Cj~Yellow Draconian Conjurer~DrCj
+236~23~23~Yellow Draconian~Dr~Mage~Summoner~Su~Yellow Draconian Summoner~DrSu
+237~23~23~Yellow Draconian~Dr~Mage~Necromancer~Ne~Yellow Draconian Necromancer~DrNe
+238~23~23~Yellow Draconian~Dr~Mage~Fire Elementalist~FE~Yellow Draconian Fire Elementalist~DrFE
+239~23~23~Yellow Draconian~Dr~Mage~Ice Elementalist~IE~Yellow Draconian Ice Elementalist~DrIE
+240~23~23~Yellow Draconian~Dr~Mage~Air Elementalist~AE~Yellow Draconian Air Elementalist~DrAE
+241~23~23~Yellow Draconian~Dr~Mage~Earth Elementalist~EE~Yellow Draconian Earth Elementalist~DrEE
+242~23~23~Yellow Draconian~Dr~Mage~Venom Mage~VM~Yellow Draconian Venom Mage~DrVM
+243~23~23~Grey Draconian~Dr~Warrior~Fighter~Fi~Grey Draconian Fighter~DrFi
+244~23~23~Grey Draconian~Dr~Warrior~Gladiator~Gl~Grey Draconian Gladiator~DrGl
+245~23~23~Grey Draconian~Dr~Warrior~Monk~Mo~Grey Draconian Monk~DrMo
+246~23~23~Grey Draconian~Dr~Warrior~Hunter~Hu~Grey Draconian Hunter~DrHu
+247~23~23~Grey Draconian~Dr~Warrior~Assassin~As~Grey Draconian Assassin~DrAs
+248~23~23~Grey Draconian~Dr~Zealot~Berserker~Be~Grey Draconian Berserker~DrBe
+249~23~23~Grey Draconian~Dr~Zealot~Abyssal Knight~AK~Grey Draconian Abyssal Knight~DrAK
+250~23~23~Grey Draconian~Dr~Zealot~Chaos Knight~CK~Grey Draconian Chaos Knight~DrCK
+251~23~23~Grey Draconian~Dr~Warrior-mage~Skald~Sk~Grey Draconian Skald~DrSk
+252~23~23~Grey Draconian~Dr~Warrior-mage~Enchanter~En~Grey Draconian Enchanter~DrEn
+253~23~23~Grey Draconian~Dr~Warrior-mage~Transmuter~Tm~Grey Draconian Transmuter~DrTm
+254~23~23~Grey Draconian~Dr~Warrior-mage~Arcane Marksman~AM~Grey Draconian Arcane Marksman~DrAM
+255~23~23~Grey Draconian~Dr~Warrior-mage~Warper~Wr~Grey Draconian Warper~DrWr
+256~23~23~Grey Draconian~Dr~Mage~Wizard~Wz~Grey Draconian Wizard~DrWz
+257~23~23~Grey Draconian~Dr~Mage~Conjurer~Cj~Grey Draconian Conjurer~DrCj
+258~23~23~Grey Draconian~Dr~Mage~Summoner~Su~Grey Draconian Summoner~DrSu
+259~23~23~Grey Draconian~Dr~Mage~Necromancer~Ne~Grey Draconian Necromancer~DrNe
+260~23~23~Grey Draconian~Dr~Mage~Fire Elementalist~FE~Grey Draconian Fire Elementalist~DrFE
+261~23~23~Grey Draconian~Dr~Mage~Ice Elementalist~IE~Grey Draconian Ice Elementalist~DrIE
+262~23~23~Grey Draconian~Dr~Mage~Air Elementalist~AE~Grey Draconian Air Elementalist~DrAE
+263~23~23~Grey Draconian~Dr~Mage~Earth Elementalist~EE~Grey Draconian Earth Elementalist~DrEE
+264~23~23~Grey Draconian~Dr~Mage~Venom Mage~VM~Grey Draconian Venom Mage~DrVM
+265~23~23~Black Draconian~Dr~Warrior~Fighter~Fi~Black Draconian Fighter~DrFi
+266~23~23~Black Draconian~Dr~Warrior~Gladiator~Gl~Black Draconian Gladiator~DrGl
+267~23~23~Black Draconian~Dr~Warrior~Monk~Mo~Black Draconian Monk~DrMo
+268~23~23~Black Draconian~Dr~Warrior~Hunter~Hu~Black Draconian Hunter~DrHu
+269~23~23~Black Draconian~Dr~Warrior~Assassin~As~Black Draconian Assassin~DrAs
+270~23~23~Black Draconian~Dr~Zealot~Berserker~Be~Black Draconian Berserker~DrBe
+271~23~23~Black Draconian~Dr~Zealot~Abyssal Knight~AK~Black Draconian Abyssal Knight~DrAK
+272~23~23~Black Draconian~Dr~Zealot~Chaos Knight~CK~Black Draconian Chaos Knight~DrCK
+273~23~23~Black Draconian~Dr~Warrior-mage~Skald~Sk~Black Draconian Skald~DrSk
+274~23~23~Black Draconian~Dr~Warrior-mage~Enchanter~En~Black Draconian Enchanter~DrEn
+275~23~23~Black Draconian~Dr~Warrior-mage~Transmuter~Tm~Black Draconian Transmuter~DrTm
+276~23~23~Black Draconian~Dr~Warrior-mage~Arcane Marksman~AM~Black Draconian Arcane Marksman~DrAM
+277~23~23~Black Draconian~Dr~Warrior-mage~Warper~Wr~Black Draconian Warper~DrWr
+278~23~23~Black Draconian~Dr~Mage~Wizard~Wz~Black Draconian Wizard~DrWz
+279~23~23~Black Draconian~Dr~Mage~Conjurer~Cj~Black Draconian Conjurer~DrCj
+280~23~23~Black Draconian~Dr~Mage~Summoner~Su~Black Draconian Summoner~DrSu
+281~23~23~Black Draconian~Dr~Mage~Necromancer~Ne~Black Draconian Necromancer~DrNe
+282~23~23~Black Draconian~Dr~Mage~Fire Elementalist~FE~Black Draconian Fire Elementalist~DrFE
+283~23~23~Black Draconian~Dr~Mage~Ice Elementalist~IE~Black Draconian Ice Elementalist~DrIE
+284~23~23~Black Draconian~Dr~Mage~Air Elementalist~AE~Black Draconian Air Elementalist~DrAE
+285~23~23~Black Draconian~Dr~Mage~Earth Elementalist~EE~Black Draconian Earth Elementalist~DrEE
+286~23~23~Black Draconian~Dr~Mage~Venom Mage~VM~Black Draconian Venom Mage~DrVM
+287~23~23~Purple Draconian~Dr~Warrior~Fighter~Fi~Purple Draconian Fighter~DrFi
+288~23~23~Purple Draconian~Dr~Warrior~Gladiator~Gl~Purple Draconian Gladiator~DrGl
+289~23~23~Purple Draconian~Dr~Warrior~Monk~Mo~Purple Draconian Monk~DrMo
+290~23~23~Purple Draconian~Dr~Warrior~Hunter~Hu~Purple Draconian Hunter~DrHu
+291~23~23~Purple Draconian~Dr~Warrior~Assassin~As~Purple Draconian Assassin~DrAs
+292~23~23~Purple Draconian~Dr~Zealot~Berserker~Be~Purple Draconian Berserker~DrBe
+293~23~23~Purple Draconian~Dr~Zealot~Abyssal Knight~AK~Purple Draconian Abyssal Knight~DrAK
+294~23~23~Purple Draconian~Dr~Zealot~Chaos Knight~CK~Purple Draconian Chaos Knight~DrCK
+295~23~23~Purple Draconian~Dr~Warrior-mage~Skald~Sk~Purple Draconian Skald~DrSk
+296~23~23~Purple Draconian~Dr~Warrior-mage~Enchanter~En~Purple Draconian Enchanter~DrEn
+297~23~23~Purple Draconian~Dr~Warrior-mage~Transmuter~Tm~Purple Draconian Transmuter~DrTm
+298~23~23~Purple Draconian~Dr~Warrior-mage~Arcane Marksman~AM~Purple Draconian Arcane Marksman~DrAM
+299~23~23~Purple Draconian~Dr~Warrior-mage~Warper~Wr~Purple Draconian Warper~DrWr
+300~23~23~Purple Draconian~Dr~Mage~Wizard~Wz~Purple Draconian Wizard~DrWz
+301~23~23~Purple Draconian~Dr~Mage~Conjurer~Cj~Purple Draconian Conjurer~DrCj
+302~23~23~Purple Draconian~Dr~Mage~Summoner~Su~Purple Draconian Summoner~DrSu
+303~23~23~Purple Draconian~Dr~Mage~Necromancer~Ne~Purple Draconian Necromancer~DrNe
+304~23~23~Purple Draconian~Dr~Mage~Fire Elementalist~FE~Purple Draconian Fire Elementalist~DrFE
+305~23~23~Purple Draconian~Dr~Mage~Ice Elementalist~IE~Purple Draconian Ice Elementalist~DrIE
+306~23~23~Purple Draconian~Dr~Mage~Air Elementalist~AE~Purple Draconian Air Elementalist~DrAE
+307~23~23~Purple Draconian~Dr~Mage~Earth Elementalist~EE~Purple Draconian Earth Elementalist~DrEE
+308~23~23~Purple Draconian~Dr~Mage~Venom Mage~VM~Purple Draconian Venom Mage~DrVM
+309~23~23~Pale Draconian~Dr~Warrior~Fighter~Fi~Pale Draconian Fighter~DrFi
+310~23~23~Pale Draconian~Dr~Warrior~Gladiator~Gl~Pale Draconian Gladiator~DrGl
+311~23~23~Pale Draconian~Dr~Warrior~Monk~Mo~Pale Draconian Monk~DrMo
+312~23~23~Pale Draconian~Dr~Warrior~Hunter~Hu~Pale Draconian Hunter~DrHu
+313~23~23~Pale Draconian~Dr~Warrior~Assassin~As~Pale Draconian Assassin~DrAs
+314~23~23~Pale Draconian~Dr~Zealot~Berserker~Be~Pale Draconian Berserker~DrBe
+315~23~23~Pale Draconian~Dr~Zealot~Abyssal Knight~AK~Pale Draconian Abyssal Knight~DrAK
+316~23~23~Pale Draconian~Dr~Zealot~Chaos Knight~CK~Pale Draconian Chaos Knight~DrCK
+317~23~23~Pale Draconian~Dr~Warrior-mage~Skald~Sk~Pale Draconian Skald~DrSk
+318~23~23~Pale Draconian~Dr~Warrior-mage~Enchanter~En~Pale Draconian Enchanter~DrEn
+319~23~23~Pale Draconian~Dr~Warrior-mage~Transmuter~Tm~Pale Draconian Transmuter~DrTm
+320~23~23~Pale Draconian~Dr~Warrior-mage~Arcane Marksman~AM~Pale Draconian Arcane Marksman~DrAM
+321~23~23~Pale Draconian~Dr~Warrior-mage~Warper~Wr~Pale Draconian Warper~DrWr
+322~23~23~Pale Draconian~Dr~Mage~Wizard~Wz~Pale Draconian Wizard~DrWz
+323~23~23~Pale Draconian~Dr~Mage~Conjurer~Cj~Pale Draconian Conjurer~DrCj
+324~23~23~Pale Draconian~Dr~Mage~Summoner~Su~Pale Draconian Summoner~DrSu
+325~23~23~Pale Draconian~Dr~Mage~Necromancer~Ne~Pale Draconian Necromancer~DrNe
+326~23~23~Pale Draconian~Dr~Mage~Fire Elementalist~FE~Pale Draconian Fire Elementalist~DrFE
+327~23~23~Pale Draconian~Dr~Mage~Ice Elementalist~IE~Pale Draconian Ice Elementalist~DrIE
+328~23~23~Pale Draconian~Dr~Mage~Air Elementalist~AE~Pale Draconian Air Elementalist~DrAE
+329~23~23~Pale Draconian~Dr~Mage~Earth Elementalist~EE~Pale Draconian Earth Elementalist~DrEE
+330~23~23~Pale Draconian~Dr~Mage~Venom Mage~VM~Pale Draconian Venom Mage~DrVM
+331~23~23~Felid~Fe~Warrior~Fighter~Fi~Felid Fighter~FeFi
+332~23~23~Felid~Fe~Warrior~Gladiator~Gl~Felid Gladiator~FeGl
+333~23~23~Felid~Fe~Warrior~Monk~Mo~Felid Monk~FeMo
+334~23~23~Felid~Fe~Warrior~Hunter~Hu~Felid Hunter~FeHu
+335~23~23~Felid~Fe~Warrior~Assassin~As~Felid Assassin~FeAs
+336~23~23~Felid~Fe~Zealot~Berserker~Be~Felid Berserker~FeBe
+337~23~23~Felid~Fe~Zealot~Abyssal Knight~AK~Felid Abyssal Knight~FeAK
+338~23~23~Felid~Fe~Zealot~Chaos Knight~CK~Felid Chaos Knight~FeCK
+339~23~23~Felid~Fe~Warrior-mage~Skald~Sk~Felid Skald~FeSk
+340~23~23~Felid~Fe~Warrior-mage~Enchanter~En~Felid Enchanter~FeEn
+341~23~23~Felid~Fe~Warrior-mage~Transmuter~Tm~Felid Transmuter~FeTm
+342~23~23~Felid~Fe~Warrior-mage~Arcane Marksman~AM~Felid Arcane Marksman~FeAM
+343~23~23~Felid~Fe~Warrior-mage~Warper~Wr~Felid Warper~FeWr
+344~23~23~Felid~Fe~Mage~Wizard~Wz~Felid Wizard~FeWz
+345~23~23~Felid~Fe~Mage~Conjurer~Cj~Felid Conjurer~FeCj
+346~23~23~Felid~Fe~Mage~Summoner~Su~Felid Summoner~FeSu
+347~23~23~Felid~Fe~Mage~Necromancer~Ne~Felid Necromancer~FeNe
+348~23~23~Felid~Fe~Mage~Fire Elementalist~FE~Felid Fire Elementalist~FeFE
+349~23~23~Felid~Fe~Mage~Ice Elementalist~IE~Felid Ice Elementalist~FeIE
+350~23~23~Felid~Fe~Mage~Air Elementalist~AE~Felid Air Elementalist~FeAE
+351~23~23~Felid~Fe~Mage~Earth Elementalist~EE~Felid Earth Elementalist~FeEE
+352~23~23~Felid~Fe~Mage~Venom Mage~VM~Felid Venom Mage~FeVM
+353~23~23~Formicid~Fo~Warrior~Fighter~Fi~Formicid Fighter~FoFi
+354~23~23~Formicid~Fo~Warrior~Gladiator~Gl~Formicid Gladiator~FoGl
+355~23~23~Formicid~Fo~Warrior~Monk~Mo~Formicid Monk~FoMo
+356~23~23~Formicid~Fo~Warrior~Hunter~Hu~Formicid Hunter~FoHu
+357~23~23~Formicid~Fo~Warrior~Assassin~As~Formicid Assassin~FoAs
+358~23~23~Formicid~Fo~Zealot~Berserker~Be~Formicid Berserker~FoBe
+359~23~23~Formicid~Fo~Zealot~Abyssal Knight~AK~Formicid Abyssal Knight~FoAK
+360~23~23~Formicid~Fo~Zealot~Chaos Knight~CK~Formicid Chaos Knight~FoCK
+361~23~23~Formicid~Fo~Warrior-mage~Skald~Sk~Formicid Skald~FoSk
+362~23~23~Formicid~Fo~Warrior-mage~Enchanter~En~Formicid Enchanter~FoEn
+363~23~23~Formicid~Fo~Warrior-mage~Transmuter~Tm~Formicid Transmuter~FoTm
+364~23~23~Formicid~Fo~Warrior-mage~Arcane Marksman~AM~Formicid Arcane Marksman~FoAM
+365~23~23~Formicid~Fo~Warrior-mage~Warper~Wr~Formicid Warper~FoWr
+366~23~23~Formicid~Fo~Mage~Wizard~Wz~Formicid Wizard~FoWz
+367~23~23~Formicid~Fo~Mage~Conjurer~Cj~Formicid Conjurer~FoCj
+368~23~23~Formicid~Fo~Mage~Summoner~Su~Formicid Summoner~FoSu
+369~23~23~Formicid~Fo~Mage~Necromancer~Ne~Formicid Necromancer~FoNe
+370~23~23~Formicid~Fo~Mage~Fire Elementalist~FE~Formicid Fire Elementalist~FoFE
+371~23~23~Formicid~Fo~Mage~Ice Elementalist~IE~Formicid Ice Elementalist~FoIE
+372~23~23~Formicid~Fo~Mage~Air Elementalist~AE~Formicid Air Elementalist~FoAE
+373~23~23~Formicid~Fo~Mage~Earth Elementalist~EE~Formicid Earth Elementalist~FoEE
+374~23~23~Formicid~Fo~Mage~Venom Mage~VM~Formicid Venom Mage~FoVM
+375~23~23~Gargoyle~Gr~Warrior~Fighter~Fi~Gargoyle Fighter~GrFi
+376~23~23~Gargoyle~Gr~Warrior~Gladiator~Gl~Gargoyle Gladiator~GrGl
+377~23~23~Gargoyle~Gr~Warrior~Monk~Mo~Gargoyle Monk~GrMo
+378~23~23~Gargoyle~Gr~Warrior~Hunter~Hu~Gargoyle Hunter~GrHu
+379~23~23~Gargoyle~Gr~Warrior~Assassin~As~Gargoyle Assassin~GrAs
+380~23~23~Gargoyle~Gr~Zealot~Berserker~Be~Gargoyle Berserker~GrBe
+381~23~23~Gargoyle~Gr~Zealot~Abyssal Knight~AK~Gargoyle Abyssal Knight~GrAK
+382~23~23~Gargoyle~Gr~Zealot~Chaos Knight~CK~Gargoyle Chaos Knight~GrCK
+383~23~23~Gargoyle~Gr~Warrior-mage~Skald~Sk~Gargoyle Skald~GrSk
+384~23~23~Gargoyle~Gr~Warrior-mage~Enchanter~En~Gargoyle Enchanter~GrEn
+385~23~23~Gargoyle~Gr~Warrior-mage~Transmuter~Tm~Gargoyle Transmuter~GrTm
+386~23~23~Gargoyle~Gr~Warrior-mage~Arcane Marksman~AM~Gargoyle Arcane Marksman~GrAM
+387~23~23~Gargoyle~Gr~Warrior-mage~Warper~Wr~Gargoyle Warper~GrWr
+388~23~23~Gargoyle~Gr~Mage~Wizard~Wz~Gargoyle Wizard~GrWz
+389~23~23~Gargoyle~Gr~Mage~Conjurer~Cj~Gargoyle Conjurer~GrCj
+390~23~23~Gargoyle~Gr~Mage~Summoner~Su~Gargoyle Summoner~GrSu
+391~23~23~Gargoyle~Gr~Mage~Necromancer~Ne~Gargoyle Necromancer~GrNe
+392~23~23~Gargoyle~Gr~Mage~Fire Elementalist~FE~Gargoyle Fire Elementalist~GrFE
+393~23~23~Gargoyle~Gr~Mage~Ice Elementalist~IE~Gargoyle Ice Elementalist~GrIE
+394~23~23~Gargoyle~Gr~Mage~Air Elementalist~AE~Gargoyle Air Elementalist~GrAE
+395~23~23~Gargoyle~Gr~Mage~Earth Elementalist~EE~Gargoyle Earth Elementalist~GrEE
+396~23~23~Gargoyle~Gr~Mage~Venom Mage~VM~Gargoyle Venom Mage~GrVM
+397~23~23~Ghoul~Gh~Warrior~Fighter~Fi~Ghoul Fighter~GhFi
+398~23~23~Ghoul~Gh~Warrior~Gladiator~Gl~Ghoul Gladiator~GhGl
+399~23~23~Ghoul~Gh~Warrior~Monk~Mo~Ghoul Monk~GhMo
+400~23~23~Ghoul~Gh~Warrior~Hunter~Hu~Ghoul Hunter~GhHu
+401~23~23~Ghoul~Gh~Warrior~Assassin~As~Ghoul Assassin~GhAs
+402~23~23~Ghoul~Gh~Zealot~Berserker~Be~Ghoul Berserker~GhBe
+403~23~23~Ghoul~Gh~Zealot~Abyssal Knight~AK~Ghoul Abyssal Knight~GhAK
+404~23~23~Ghoul~Gh~Zealot~Chaos Knight~CK~Ghoul Chaos Knight~GhCK
+405~23~23~Ghoul~Gh~Warrior-mage~Skald~Sk~Ghoul Skald~GhSk
+406~23~23~Ghoul~Gh~Warrior-mage~Enchanter~En~Ghoul Enchanter~GhEn
+407~23~23~Ghoul~Gh~Warrior-mage~Transmuter~Tm~Ghoul Transmuter~GhTm
+408~23~23~Ghoul~Gh~Warrior-mage~Arcane Marksman~AM~Ghoul Arcane Marksman~GhAM
+409~23~23~Ghoul~Gh~Warrior-mage~Warper~Wr~Ghoul Warper~GhWr
+410~23~23~Ghoul~Gh~Mage~Wizard~Wz~Ghoul Wizard~GhWz
+411~23~23~Ghoul~Gh~Mage~Conjurer~Cj~Ghoul Conjurer~GhCj
+412~23~23~Ghoul~Gh~Mage~Summoner~Su~Ghoul Summoner~GhSu
+413~23~23~Ghoul~Gh~Mage~Necromancer~Ne~Ghoul Necromancer~GhNe
+414~23~23~Ghoul~Gh~Mage~Fire Elementalist~FE~Ghoul Fire Elementalist~GhFE
+415~23~23~Ghoul~Gh~Mage~Ice Elementalist~IE~Ghoul Ice Elementalist~GhIE
+416~23~23~Ghoul~Gh~Mage~Air Elementalist~AE~Ghoul Air Elementalist~GhAE
+417~23~23~Ghoul~Gh~Mage~Earth Elementalist~EE~Ghoul Earth Elementalist~GhEE
+418~23~23~Ghoul~Gh~Mage~Venom Mage~VM~Ghoul Venom Mage~GhVM
+419~23~23~Gnoll~Gn~Warrior~Fighter~Fi~Gnoll Fighter~GnFi
+420~23~23~Gnoll~Gn~Warrior~Gladiator~Gl~Gnoll Gladiator~GnGl
+421~23~23~Gnoll~Gn~Warrior~Monk~Mo~Gnoll Monk~GnMo
+422~23~23~Gnoll~Gn~Warrior~Hunter~Hu~Gnoll Hunter~GnHu
+423~23~23~Gnoll~Gn~Warrior~Assassin~As~Gnoll Assassin~GnAs
+424~23~23~Gnoll~Gn~Zealot~Berserker~Be~Gnoll Berserker~GnBe
+425~23~23~Gnoll~Gn~Zealot~Abyssal Knight~AK~Gnoll Abyssal Knight~GnAK
+426~23~23~Gnoll~Gn~Zealot~Chaos Knight~CK~Gnoll Chaos Knight~GnCK
+427~23~23~Gnoll~Gn~Warrior-mage~Skald~Sk~Gnoll Skald~GnSk
+428~23~23~Gnoll~Gn~Warrior-mage~Enchanter~En~Gnoll Enchanter~GnEn
+429~23~23~Gnoll~Gn~Warrior-mage~Transmuter~Tm~Gnoll Transmuter~GnTm
+430~23~23~Gnoll~Gn~Warrior-mage~Arcane Marksman~AM~Gnoll Arcane Marksman~GnAM
+431~23~23~Gnoll~Gn~Warrior-mage~Warper~Wr~Gnoll Warper~GnWr
+432~23~23~Gnoll~Gn~Mage~Wizard~Wz~Gnoll Wizard~GnWz
+433~23~23~Gnoll~Gn~Mage~Conjurer~Cj~Gnoll Conjurer~GnCj
+434~23~23~Gnoll~Gn~Mage~Summoner~Su~Gnoll Summoner~GnSu
+435~23~23~Gnoll~Gn~Mage~Necromancer~Ne~Gnoll Necromancer~GnNe
+436~23~23~Gnoll~Gn~Mage~Fire Elementalist~FE~Gnoll Fire Elementalist~GnFE
+437~23~23~Gnoll~Gn~Mage~Ice Elementalist~IE~Gnoll Ice Elementalist~GnIE
+438~23~23~Gnoll~Gn~Mage~Air Elementalist~AE~Gnoll Air Elementalist~GnAE
+439~23~23~Gnoll~Gn~Mage~Earth Elementalist~EE~Gnoll Earth Elementalist~GnEE
+440~23~23~Gnoll~Gn~Mage~Venom Mage~VM~Gnoll Venom Mage~GnVM
+441~23~23~Halfling~Ha~Warrior~Fighter~Fi~Halfling Fighter~HaFi
+442~23~23~Halfling~Ha~Warrior~Gladiator~Gl~Halfling Gladiator~HaGl
+443~23~23~Halfling~Ha~Warrior~Monk~Mo~Halfling Monk~HaMo
+444~23~23~Halfling~Ha~Warrior~Hunter~Hu~Halfling Hunter~HaHu
+445~23~23~Halfling~Ha~Warrior~Assassin~As~Halfling Assassin~HaAs
+446~23~23~Halfling~Ha~Zealot~Berserker~Be~Halfling Berserker~HaBe
+447~23~23~Halfling~Ha~Zealot~Abyssal Knight~AK~Halfling Abyssal Knight~HaAK
+448~23~23~Halfling~Ha~Zealot~Chaos Knight~CK~Halfling Chaos Knight~HaCK
+449~23~23~Halfling~Ha~Warrior-mage~Skald~Sk~Halfling Skald~HaSk
+450~23~23~Halfling~Ha~Warrior-mage~Enchanter~En~Halfling Enchanter~HaEn
+451~23~23~Halfling~Ha~Warrior-mage~Transmuter~Tm~Halfling Transmuter~HaTm
+452~23~23~Halfling~Ha~Warrior-mage~Arcane Marksman~AM~Halfling Arcane Marksman~HaAM
+453~23~23~Halfling~Ha~Warrior-mage~Warper~Wr~Halfling Warper~HaWr
+454~23~23~Halfling~Ha~Mage~Wizard~Wz~Halfling Wizard~HaWz
+455~23~23~Halfling~Ha~Mage~Conjurer~Cj~Halfling Conjurer~HaCj
+456~23~23~Halfling~Ha~Mage~Summoner~Su~Halfling Summoner~HaSu
+457~23~23~Halfling~Ha~Mage~Necromancer~Ne~Halfling Necromancer~HaNe
+458~23~23~Halfling~Ha~Mage~Fire Elementalist~FE~Halfling Fire Elementalist~HaFE
+459~23~23~Halfling~Ha~Mage~Ice Elementalist~IE~Halfling Ice Elementalist~HaIE
+460~23~23~Halfling~Ha~Mage~Air Elementalist~AE~Halfling Air Elementalist~HaAE
+461~23~23~Halfling~Ha~Mage~Earth Elementalist~EE~Halfling Earth Elementalist~HaEE
+462~23~23~Halfling~Ha~Mage~Venom Mage~VM~Halfling Venom Mage~HaVM
+463~23~23~Hill Orc~HO~Warrior~Fighter~Fi~Hill Orc Fighter~HOFi
+464~23~23~Hill Orc~HO~Warrior~Gladiator~Gl~Hill Orc Gladiator~HOGl
+465~23~23~Hill Orc~HO~Warrior~Monk~Mo~Hill Orc Monk~HOMo
+466~23~23~Hill Orc~HO~Warrior~Hunter~Hu~Hill Orc Hunter~HOHu
+467~23~23~Hill Orc~HO~Warrior~Assassin~As~Hill Orc Assassin~HOAs
+468~23~23~Hill Orc~HO~Zealot~Berserker~Be~Hill Orc Berserker~HOBe
+469~23~23~Hill Orc~HO~Zealot~Abyssal Knight~AK~Hill Orc Abyssal Knight~HOAK
+470~23~23~Hill Orc~HO~Zealot~Chaos Knight~CK~Hill Orc Chaos Knight~HOCK
+471~23~23~Hill Orc~HO~Warrior-mage~Skald~Sk~Hill Orc Skald~HOSk
+472~23~23~Hill Orc~HO~Warrior-mage~Enchanter~En~Hill Orc Enchanter~HOEn
+473~23~23~Hill Orc~HO~Warrior-mage~Transmuter~Tm~Hill Orc Transmuter~HOTm
+474~23~23~Hill Orc~HO~Warrior-mage~Arcane Marksman~AM~Hill Orc Arcane Marksman~HOAM
+475~23~23~Hill Orc~HO~Warrior-mage~Warper~Wr~Hill Orc Warper~HOWr
+476~23~23~Hill Orc~HO~Mage~Wizard~Wz~Hill Orc Wizard~HOWz
+477~23~23~Hill Orc~HO~Mage~Conjurer~Cj~Hill Orc Conjurer~HOCj
+478~23~23~Hill Orc~HO~Mage~Summoner~Su~Hill Orc Summoner~HOSu
+479~23~23~Hill Orc~HO~Mage~Necromancer~Ne~Hill Orc Necromancer~HONe
+480~23~23~Hill Orc~HO~Mage~Fire Elementalist~FE~Hill Orc Fire Elementalist~HOFE
+481~23~23~Hill Orc~HO~Mage~Ice Elementalist~IE~Hill Orc Ice Elementalist~HOIE
+482~23~23~Hill Orc~HO~Mage~Air Elementalist~AE~Hill Orc Air Elementalist~HOAE
+483~23~23~Hill Orc~HO~Mage~Earth Elementalist~EE~Hill Orc Earth Elementalist~HOEE
+484~23~23~Hill Orc~HO~Mage~Venom Mage~VM~Hill Orc Venom Mage~HOVM
+485~23~23~Human~Hu~Warrior~Fighter~Fi~Human Fighter~HuFi
+486~23~23~Human~Hu~Warrior~Gladiator~Gl~Human Gladiator~HuGl
+487~23~23~Human~Hu~Warrior~Monk~Mo~Human Monk~HuMo
+488~23~23~Human~Hu~Warrior~Hunter~Hu~Human Hunter~HuHu
+489~23~23~Human~Hu~Warrior~Assassin~As~Human Assassin~HuAs
+490~23~23~Human~Hu~Zealot~Berserker~Be~Human Berserker~HuBe
+491~23~23~Human~Hu~Zealot~Abyssal Knight~AK~Human Abyssal Knight~HuAK
+492~23~23~Human~Hu~Zealot~Chaos Knight~CK~Human Chaos Knight~HuCK
+493~23~23~Human~Hu~Warrior-mage~Skald~Sk~Human Skald~HuSk
+494~23~23~Human~Hu~Warrior-mage~Enchanter~En~Human Enchanter~HuEn
+495~23~23~Human~Hu~Warrior-mage~Transmuter~Tm~Human Transmuter~HuTm
+496~23~23~Human~Hu~Warrior-mage~Arcane Marksman~AM~Human Arcane Marksman~HuAM
+497~23~23~Human~Hu~Warrior-mage~Warper~Wr~Human Warper~HuWr
+498~23~23~Human~Hu~Mage~Wizard~Wz~Human Wizard~HuWz
+499~23~23~Human~Hu~Mage~Conjurer~Cj~Human Conjurer~HuCj
+500~23~23~Human~Hu~Mage~Summoner~Su~Human Summoner~HuSu
+501~23~23~Human~Hu~Mage~Necromancer~Ne~Human Necromancer~HuNe
+502~23~23~Human~Hu~Mage~Fire Elementalist~FE~Human Fire Elementalist~HuFE
+503~23~23~Human~Hu~Mage~Ice Elementalist~IE~Human Ice Elementalist~HuIE
+504~23~23~Human~Hu~Mage~Air Elementalist~AE~Human Air Elementalist~HuAE
+505~23~23~Human~Hu~Mage~Earth Elementalist~EE~Human Earth Elementalist~HuEE
+506~23~23~Human~Hu~Mage~Venom Mage~VM~Human Venom Mage~HuVM
+507~23~23~Kobold~Ko~Warrior~Fighter~Fi~Kobold Fighter~KoFi
+508~23~23~Kobold~Ko~Warrior~Gladiator~Gl~Kobold Gladiator~KoGl
+509~23~23~Kobold~Ko~Warrior~Monk~Mo~Kobold Monk~KoMo
+510~23~23~Kobold~Ko~Warrior~Hunter~Hu~Kobold Hunter~KoHu
+511~23~23~Kobold~Ko~Warrior~Assassin~As~Kobold Assassin~KoAs
+512~23~23~Kobold~Ko~Zealot~Berserker~Be~Kobold Berserker~KoBe
+513~23~23~Kobold~Ko~Zealot~Abyssal Knight~AK~Kobold Abyssal Knight~KoAK
+514~23~23~Kobold~Ko~Zealot~Chaos Knight~CK~Kobold Chaos Knight~KoCK
+515~23~23~Kobold~Ko~Warrior-mage~Skald~Sk~Kobold Skald~KoSk
+516~23~23~Kobold~Ko~Warrior-mage~Enchanter~En~Kobold Enchanter~KoEn
+517~23~23~Kobold~Ko~Warrior-mage~Transmuter~Tm~Kobold Transmuter~KoTm
+518~23~23~Kobold~Ko~Warrior-mage~Arcane Marksman~AM~Kobold Arcane Marksman~KoAM
+519~23~23~Kobold~Ko~Warrior-mage~Warper~Wr~Kobold Warper~KoWr
+520~23~23~Kobold~Ko~Mage~Wizard~Wz~Kobold Wizard~KoWz
+521~23~23~Kobold~Ko~Mage~Conjurer~Cj~Kobold Conjurer~KoCj
+522~23~23~Kobold~Ko~Mage~Summoner~Su~Kobold Summoner~KoSu
+523~23~23~Kobold~Ko~Mage~Necromancer~Ne~Kobold Necromancer~KoNe
+524~23~23~Kobold~Ko~Mage~Fire Elementalist~FE~Kobold Fire Elementalist~KoFE
+525~23~23~Kobold~Ko~Mage~Ice Elementalist~IE~Kobold Ice Elementalist~KoIE
+526~23~23~Kobold~Ko~Mage~Air Elementalist~AE~Kobold Air Elementalist~KoAE
+527~23~23~Kobold~Ko~Mage~Earth Elementalist~EE~Kobold Earth Elementalist~KoEE
+528~23~23~Kobold~Ko~Mage~Venom Mage~VM~Kobold Venom Mage~KoVM
+529~23~23~Merfolk~Mf~Warrior~Fighter~Fi~Merfolk Fighter~MfFi
+530~23~23~Merfolk~Mf~Warrior~Gladiator~Gl~Merfolk Gladiator~MfGl
+531~23~23~Merfolk~Mf~Warrior~Monk~Mo~Merfolk Monk~MfMo
+532~23~23~Merfolk~Mf~Warrior~Hunter~Hu~Merfolk Hunter~MfHu
+533~23~23~Merfolk~Mf~Warrior~Assassin~As~Merfolk Assassin~MfAs
+534~23~23~Merfolk~Mf~Zealot~Berserker~Be~Merfolk Berserker~MfBe
+535~23~23~Merfolk~Mf~Zealot~Abyssal Knight~AK~Merfolk Abyssal Knight~MfAK
+536~23~23~Merfolk~Mf~Zealot~Chaos Knight~CK~Merfolk Chaos Knight~MfCK
+537~23~23~Merfolk~Mf~Warrior-mage~Skald~Sk~Merfolk Skald~MfSk
+538~23~23~Merfolk~Mf~Warrior-mage~Enchanter~En~Merfolk Enchanter~MfEn
+539~23~23~Merfolk~Mf~Warrior-mage~Transmuter~Tm~Merfolk Transmuter~MfTm
+540~23~23~Merfolk~Mf~Warrior-mage~Arcane Marksman~AM~Merfolk Arcane Marksman~MfAM
+541~23~23~Merfolk~Mf~Warrior-mage~Warper~Wr~Merfolk Warper~MfWr
+542~23~23~Merfolk~Mf~Mage~Wizard~Wz~Merfolk Wizard~MfWz
+543~23~23~Merfolk~Mf~Mage~Conjurer~Cj~Merfolk Conjurer~MfCj
+544~23~23~Merfolk~Mf~Mage~Summoner~Su~Merfolk Summoner~MfSu
+545~23~23~Merfolk~Mf~Mage~Necromancer~Ne~Merfolk Necromancer~MfNe
+546~23~23~Merfolk~Mf~Mage~Fire Elementalist~FE~Merfolk Fire Elementalist~MfFE
+547~23~23~Merfolk~Mf~Mage~Ice Elementalist~IE~Merfolk Ice Elementalist~MfIE
+548~23~23~Merfolk~Mf~Mage~Air Elementalist~AE~Merfolk Air Elementalist~MfAE
+549~23~23~Merfolk~Mf~Mage~Earth Elementalist~EE~Merfolk Earth Elementalist~MfEE
+550~23~23~Merfolk~Mf~Mage~Venom Mage~VM~Merfolk Venom Mage~MfVM
+551~23~23~Minotaur~Mi~Warrior~Fighter~Fi~Minotaur Fighter~MiFi
+552~23~23~Minotaur~Mi~Warrior~Gladiator~Gl~Minotaur Gladiator~MiGl
+553~23~23~Minotaur~Mi~Warrior~Monk~Mo~Minotaur Monk~MiMo
+554~23~23~Minotaur~Mi~Warrior~Hunter~Hu~Minotaur Hunter~MiHu
+555~23~23~Minotaur~Mi~Warrior~Assassin~As~Minotaur Assassin~MiAs
+556~23~23~Minotaur~Mi~Zealot~Berserker~Be~Minotaur Berserker~MiBe
+557~23~23~Minotaur~Mi~Zealot~Abyssal Knight~AK~Minotaur Abyssal Knight~MiAK
+558~23~23~Minotaur~Mi~Zealot~Chaos Knight~CK~Minotaur Chaos Knight~MiCK
+559~23~23~Minotaur~Mi~Warrior-mage~Skald~Sk~Minotaur Skald~MiSk
+560~23~23~Minotaur~Mi~Warrior-mage~Enchanter~En~Minotaur Enchanter~MiEn
+561~23~23~Minotaur~Mi~Warrior-mage~Transmuter~Tm~Minotaur Transmuter~MiTm
+562~23~23~Minotaur~Mi~Warrior-mage~Arcane Marksman~AM~Minotaur Arcane Marksman~MiAM
+563~23~23~Minotaur~Mi~Warrior-mage~Warper~Wr~Minotaur Warper~MiWr
+564~23~23~Minotaur~Mi~Mage~Wizard~Wz~Minotaur Wizard~MiWz
+565~23~23~Minotaur~Mi~Mage~Conjurer~Cj~Minotaur Conjurer~MiCj
+566~23~23~Minotaur~Mi~Mage~Summoner~Su~Minotaur Summoner~MiSu
+567~23~23~Minotaur~Mi~Mage~Necromancer~Ne~Minotaur Necromancer~MiNe
+568~23~23~Minotaur~Mi~Mage~Fire Elementalist~FE~Minotaur Fire Elementalist~MiFE
+569~23~23~Minotaur~Mi~Mage~Ice Elementalist~IE~Minotaur Ice Elementalist~MiIE
+570~23~23~Minotaur~Mi~Mage~Air Elementalist~AE~Minotaur Air Elementalist~MiAE
+571~23~23~Minotaur~Mi~Mage~Earth Elementalist~EE~Minotaur Earth Elementalist~MiEE
+572~23~23~Minotaur~Mi~Mage~Venom Mage~VM~Minotaur Venom Mage~MiVM
+573~23~23~Mummy~Mu~Warrior~Fighter~Fi~Mummy Fighter~MuFi
+574~23~23~Mummy~Mu~Warrior~Gladiator~Gl~Mummy Gladiator~MuGl
+575~23~23~Mummy~Mu~Warrior~Monk~Mo~Mummy Monk~MuMo
+576~23~23~Mummy~Mu~Warrior~Hunter~Hu~Mummy Hunter~MuHu
+577~23~23~Mummy~Mu~Warrior~Assassin~As~Mummy Assassin~MuAs
+578~23~23~Mummy~Mu~Zealot~Berserker~Be~Mummy Berserker~MuBe
+579~23~23~Mummy~Mu~Zealot~Abyssal Knight~AK~Mummy Abyssal Knight~MuAK
+580~23~23~Mummy~Mu~Zealot~Chaos Knight~CK~Mummy Chaos Knight~MuCK
+581~23~23~Mummy~Mu~Warrior-mage~Skald~Sk~Mummy Skald~MuSk
+582~23~23~Mummy~Mu~Warrior-mage~Enchanter~En~Mummy Enchanter~MuEn
+583~23~23~Mummy~Mu~Warrior-mage~Transmuter~Tm~Mummy Transmuter~MuTm
+584~23~23~Mummy~Mu~Warrior-mage~Arcane Marksman~AM~Mummy Arcane Marksman~MuAM
+585~23~23~Mummy~Mu~Warrior-mage~Warper~Wr~Mummy Warper~MuWr
+586~23~23~Mummy~Mu~Mage~Wizard~Wz~Mummy Wizard~MuWz
+587~23~23~Mummy~Mu~Mage~Conjurer~Cj~Mummy Conjurer~MuCj
+588~23~23~Mummy~Mu~Mage~Summoner~Su~Mummy Summoner~MuSu
+589~23~23~Mummy~Mu~Mage~Necromancer~Ne~Mummy Necromancer~MuNe
+590~23~23~Mummy~Mu~Mage~Fire Elementalist~FE~Mummy Fire Elementalist~MuFE
+591~23~23~Mummy~Mu~Mage~Ice Elementalist~IE~Mummy Ice Elementalist~MuIE
+592~23~23~Mummy~Mu~Mage~Air Elementalist~AE~Mummy Air Elementalist~MuAE
+593~23~23~Mummy~Mu~Mage~Earth Elementalist~EE~Mummy Earth Elementalist~MuEE
+594~23~23~Mummy~Mu~Mage~Venom Mage~VM~Mummy Venom Mage~MuVM
+595~23~23~Naga~Na~Warrior~Fighter~Fi~Naga Fighter~NaFi
+596~23~23~Naga~Na~Warrior~Gladiator~Gl~Naga Gladiator~NaGl
+597~23~23~Naga~Na~Warrior~Monk~Mo~Naga Monk~NaMo
+598~23~23~Naga~Na~Warrior~Hunter~Hu~Naga Hunter~NaHu
+599~23~23~Naga~Na~Warrior~Assassin~As~Naga Assassin~NaAs
+600~23~23~Naga~Na~Zealot~Berserker~Be~Naga Berserker~NaBe
+601~23~23~Naga~Na~Zealot~Abyssal Knight~AK~Naga Abyssal Knight~NaAK
+602~23~23~Naga~Na~Zealot~Chaos Knight~CK~Naga Chaos Knight~NaCK
+603~23~23~Naga~Na~Warrior-mage~Skald~Sk~Naga Skald~NaSk
+604~23~23~Naga~Na~Warrior-mage~Enchanter~En~Naga Enchanter~NaEn
+605~23~23~Naga~Na~Warrior-mage~Transmuter~Tm~Naga Transmuter~NaTm
+606~23~23~Naga~Na~Warrior-mage~Arcane Marksman~AM~Naga Arcane Marksman~NaAM
+607~23~23~Naga~Na~Warrior-mage~Warper~Wr~Naga Warper~NaWr
+608~23~23~Naga~Na~Mage~Wizard~Wz~Naga Wizard~NaWz
+609~23~23~Naga~Na~Mage~Conjurer~Cj~Naga Conjurer~NaCj
+610~23~23~Naga~Na~Mage~Summoner~Su~Naga Summoner~NaSu
+611~23~23~Naga~Na~Mage~Necromancer~Ne~Naga Necromancer~NaNe
+612~23~23~Naga~Na~Mage~Fire Elementalist~FE~Naga Fire Elementalist~NaFE
+613~23~23~Naga~Na~Mage~Ice Elementalist~IE~Naga Ice Elementalist~NaIE
+614~23~23~Naga~Na~Mage~Air Elementalist~AE~Naga Air Elementalist~NaAE
+615~23~23~Naga~Na~Mage~Earth Elementalist~EE~Naga Earth Elementalist~NaEE
+616~23~23~Naga~Na~Mage~Venom Mage~VM~Naga Venom Mage~NaVM
+617~23~23~Octopode~Op~Warrior~Fighter~Fi~Octopode Fighter~OpFi
+618~23~23~Octopode~Op~Warrior~Gladiator~Gl~Octopode Gladiator~OpGl
+619~23~23~Octopode~Op~Warrior~Monk~Mo~Octopode Monk~OpMo
+620~23~23~Octopode~Op~Warrior~Hunter~Hu~Octopode Hunter~OpHu
+621~23~23~Octopode~Op~Warrior~Assassin~As~Octopode Assassin~OpAs
+622~23~23~Octopode~Op~Zealot~Berserker~Be~Octopode Berserker~OpBe
+623~23~23~Octopode~Op~Zealot~Abyssal Knight~AK~Octopode Abyssal Knight~OpAK
+624~23~23~Octopode~Op~Zealot~Chaos Knight~CK~Octopode Chaos Knight~OpCK
+625~23~23~Octopode~Op~Warrior-mage~Skald~Sk~Octopode Skald~OpSk
+626~23~23~Octopode~Op~Warrior-mage~Enchanter~En~Octopode Enchanter~OpEn
+627~23~23~Octopode~Op~Warrior-mage~Transmuter~Tm~Octopode Transmuter~OpTm
+628~23~23~Octopode~Op~Warrior-mage~Arcane Marksman~AM~Octopode Arcane Marksman~OpAM
+629~23~23~Octopode~Op~Warrior-mage~Warper~Wr~Octopode Warper~OpWr
+630~23~23~Octopode~Op~Mage~Wizard~Wz~Octopode Wizard~OpWz
+631~23~23~Octopode~Op~Mage~Conjurer~Cj~Octopode Conjurer~OpCj
+632~23~23~Octopode~Op~Mage~Summoner~Su~Octopode Summoner~OpSu
+633~23~23~Octopode~Op~Mage~Necromancer~Ne~Octopode Necromancer~OpNe
+634~23~23~Octopode~Op~Mage~Fire Elementalist~FE~Octopode Fire Elementalist~OpFE
+635~23~23~Octopode~Op~Mage~Ice Elementalist~IE~Octopode Ice Elementalist~OpIE
+636~23~23~Octopode~Op~Mage~Air Elementalist~AE~Octopode Air Elementalist~OpAE
+637~23~23~Octopode~Op~Mage~Earth Elementalist~EE~Octopode Earth Elementalist~OpEE
+638~23~23~Octopode~Op~Mage~Venom Mage~VM~Octopode Venom Mage~OpVM
+639~23~23~Ogre~Og~Warrior~Fighter~Fi~Ogre Fighter~OgFi
+640~23~23~Ogre~Og~Warrior~Gladiator~Gl~Ogre Gladiator~OgGl
+641~23~23~Ogre~Og~Warrior~Monk~Mo~Ogre Monk~OgMo
+642~23~23~Ogre~Og~Warrior~Hunter~Hu~Ogre Hunter~OgHu
+643~23~23~Ogre~Og~Warrior~Assassin~As~Ogre Assassin~OgAs
+644~23~23~Ogre~Og~Zealot~Berserker~Be~Ogre Berserker~OgBe
+645~23~23~Ogre~Og~Zealot~Abyssal Knight~AK~Ogre Abyssal Knight~OgAK
+646~23~23~Ogre~Og~Zealot~Chaos Knight~CK~Ogre Chaos Knight~OgCK
+647~23~23~Ogre~Og~Warrior-mage~Skald~Sk~Ogre Skald~OgSk
+648~23~23~Ogre~Og~Warrior-mage~Enchanter~En~Ogre Enchanter~OgEn
+649~23~23~Ogre~Og~Warrior-mage~Transmuter~Tm~Ogre Transmuter~OgTm
+650~23~23~Ogre~Og~Warrior-mage~Arcane Marksman~AM~Ogre Arcane Marksman~OgAM
+651~23~23~Ogre~Og~Warrior-mage~Warper~Wr~Ogre Warper~OgWr
+652~23~23~Ogre~Og~Mage~Wizard~Wz~Ogre Wizard~OgWz
+653~23~23~Ogre~Og~Mage~Conjurer~Cj~Ogre Conjurer~OgCj
+654~23~23~Ogre~Og~Mage~Summoner~Su~Ogre Summoner~OgSu
+655~23~23~Ogre~Og~Mage~Necromancer~Ne~Ogre Necromancer~OgNe
+656~23~23~Ogre~Og~Mage~Fire Elementalist~FE~Ogre Fire Elementalist~OgFE
+657~23~23~Ogre~Og~Mage~Ice Elementalist~IE~Ogre Ice Elementalist~OgIE
+658~23~23~Ogre~Og~Mage~Air Elementalist~AE~Ogre Air Elementalist~OgAE
+659~23~23~Ogre~Og~Mage~Earth Elementalist~EE~Ogre Earth Elementalist~OgEE
+660~23~23~Ogre~Og~Mage~Venom Mage~VM~Ogre Venom Mage~OgVM
+661~23~23~Spriggan~Sp~Warrior~Fighter~Fi~Spriggan Fighter~SpFi
+662~23~23~Spriggan~Sp~Warrior~Gladiator~Gl~Spriggan Gladiator~SpGl
+663~23~23~Spriggan~Sp~Warrior~Monk~Mo~Spriggan Monk~SpMo
+664~23~23~Spriggan~Sp~Warrior~Hunter~Hu~Spriggan Hunter~SpHu
+665~23~23~Spriggan~Sp~Warrior~Assassin~As~Spriggan Assassin~SpAs
+666~23~23~Spriggan~Sp~Zealot~Berserker~Be~Spriggan Berserker~SpBe
+667~23~23~Spriggan~Sp~Zealot~Abyssal Knight~AK~Spriggan Abyssal Knight~SpAK
+668~23~23~Spriggan~Sp~Zealot~Chaos Knight~CK~Spriggan Chaos Knight~SpCK
+669~23~23~Spriggan~Sp~Warrior-mage~Skald~Sk~Spriggan Skald~SpSk
+670~23~23~Spriggan~Sp~Warrior-mage~Enchanter~En~Spriggan Enchanter~SpEn
+671~23~23~Spriggan~Sp~Warrior-mage~Transmuter~Tm~Spriggan Transmuter~SpTm
+672~23~23~Spriggan~Sp~Warrior-mage~Arcane Marksman~AM~Spriggan Arcane Marksman~SpAM
+673~23~23~Spriggan~Sp~Warrior-mage~Warper~Wr~Spriggan Warper~SpWr
+674~23~23~Spriggan~Sp~Mage~Wizard~Wz~Spriggan Wizard~SpWz
+675~23~23~Spriggan~Sp~Mage~Conjurer~Cj~Spriggan Conjurer~SpCj
+676~23~23~Spriggan~Sp~Mage~Summoner~Su~Spriggan Summoner~SpSu
+677~23~23~Spriggan~Sp~Mage~Necromancer~Ne~Spriggan Necromancer~SpNe
+678~23~23~Spriggan~Sp~Mage~Fire Elementalist~FE~Spriggan Fire Elementalist~SpFE
+679~23~23~Spriggan~Sp~Mage~Ice Elementalist~IE~Spriggan Ice Elementalist~SpIE
+680~23~23~Spriggan~Sp~Mage~Air Elementalist~AE~Spriggan Air Elementalist~SpAE
+681~23~23~Spriggan~Sp~Mage~Earth Elementalist~EE~Spriggan Earth Elementalist~SpEE
+682~23~23~Spriggan~Sp~Mage~Venom Mage~VM~Spriggan Venom Mage~SpVM
+683~23~23~Tengu~Te~Warrior~Fighter~Fi~Tengu Fighter~TeFi
+684~23~23~Tengu~Te~Warrior~Gladiator~Gl~Tengu Gladiator~TeGl
+685~23~23~Tengu~Te~Warrior~Monk~Mo~Tengu Monk~TeMo
+686~23~23~Tengu~Te~Warrior~Hunter~Hu~Tengu Hunter~TeHu
+687~23~23~Tengu~Te~Warrior~Assassin~As~Tengu Assassin~TeAs
+688~23~23~Tengu~Te~Zealot~Berserker~Be~Tengu Berserker~TeBe
+689~23~23~Tengu~Te~Zealot~Abyssal Knight~AK~Tengu Abyssal Knight~TeAK
+690~23~23~Tengu~Te~Zealot~Chaos Knight~CK~Tengu Chaos Knight~TeCK
+691~23~23~Tengu~Te~Warrior-mage~Skald~Sk~Tengu Skald~TeSk
+692~23~23~Tengu~Te~Warrior-mage~Enchanter~En~Tengu Enchanter~TeEn
+693~23~23~Tengu~Te~Warrior-mage~Transmuter~Tm~Tengu Transmuter~TeTm
+694~23~23~Tengu~Te~Warrior-mage~Arcane Marksman~AM~Tengu Arcane Marksman~TeAM
+695~23~23~Tengu~Te~Warrior-mage~Warper~Wr~Tengu Warper~TeWr
+696~23~23~Tengu~Te~Mage~Wizard~Wz~Tengu Wizard~TeWz
+697~23~23~Tengu~Te~Mage~Conjurer~Cj~Tengu Conjurer~TeCj
+698~23~23~Tengu~Te~Mage~Summoner~Su~Tengu Summoner~TeSu
+699~23~23~Tengu~Te~Mage~Necromancer~Ne~Tengu Necromancer~TeNe
+700~23~23~Tengu~Te~Mage~Fire Elementalist~FE~Tengu Fire Elementalist~TeFE
+701~23~23~Tengu~Te~Mage~Ice Elementalist~IE~Tengu Ice Elementalist~TeIE
+702~23~23~Tengu~Te~Mage~Air Elementalist~AE~Tengu Air Elementalist~TeAE
+703~23~23~Tengu~Te~Mage~Earth Elementalist~EE~Tengu Earth Elementalist~TeEE
+704~23~23~Tengu~Te~Mage~Venom Mage~VM~Tengu Venom Mage~TeVM
+705~23~23~Troll~Tr~Warrior~Fighter~Fi~Troll Fighter~TrFi
+706~23~23~Troll~Tr~Warrior~Gladiator~Gl~Troll Gladiator~TrGl
+707~23~23~Troll~Tr~Warrior~Monk~Mo~Troll Monk~TrMo
+708~23~23~Troll~Tr~Warrior~Hunter~Hu~Troll Hunter~TrHu
+709~23~23~Troll~Tr~Warrior~Assassin~As~Troll Assassin~TrAs
+710~23~23~Troll~Tr~Zealot~Berserker~Be~Troll Berserker~TrBe
+711~23~23~Troll~Tr~Zealot~Abyssal Knight~AK~Troll Abyssal Knight~TrAK
+712~23~23~Troll~Tr~Zealot~Chaos Knight~CK~Troll Chaos Knight~TrCK
+713~23~23~Troll~Tr~Warrior-mage~Skald~Sk~Troll Skald~TrSk
+714~23~23~Troll~Tr~Warrior-mage~Enchanter~En~Troll Enchanter~TrEn
+715~23~23~Troll~Tr~Warrior-mage~Transmuter~Tm~Troll Transmuter~TrTm
+716~23~23~Troll~Tr~Warrior-mage~Arcane Marksman~AM~Troll Arcane Marksman~TrAM
+717~23~23~Troll~Tr~Warrior-mage~Warper~Wr~Troll Warper~TrWr
+718~23~23~Troll~Tr~Mage~Wizard~Wz~Troll Wizard~TrWz
+719~23~23~Troll~Tr~Mage~Conjurer~Cj~Troll Conjurer~TrCj
+720~23~23~Troll~Tr~Mage~Summoner~Su~Troll Summoner~TrSu
+721~23~23~Troll~Tr~Mage~Necromancer~Ne~Troll Necromancer~TrNe
+722~23~23~Troll~Tr~Mage~Fire Elementalist~FE~Troll Fire Elementalist~TrFE
+723~23~23~Troll~Tr~Mage~Ice Elementalist~IE~Troll Ice Elementalist~TrIE
+724~23~23~Troll~Tr~Mage~Air Elementalist~AE~Troll Air Elementalist~TrAE
+725~23~23~Troll~Tr~Mage~Earth Elementalist~EE~Troll Earth Elementalist~TrEE
+726~23~23~Troll~Tr~Mage~Venom Mage~VM~Troll Venom Mage~TrVM
+727~23~23~Vampire~Vp~Warrior~Fighter~Fi~Vampire Fighter~VpFi
+728~23~23~Vampire~Vp~Warrior~Gladiator~Gl~Vampire Gladiator~VpGl
+729~23~23~Vampire~Vp~Warrior~Monk~Mo~Vampire Monk~VpMo
+730~23~23~Vampire~Vp~Warrior~Hunter~Hu~Vampire Hunter~VpHu
+731~23~23~Vampire~Vp~Warrior~Assassin~As~Vampire Assassin~VpAs
+732~23~23~Vampire~Vp~Zealot~Berserker~Be~Vampire Berserker~VpBe
+733~23~23~Vampire~Vp~Zealot~Abyssal Knight~AK~Vampire Abyssal Knight~VpAK
+734~23~23~Vampire~Vp~Zealot~Chaos Knight~CK~Vampire Chaos Knight~VpCK
+735~23~23~Vampire~Vp~Warrior-mage~Skald~Sk~Vampire Skald~VpSk
+736~23~23~Vampire~Vp~Warrior-mage~Enchanter~En~Vampire Enchanter~VpEn
+737~23~23~Vampire~Vp~Warrior-mage~Transmuter~Tm~Vampire Transmuter~VpTm
+738~23~23~Vampire~Vp~Warrior-mage~Arcane Marksman~AM~Vampire Arcane Marksman~VpAM
+739~23~23~Vampire~Vp~Warrior-mage~Warper~Wr~Vampire Warper~VpWr
+740~23~23~Vampire~Vp~Mage~Wizard~Wz~Vampire Wizard~VpWz
+741~23~23~Vampire~Vp~Mage~Conjurer~Cj~Vampire Conjurer~VpCj
+742~23~23~Vampire~Vp~Mage~Summoner~Su~Vampire Summoner~VpSu
+743~23~23~Vampire~Vp~Mage~Necromancer~Ne~Vampire Necromancer~VpNe
+744~23~23~Vampire~Vp~Mage~Fire Elementalist~FE~Vampire Fire Elementalist~VpFE
+745~23~23~Vampire~Vp~Mage~Ice Elementalist~IE~Vampire Ice Elementalist~VpIE
+746~23~23~Vampire~Vp~Mage~Air Elementalist~AE~Vampire Air Elementalist~VpAE
+747~23~23~Vampire~Vp~Mage~Earth Elementalist~EE~Vampire Earth Elementalist~VpEE
+748~23~23~Vampire~Vp~Mage~Venom Mage~VM~Vampire Venom Mage~VpVM
+749~23~23~Vine Stalker~VS~Warrior~Fighter~Fi~Vine Stalker Fighter~VSFi
+750~23~23~Vine Stalker~VS~Warrior~Gladiator~Gl~Vine Stalker Gladiator~VSGl
+751~23~23~Vine Stalker~VS~Warrior~Monk~Mo~Vine Stalker Monk~VSMo
+752~23~23~Vine Stalker~VS~Warrior~Hunter~Hu~Vine Stalker Hunter~VSHu
+753~23~23~Vine Stalker~VS~Warrior~Assassin~As~Vine Stalker Assassin~VSAs
+754~23~23~Vine Stalker~VS~Zealot~Berserker~Be~Vine Stalker Berserker~VSBe
+755~23~23~Vine Stalker~VS~Zealot~Abyssal Knight~AK~Vine Stalker Abyssal Knight~VSAK
+756~23~23~Vine Stalker~VS~Zealot~Chaos Knight~CK~Vine Stalker Chaos Knight~VSCK
+757~23~23~Vine Stalker~VS~Warrior-mage~Skald~Sk~Vine Stalker Skald~VSSk
+758~23~23~Vine Stalker~VS~Warrior-mage~Enchanter~En~Vine Stalker Enchanter~VSEn
+759~23~23~Vine Stalker~VS~Warrior-mage~Transmuter~Tm~Vine Stalker Transmuter~VSTm
+760~23~23~Vine Stalker~VS~Warrior-mage~Arcane Marksman~AM~Vine Stalker Arcane Marksman~VSAM
+761~23~23~Vine Stalker~VS~Warrior-mage~Warper~Wr~Vine Stalker Warper~VSWr
+762~23~23~Vine Stalker~VS~Mage~Wizard~Wz~Vine Stalker Wizard~VSWz
+763~23~23~Vine Stalker~VS~Mage~Conjurer~Cj~Vine Stalker Conjurer~VSCj
+764~23~23~Vine Stalker~VS~Mage~Summoner~Su~Vine Stalker Summoner~VSSu
+765~23~23~Vine Stalker~VS~Mage~Necromancer~Ne~Vine Stalker Necromancer~VSNe
+766~23~23~Vine Stalker~VS~Mage~Fire Elementalist~FE~Vine Stalker Fire Elementalist~VSFE
+767~23~23~Vine Stalker~VS~Mage~Ice Elementalist~IE~Vine Stalker Ice Elementalist~VSIE
+768~23~23~Vine Stalker~VS~Mage~Air Elementalist~AE~Vine Stalker Air Elementalist~VSAE
+769~23~23~Vine Stalker~VS~Mage~Earth Elementalist~EE~Vine Stalker Earth Elementalist~VSEE
+770~23~23~Vine Stalker~VS~Mage~Venom Mage~VM~Vine Stalker Venom Mage~VSVM
