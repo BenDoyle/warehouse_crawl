@@ -2,11 +2,12 @@ import os
 import pathlib
 import re
 from collections import defaultdict
+import codecs
 
 version_pattern = re.compile(' ([0-9]+[.][0-9]+)[.-]')
 
 def get_version(path):
-    with open(path) as f:
+    with open(path, encoding='iso-8859-1') as f:
         first_line = f.readline()
     match = version_pattern.search(first_line)
     return match[1] if match else None
@@ -34,9 +35,9 @@ if __name__ == '__main__':
 
     print('* Classifying morgue files in {}'.format(morgues_path))
     versions = defaultdict(set)
-    for path in find_morgues(morgues_path):
+    for i, path in enumerate(find_morgues(morgues_path)):
         version = get_version(path)
-        print('  > {}'.format(path))
+        print('  > ({}) {}'.format(i + 1, path))
         if version and version.startswith('0.'):
             versions[version].add(path)
 
