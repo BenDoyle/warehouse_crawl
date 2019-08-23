@@ -29,11 +29,8 @@ def write_csv(outfile_name, rows):
 
 
 def read_text_file(file_name):
-    file_handle = open(file_name, mode='r', errors='ignore')
-    contents = file_handle.read()
-    file_handle.close()
-
-    return contents
+    with open(file_name, mode='r', errors='ignore') as file_handle:
+        return file_handle.read()
 
 
 def write_rows_to_csv(rows, file_name, output_path):
