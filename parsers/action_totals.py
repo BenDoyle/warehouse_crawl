@@ -46,9 +46,9 @@ if __name__ == '__main__':
     files = glob.glob('{}/*.txt'.format(os.environ.get('input_path')))
     output_path = os.environ.get('output_path')
     for file_name in files:
+        print(file_name)
         contents = read_text_file(file_name)
         game_id = get_game_id(file_name)
         rows = get_rows(contents)
         write_rows_to_csv(rows, file_name, output_path)
-        print(file_name)
 

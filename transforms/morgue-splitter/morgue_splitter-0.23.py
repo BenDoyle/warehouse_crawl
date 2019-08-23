@@ -23,7 +23,7 @@ SECTION_PATTERNS = {
     'final_portals':                'Portals',
     'notes':                        'Notes',
     'skill_progression':            'Skill\s+XL:',
-    'action_totals':                'Action\s+\|',
+    'action_totals':                '\nAction\s+\|',
     'levels_and_vaults_discovered': 'Levels and vault maps discovered:',
     'monsters_and_xp_by_level':     'Table legend:',
     'vaults_used':                  'Vault maps used:'

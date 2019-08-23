@@ -19,7 +19,7 @@ def get_rows(game_id, contents):
             False,                  # malformed
         ]]
     else:
-        info = re.search('(\d+)\.(\d+).*\((console|tiles)\)', contents)
+        info = re.search('(\d+)\.(\d+).*\((console|tiles|webtiles)\)', contents)
         return [game_id + [
             info.group(0).strip(),  # string
             int(info.group(1)),     # major
