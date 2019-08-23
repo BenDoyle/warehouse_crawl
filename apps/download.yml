@@ -23,5 +23,5 @@ jobs:
       skip: true
     - transform: concat
       input_path: ~/warehouse_crawl-data/morgues-parsed/0.23/altars
-      output_file: ~/warehouse_crawl-data/summaries/0.23/altars.csv
+      output_file: ~/warehouse_crawl-data/morgues-summaries/0.23/altars.csv
       skip: true
