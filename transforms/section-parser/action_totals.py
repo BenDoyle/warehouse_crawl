@@ -1,10 +1,8 @@
-from common import get_game_id
-from common import write_rows_to_csv
-from common import read_text_file
-import os
-import glob
+from common import run_parser
+import re
 
-def get_rows(contents):
+
+def get_rows(game_id, contents):
     lines = contents.strip().split('\n')
     assert lines[0][0:6] == 'Action'
 
@@ -43,12 +41,8 @@ def get_rows(contents):
 
 
 if __name__ == '__main__':
-    files = glob.glob('{}/*.txt'.format(os.environ.get('input_path')))
-    output_path = os.environ.get('output_path')
-    for file_name in files:
-        print(file_name)
-        contents = read_text_file(file_name)
-        game_id = get_game_id(file_name)
-        rows = get_rows(contents)
-        write_rows_to_csv(rows, file_name, output_path)
-
+    run_parser(
+        input_path_string='input_path',
+        output_path_string='output_path',
+        get_rows=get_rows,
+    )

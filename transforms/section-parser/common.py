@@ -1,4 +1,5 @@
 import os
+import glob
 import re
 import csv
 from datetime import datetime
@@ -45,4 +46,17 @@ def write_rows_to_csv(rows, file_name, output_path):
         outfile_name = '/'.join([output_path, tokens[-1]])
         outfile_name = outfile_name[0:-4] + '.csv'
         write_csv(outfile_name, rows)
+
+
+def run_parser(input_path_string, output_path_string, get_rows):
+    input_path=os.environ.get(input_path_string),
+    output_path=os.environ.get(output_path_string),
+    files = glob.glob('{}/*.txt'.format(input_path))
+    for file_name in files:
+        print(file_name)
+        contents = read_text_file(file_name)
+        game_id = get_game_id(file_name)
+        rows = get_rows(game_id, contents)
+        write_rows_to_csv(rows, file_name, output_path)
+
 
