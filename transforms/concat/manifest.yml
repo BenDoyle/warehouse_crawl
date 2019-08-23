@@ -1,0 +1,7 @@
+name: concat
+env-type: python
+run-command: python run.py
+options:
+ - input_path: path to csv files
+ - output_file: file to be written
+# test-command: py.test
