@@ -46,9 +46,10 @@ def write_rows_to_csv(rows, file_name, output_path):
 
 
 def run_parser(input_path_string, output_path_string, get_rows):
-    input_path=os.environ.get(input_path_string),
-    output_path=os.environ.get(output_path_string),
+    input_path=os.environ.get(input_path_string)
+    output_path=os.environ.get(output_path_string)
     files = glob.glob('{}/*.txt'.format(input_path))
+
     for file_name in files:
         print(file_name)
         contents = read_text_file(file_name)
