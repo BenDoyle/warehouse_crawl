@@ -1,11 +1,12 @@
 import argparse
 import os
+import pathlib
+import re
 import subprocess
 import sys
-import re
 import tempfile
 from collections import OrderedDict
-import pathlib
+from pprint import pprint
 
 import yaml
 
@@ -154,16 +155,28 @@ def resolve_manifest_placeholders(manifest):
 
 
 def run_app(manifest, dryrun=False, transforms_repo_path=None):
+    print(' > Parsing app manifest')
+    if isinstance(manifest, str):
+        # assume a path to a YAML file
+        print('   Loading YAML at: {}'.format(manifest))
+        manifest = load_yaml(manifest)
+    resolve_manifest_placeholders(manifest)
+    if dryrun:
+        print('Manifest parsed as:')
+        pprint(manifest, width=140)
+
     print('Running app: {}'.format(manifest['name']))
     print(' > Discovering transforms...')
     transforms_repo_path = transforms_repo_path or TRANSFORMS_REPO_PATH
     transforms = discover_transforms(transforms_repo_path)
 
     if not transforms:
-        print('Could not find any transforms at {}'.format(transforms_repo_path))
+        print('!! Could not find any transforms at {}'.format(transforms_repo_path))
         return
 
-    resolve_manifest_placeholders(manifest)
+    if dryrun:
+        print('Available transforms detected:')
+        pprint(transforms, width=140)
 
     for (job_name, steps) in manifest['jobs'].items():
         execute_job_steps(job_name, steps, transforms, dryrun)
@@ -179,6 +192,4 @@ if __name__ == '__main__':
         print('File does not exist: {}'.format(manifest_path))
         exit(code=1)
 
-    manifest = load_yaml(manifest_path)
-
-    run_app(manifest, args.dryrun)
+    run_app(manifest_path, args.dryrun)
