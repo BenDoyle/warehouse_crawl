@@ -58,3 +58,12 @@ def run_parser(input_path_string, output_path_string, get_rows):
         write_rows_to_csv(rows, file_name, output_path)
 
 
+def build_parser(split_on, filter_by, map_function):
+    def anon(game_id, contents):
+        lines = contents.strip().split(split_on)
+        return [
+            map_function(game_id, line)
+            for line_index, line in enumerate(lines)
+            if filter_by(line_index, line)
+        ]
+    return anon
