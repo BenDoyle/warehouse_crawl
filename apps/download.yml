@@ -7,21 +7,33 @@ jobs:
       throttle: 1000
       output: ~/warehouse_crawl-data/morgues
       skip: true
+
     - transform: morgues-download-2
       base_url: http://crawl.berotato.org/crawl/morgue/
       throttle: 1000
       output: ~/warehouse_crawl-data/morgues
       skip: true
+
     - transform: index-versions
       morgues: $previous.output
       output: ~/warehouse_crawl-data/morgues-by-version/
       skip: true
+
     - transform: morgue-splitter
       versioned-morgues: $previous.output
       version: 0.23
       output: ~/warehouse_crawl-data/morgues-split
       skip: true
+
     - transform: concat
       input_path: ~/warehouse_crawl-data/morgues-parsed/0.23/altars
       output_file: ~/warehouse_crawl-data/morgues-summaries/0.23/altars.csv
+      skip: true
+
+    - transform: load-csv
+      type: postgres
+      configuration: /Users/seb/Development/dcss-data/conn.postgres  # see transforms/load-csv/README.md
+      table_name: altars
+      csv_path: /Users/seb/Development/dcss-data/transforms/load-csv/tests/fixtures/altars/altars.csv
+      schema_path: /Users/seb/Development/dcss-data/transforms/load-csv/tests/fixtures/altars/altars.schema.json
       skip: true
