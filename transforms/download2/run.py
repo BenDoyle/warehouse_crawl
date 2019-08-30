@@ -6,8 +6,8 @@ import time
 
 from lxml import html
 
-def _get_url(url):
-    response = requests.get(url)
+def _get_url(url, session):
+    response = session.get(url)
     response.raise_for_status()
     return response
 
@@ -23,6 +23,7 @@ class MorguesCrawler(object):
         self.__throttle = timedelta(milliseconds=int(throttle)) if throttle else None
         self.__force = force
         self.__last_download = datetime(2000,1,1)
+        self.__cached_session = (requests.Session(), datetime.now())
 
     @property
     def base_url(self):
@@ -39,20 +40,6 @@ class MorguesCrawler(object):
     @property
     def force(self):
         return self.__force
-
-    # def get_user_names(self):
-    #     print('> Listing user directories at {}'.format(self.base_url))
-    #     html = self._get_url(self.base_url).text
-    #     usernames = _get_links(html, '<a href="([a-zA-Z0-9][^"]*)/"', group=0)
-    #     for username in usernames:
-    #         yield username
-
-    # def get_user_listing(self, username):
-    #     print('> Listing morgue files for [{}]'.format(username))
-    #     html = self._get_url('{}{}/'.format(self.base_url, username)).text
-    #     files = _get_links(html, '<a href="(morgue-[^"]*.txt)"')
-    #     for file_ in files:
-    #         yield '{}{}/{}'.format(self.base_url, username, file_)
 
     def download(self, file_):
         basedir = self.output.rstrip('/')
@@ -80,9 +67,13 @@ class MorguesCrawler(object):
                 seconds = self.throttle.total_seconds() - (delta.microseconds / 1000000.0)
                 print('  ! Sleeping {} seconds'.format(seconds))
                 time.sleep(seconds)
-
         self.__last_download = now
-        return _get_url(url)
+
+        session, birth = self.__cached_session
+        if datetime.now() - birth > timedelta(minutes=10):
+            session, birth = requests.Session(), datetime.now()
+            self.__cached_session = session, birth
+        return _get_url(url, session)
 
     def get_user_morgues(self, url):
         MORGUE_FILENAME_REGEX = '^morgue-.*\.txt$'
@@ -116,9 +107,6 @@ class MorguesCrawler(object):
             yield os.path.join(url, link.get('href'))
 
     def run(self):
-        # for username in self.get_user_names():
-        #     for file in self.get_user_listing(username):
-        #         self.download(file)
         for user_url in self.get_listing(self.base_url):
             for morgue_url in self.get_user_morgues(user_url):
                 self.download(morgue_url)
