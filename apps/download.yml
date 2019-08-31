@@ -8,8 +8,7 @@ jobs:
       output: ~/warehouse_crawl-data/morgues
       skip: true
 
-    - transform: morgues-download-2
-      base_url: http://crawl.berotato.org/crawl/morgue/
+    - transform: morgues-download-berotato
       throttle: 1000
       output: ~/warehouse_crawl-data/morgues
       skip: true
