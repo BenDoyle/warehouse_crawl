@@ -1,5 +1,5 @@
 VENV=.venv
-PYVERSION=3.6.5
+PYVERSION=3.7.3
 
 ${VENV}:
 	@which pyenv > /dev/null 2>&1 || (echo "Install pyenv (e.g. brew install pyenv)" && exit 1)
