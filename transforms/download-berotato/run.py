@@ -49,19 +49,23 @@ class MorguesCrawler(object):
 
     def download(self, file_):
         basedir = self.output.rstrip('/')
-        filepath = '{}/{}'.format(basedir, os.path.basename(file_))
+        basename = os.path.basename(file_)
+        username = os.path.basename(os.path.dirname(file_))
+
+        filepath = '{}/{}/{}'.format(basedir, username, basename)
         if not self.force and os.path.exists(filepath):
-            print('  > !! Skipping existing file {} ...'.format(os.path.basename(file_)))
+            print('  > !! Skipping existing file {} ...'.format(basename))
             return
 
-        print('  > Downloading {} ...'.format(os.path.basename(file_)))
+        print('  > Downloading {} ...'.format(basename))
         response = self._get_url(file_)
         if not response.ok:
             print('  !! Failed to download file {} {} - {}'.format(response.status_code, response.reason, file_))
             return
 
-        if not os.path.exists(basedir):
-            os.makedirs(basedir)
+        parent_dir = os.path.dirname(filepath)
+        if not os.path.exists(parent_dir):
+            os.makedirs(parent_dir)
         with open(filepath, 'wb') as f:
             f.write(response.content)
 

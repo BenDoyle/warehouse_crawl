@@ -10,7 +10,7 @@ jobs:
 
     - transform: morgues-download-berotato
       throttle: 1000
-      output: ~/warehouse_crawl-data/morgues
+      output: ~/warehouse_crawl-data/morgues-folderized
       skip: true
 
     - transform: index-versions
