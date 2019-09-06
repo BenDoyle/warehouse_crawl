@@ -5,6 +5,7 @@ import simplejson as json
 from datetime import datetime, timedelta
 import time
 from datetime import datetime
+from urllib.parse import urlparse
 
 from lxml import html
 
@@ -25,7 +26,6 @@ class MorguesCrawler(object):
     def __init__(self, base_url, output, throttle=None, force=False):
         self.__base_url = base_url
         self.__output = output
-        self.__last_crawl = None
         self.__throttle = timedelta(milliseconds=int(throttle)) if throttle else None
         self.__force = force
         self.__last_download = datetime(2000,1,1)
@@ -103,24 +103,25 @@ class MorguesCrawler(object):
                 yield os.path.join(url, link.get('href'))
 
     def has_updated_morgues(self, url, updated_at):
-        last_crawl = self.__last_crawl.get(url)
+        path = self._last_crawl_path(url)
+        if not os.path.exists(path):
+            return True
+        with open(path, 'r') as f:
+            last_crawl = f.readline()
         last_crawl = datetime.strptime(last_crawl, DATE_FORMAT) if last_crawl else datetime.min
         return updated_at >= last_crawl
 
-    def _last_crawl_path(self):
-        return '{}/.last_crawl.json'.format(self.__output)
-
-    def _load_last_crawls(self):
-        try:
-            with open(self._last_crawl_path(), 'r') as fd:
-                return json.load(fd)
-        except FileNotFoundError:
-            return {}
+    def _last_crawl_path(self, url):
+        basename = os.path.basename(urlparse(url).path.rstrip('/'))
+        return '{}/{}/.last_crawl'.format(self.__output, basename)
 
     def _record_last_crawl(self, url, last_crawl):
-        self.__last_crawl[url] = last_crawl
-        with open(self._last_crawl_path(), 'w') as fd:
-            json.dump(self.__last_crawl, fd)
+        path = self._last_crawl_path(url)
+        parent_dir = os.path.dirname(path)
+        if not os.path.exists(parent_dir):
+            os.makedirs(parent_dir)
+        with open(path, 'w') as fd:
+            fd.write(datetime.strftime(last_crawl, DATE_FORMAT))
 
     def get_listing(self, url):
         print('* Downloading listing from {} ...'.format(url))
@@ -144,11 +145,10 @@ class MorguesCrawler(object):
             yield href, updated_at
 
     def run(self):
-        self.__last_crawl = self._load_last_crawls()
         for user_url, updated_at in self.get_listing(self.base_url):
             if not self.has_updated_morgues(user_url, updated_at):
                 continue
-            current_crawl = datetime.strftime(datetime.utcnow(), DATE_FORMAT)
+            current_crawl = datetime.utcnow()
             for morgue_url in self.get_user_morgues(user_url):
                 self.download(morgue_url)
             self._record_last_crawl(user_url, current_crawl)

@@ -4,6 +4,7 @@ import requests
 import os
 import pathlib
 import re
+from datetime import datetime, timedelta
 from requests_mock import Adapter
 
 from run import MorguesCrawler
@@ -75,13 +76,17 @@ def morgue_requests_mock(requests_mock, all_morgue_files):
     return requests_mock
 
 @pytest.fixture
-def create_crawler(morgue_requests_mock, tmpdir):
-    mocks = {
-        '_load_last_crawls': mock.Mock(return_value={}),
+def output_path(tmpdir):
+    return str(tmpdir)
+
+@pytest.fixture
+def create_crawler(request, morgue_requests_mock, output_path):
+    mocks = {} if 'real_io' in request.keywords else {
+        'has_updated_morgues': mock.Mock(return_value=True),
         '_record_last_crawl': mock.Mock(),
     }
-    with mock.patch.multiple('run.MorguesCrawler', **mocks):
-        def create(base_url='http://example.com/morgues-repo/', output=str(tmpdir), throttle=None, force=False):
+    with mock.patch.multiple('run.MorguesCrawler', **mocks) if mocks else mock.MagicMock():
+        def create(base_url='http://example.com/morgues-repo/', output=output_path, throttle=None, force=False):
             return MorguesCrawler(base_url, output, throttle, force)
         yield create
 
@@ -125,12 +130,17 @@ def test_full_run(crawler, requests_mock, all_morgue_files):
     expected_files = sorted(all_morgue_files)
     assert actual_files == expected_files, 'Unexpected output files'
 
+    assert crawler._record_last_crawl.call_args_list == [
+        mock.call('http://example.com/morgues-repo/0beahy/', mock.ANY),
+        mock.call('http://example.com/morgues-repo/AbAeterno/', mock.ANY),
+        mock.call('http://example.com/morgues-repo/nonames/', mock.ANY)
+    ]
+
 def test_partial_run(crawler, requests_mock, all_morgue_files):
-    crawler._load_last_crawls.return_value = {
-        'http://example.com/morgues-repo/AbAeterno/': '27-Aug-2019 21:07', # skip entirely without fetching the listing
-        'http://example.com/morgues-repo/nonames/': '13-Aug-2019 03:09', # fetch the listing, but skip based on existing files
-        # http://example.com/morgues-repo/0beahy/ missing key, it should download all morgues within
-    }
+    up_to_date = [
+        'http://example.com/morgues-repo/AbAeterno/'  # skip entirely without fetching the listing
+    ]
+    crawler.has_updated_morgues = lambda url, _: url not in up_to_date
 
     existing_files = [f for f in all_morgue_files if 'nonames' in f.lower() and f.lower() < 'nonames/morgue-nonames-20190813-070904.txt']
     _write_existing_files(existing_files, crawler.output)
@@ -141,12 +151,17 @@ def test_partial_run(crawler, requests_mock, all_morgue_files):
     assert request_history == [
         ('GET', 'http://example.com/morgues-repo/'),
         ('GET', 'http://example.com/morgues-repo/0beahy/'),
-        ('GET', 'http://example.com/morgues-repo/0beahy/morgue-0beahy-20190829-201557.txt'),
+        ('GET', 'http://example.com/morgues-repo/0beahy/morgue-0beahy-20190829-201557.txt'),  # fetch them all
         ('GET', 'http://example.com/morgues-repo/0beahy/morgue-0beahy-20190829-201920.txt'),
         ('GET', 'http://example.com/morgues-repo/nonames/'),
-        ('GET', 'http://example.com/morgues-repo/nonames/morgue-nonames-20190813-070904.txt'),
+        ('GET', 'http://example.com/morgues-repo/nonames/morgue-nonames-20190813-070904.txt'), # fetches only the last 2 files that don't exist
         ('GET', 'http://example.com/morgues-repo/nonames/morgue-nonames-20190813-073811.txt')
     ], 'Unexpected HTTP request sequence'
+
+    assert crawler._record_last_crawl.call_args_list == [
+        mock.call('http://example.com/morgues-repo/0beahy/', mock.ANY),
+        mock.call('http://example.com/morgues-repo/nonames/', mock.ANY)
+    ]
 
 def test_forced_run(create_crawler, requests_mock, all_morgue_files):
     crawler = create_crawler(force=True)
@@ -199,3 +214,20 @@ def test_throttled_run(sleep_mock, create_crawler, requests_mock, all_morgue_fil
     actual_files = _get_downloaded_files(crawler.output)
     expected_files = sorted(all_morgue_files)
     assert actual_files == expected_files, 'Unexpected output files'
+
+def test_last_crawl_path(create_crawler, output_path):
+    crawler = create_crawler()
+    assert crawler._last_crawl_path('http://example.com/morgues-repo/nonames/') == '{}/nonames/.last_crawl'.format(output_path)
+
+@pytest.mark.real_io
+def test_read_write_last_crawl(create_crawler):
+    last_crawl = datetime(2019, 9, 6, 1, 23)
+    url = 'http://example.com/morgues-repo/nonames/'
+    crawler = create_crawler()
+
+    assert crawler.has_updated_morgues(url, last_crawl), 'File does not exist, we should assume there are updated morgues'
+    crawler._record_last_crawl(url, last_crawl)
+
+    assert crawler.has_updated_morgues(url, last_crawl), 'Updated timestamp matches the last crawl, we should check for updates just in case'
+    assert crawler.has_updated_morgues(url, last_crawl + timedelta(minutes=1)), 'Updated since last crawl, we should check for updates'
+    assert not crawler.has_updated_morgues(url, last_crawl - timedelta(minutes=1)), 'Has not been updated since last crawl, so do not check for updates'
